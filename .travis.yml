@@ -1,0 +1,12 @@
+language: java
+jdk:
+ - oraclejdk8
+sudo: false
+script: mvn clean install
+deploy:
+ provider: heroku
+ api-key: 
+  secure: SloyL6fYG1zz/hW9CtHjhn3elvGFog8Pt6TCy8a9od6GYebyyTS/Vzy1Q//U3IQvg+9maMx83kFeiA4G+hQ1TVpKjcwmeofxhp01sHjBJ3GOoFlMWHlbHm5si3PBvyx+3KuFwghymzd6BeNFWzJKwUmX+VxYhgqNIKAOV8Ky99KkpDhwgCwceJJDOMXBgx0pvLFttoFdMDf3qebuqmiZCj4spWjVH8FrZ0hn2H0NcmhLKH33HqotBu3a88D0IEEvQCcSYU4EpN9HOXTjzsoqpckVy6ijRpD5geNCFEFRpwlv1tn9A5MKAb0bhS4ZNSLbQJcarWPrpnXrMFa3wHdoscJ58foRy6GfCW00gMcKiU4LzwaXUEpSNo8V7dZHyirHiWvrrZNyHAev6eyO2B2Xm3l+CiYRtezRHRBaTLKiDo4KRxzDhYBO2EnUnDuhQVxWaePfAmWEmeb9CS/ywvP+tT3FEI9TT9OL2f42wYO+9lqGyaULOh27LM6znIHh+Ncsg3UkKhcONtQeTqiQZ0e4GPUbcO9CgufxnKaf+hJkHE0Prirj+pggykH1OTv/EP04HNorHRXG3g+8e4BMC8MW3VzJ2zEkQXhN3jn9mjrBwDFt47KO1mJsl33JfdTL1VEFXIWADInv3o8xS83DrD/VfzNYzXv7JyphwP17k3SFq24=
+ app: pik-predator
+ on:
+  repo: ACharchula/PIK-predator
