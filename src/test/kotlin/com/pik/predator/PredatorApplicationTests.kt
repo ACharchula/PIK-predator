@@ -13,6 +13,6 @@ class PredatorApplicationTests {
     @Test
     fun testHelloController() {
         val helloController = HelloController()
-        assertEquals("tak to ja, PREDATOR", helloController.hello())
+        assertEquals("tak to ja, PREDATOR wrong", helloController.hello())
     }
 }
