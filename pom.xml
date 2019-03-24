@@ -116,20 +116,6 @@
                             <arguments>run test</arguments>
                         </configuration>
                     </execution>
-                    <execution>
-						<id>npm run clean (clean)</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>clean</phase>
-						<configuration>
-							<executable>npm</executable>
-							<arguments>
-								<argument>run</argument>
-								<argument>clean</argument>
-							</arguments>
-						</configuration>
-					</execution>
                 </executions>
             </plugin>
             <plugin>
