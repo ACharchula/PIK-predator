@@ -109,12 +109,12 @@
                     </execution>
                     <execution>
                         <id>npm test</id>
-			<phase>test</phase>
+			            <phase>test</phase>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run test</arguments>
+                            <arguments>run testdeploy</arguments>
                         </configuration>
                     </execution>
                 </executions>
