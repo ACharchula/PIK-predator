@@ -114,7 +114,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run test</arguments>
+                            <arguments>run testdeploy</arguments>
                         </configuration>
                     </execution>
                 </executions>
