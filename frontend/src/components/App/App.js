@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
+
 
 class App extends Component {
 
@@ -11,8 +17,8 @@ class App extends Component {
     }
 
     hello = () => {
-        fetch('/api/hello')
-            .then(response => response.text())
+        axios.get('/api/hello')
+            .then(response => response.data)
             .then(message => {
                 this.setState({message: message});
             });
@@ -22,16 +28,15 @@ class App extends Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
                     <h1 className="App-title">{this.state.message}</h1>
                 </header>
                 <p>IT is test</p>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-                <p>
-                    test change
-                </p>
+                <Container>
+                    <Row>
+                        <Col>1</Col>
+                        <Col>2</Col>
+                    </Row>
+                </Container>
             </div>
         );
     }

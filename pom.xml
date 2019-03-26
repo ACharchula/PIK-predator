@@ -109,7 +109,7 @@
                     </execution>
                     <execution>
                         <id>npm test</id>
-			<phase>test</phase>
+			            <phase>test</phase>
                         <goals>
                             <goal>npm</goal>
                         </goals>
@@ -139,5 +139,17 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://localhost:8081/repository/predator-test-realeses/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deployment</id>
+            <name>Internal Snapshot Releases</name>
+            <url>http://localhost:8081/repository/predator-test-snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
