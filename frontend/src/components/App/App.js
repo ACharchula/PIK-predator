@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import './App.css';
 import axios from 'axios';
 
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
+
+
 class App extends Component {
 
     state = {};
@@ -25,6 +31,12 @@ class App extends Component {
                     <h1 className="App-title">{this.state.message}</h1>
                 </header>
                 <p>IT is test</p>
+                <Container>
+                    <Row>
+                        <Col>1</Col>
+                        <Col>2</Col>
+                    </Row>
+                </Container>
             </div>
         );
     }
