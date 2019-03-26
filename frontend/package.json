@@ -7,8 +7,11 @@
     "enzyme-adapter-react-16": "^1.11.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
+    "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
-    "react-test-renderer": "^16.8.5"
+    "react-test-renderer": "^16.8.5",
+    "redux": "^4.0.1",
+    "redux-promise": "^0.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
