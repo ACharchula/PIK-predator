@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import axios from 'axios'
 
 class App extends Component {
 
@@ -10,8 +11,8 @@ class App extends Component {
     }
 
     hello = () => {
-        fetch('/api/hello')
-            .then(response => response.text())
+        axios.get('/api/hello')
+            .then(response => response.data)
             .then(message => {
                 this.setState({message: message});
             });
