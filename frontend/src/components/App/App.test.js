@@ -16,7 +16,6 @@ describe('App', () => {
     expect(
       wrapper.contains(<p>IT is test</p>)
     ).toBe(true);
-
   })
 
 })
