@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
-import Adapter from 'enzyme-adapter-react-16';
-import { shallow, configure } from 'enzyme';
+import { shallow } from 'enzyme';
 
-configure({adapter: new Adapter()});
 
 describe('App', () => {
   let wrapper;
