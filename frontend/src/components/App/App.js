@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.scss';
 import axios from 'axios';
-
 import Container from 'react-bootstrap/Container'
 import Layout from '../Layout/Layout'
 
