@@ -3,8 +3,6 @@ import './App.scss';
 import axios from 'axios';
 
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Layout from '../Layout/Layout'
 
 //fontawesome
