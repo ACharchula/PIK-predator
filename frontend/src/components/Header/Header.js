@@ -6,21 +6,24 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
-
+import SideNavigation from './SideNavigation/SideNavigation'
 
 export const Header = (props) => {
+
+
     return(
         <div className="App-header">
+        <SideNavigation {...props}/>
+        <FontAwesomeIcon icon="bars" onClick={props.onOpenNav} className="icon"/>
             <Container>
                 <Row>
-                    <Col xs={4}>
+                    <Col xs={6}>
                         <Row>
-                            <FontAwesomeIcon icon="bars" className="icon"/>
                             <p className="logo">PREDATOR</p>
                         </Row>
                     </Col>
-                    <Col xs={6}>
-                        <InputGroup className="searchBar">
+                    <Col xs={4}>
+                        <InputGroup size="sm" className="searchBar">
                             <FormControl
                             placeholder="What are you searching for ..."
                             aria-label="Search"
@@ -33,7 +36,7 @@ export const Header = (props) => {
                             </InputGroup.Append>
                         </InputGroup>
                     </Col>
-                    <Col>
+                    <Col xs={2}>
                         <FontAwesomeIcon icon="user" className="icon"/>
                         <FontAwesomeIcon icon="shopping-cart" className="icon"/>
                     </Col>

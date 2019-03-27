@@ -2,15 +2,22 @@ $blood-red-color: #b20715;
 $background-dark-gray: #191919;
 $icons-color: white;
 
+input, textarea{
+    background-color:#666;
+    color: #FFF;
+}
+
 .App-header {
     font-size: 40px;
     background-color: $background-dark-gray;
+    display:flex;
+    flex-direction: row;
 }
 
 .logo {
     font-family: 'Metal Mania', cursive;
     color: $blood-red-color;
-    margin:auto;
+    margin:auto 0;
 }
 
 .icon {
@@ -24,5 +31,5 @@ $icons-color: white;
 }
 
 .searchBar {
-    margin: 10px;
+    margin: 15px;
 }

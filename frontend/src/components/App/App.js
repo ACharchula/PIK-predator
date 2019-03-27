@@ -5,7 +5,7 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Header from '../Header/Header'
+import Layout from '../Layout/Layout'
 
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -32,17 +32,17 @@ class App extends Component {
     render() {
         return (
         <div className="App">
-                <Header>
-                    <h1 className="App-title">{this.state.message}</h1>
-                </Header>
+                <Layout>
+                    <Container>
+                        <p>IT is test</p>
+                        <Row>
+                            <Col>1</Col>
+                            <Col>2</Col>
+                        </Row>
+                    </Container>
+                </Layout>
                 
-                <Container>
-                    <p>IT is test</p>
-                    <Row>
-                        <Col>1</Col>
-                        <Col>2</Col>
-                    </Row>
-                </Container>
+               
             </div>
         );
     }
