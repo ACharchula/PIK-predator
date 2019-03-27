@@ -1,0 +1,34 @@
+$blood-red-color: #b20715;
+$background-dark-gray: #191919;
+$icons-color: white;
+
+.custom-container {
+     min-width: 90%;
+}
+
+.App-header {
+    font-size: 40px;
+    background-color: $background-dark-gray;
+    display:flex;
+    flex-direction: row;
+}
+
+.logo {
+    font-family: 'Metal Mania', cursive;
+    color: $blood-red-color;
+    margin:auto 0;
+}
+
+.icon {
+    color: $icons-color;
+    font-size: 30px;
+    margin:auto 10px;
+}
+
+.icon :hover{
+    cursor: pointer;
+}
+
+.searchBar {
+    margin: 15px;
+}

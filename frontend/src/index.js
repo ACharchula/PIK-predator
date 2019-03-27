@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
-import Container from 'react-bootstrap/Container'
 
 //redux things
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -22,9 +21,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <Container>
             <App/>
-        </Container>
     </Provider>
     , document.getElementById('root')
 );
