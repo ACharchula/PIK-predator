@@ -34,11 +34,16 @@ class App extends Component {
         <div className="App">
                 <Layout>
                     <Container>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
                         <p>IT is test</p>
-                        <Row>
-                            <Col>1</Col>
-                            <Col>2</Col>
-                        </Row>
+                        
                     </Container>
                 </Layout>
                 

@@ -10,39 +10,38 @@ import SideNavigation from './SideNavigation/SideNavigation'
 
 export const Header = (props) => {
 
-
     return(
         <div className="App-header">
-        <SideNavigation {...props}/>
-        <FontAwesomeIcon icon="bars" onClick={props.onOpenNav} className="icon"/>
-            <Container>
+
+            
+
+            <Container className="custom-container">
                 <Row>
-                    <Col xs={6}>
-                        <Row>
-                            <p className="logo">PREDATOR</p>
-                        </Row>
+                    <Col className="icon">
+                        <SideNavigation {...props} />
+                        <FontAwesomeIcon icon="bars" onClick={props.onOpenNav} />
                     </Col>
-                    <Col xs={4}>
-                        <InputGroup size="sm" className="searchBar">
+                    <Col className="justify-content-center d-flex">
+                        <p className="logo">PREDATOR</p>
+                    </Col>
+                    <Col className="justify-content-end d-flex">
+                        <InputGroup size="sm" className="searchBar" style={{ maxWidth: "250px" }}>
                             <FormControl
-                            placeholder="What are you searching for ..."
-                            aria-label="Search"
-                            aria-describedby="search-bar"
+                                style={{ backgroundColor: "#191919", borderColor: "#202020" }}
+                                placeholder="What are you searching for ..."
+                                aria-label="Search"
+                                aria-describedby="search-bar"
                             />
                             <InputGroup.Append>
-                            <InputGroup.Text id="search-bar">
-                                <FontAwesomeIcon icon="search" />
-                            </InputGroup.Text>
+                                <InputGroup.Text id="search-bar">
+                                    <FontAwesomeIcon icon="search" />
+                                </InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
+                        <FontAwesomeIcon icon="user" className="icon" />
+                        <FontAwesomeIcon icon="shopping-cart" className="icon" />
                     </Col>
-                    <Col xs={2}>
-                        <FontAwesomeIcon icon="user" className="icon"/>
-                        <FontAwesomeIcon icon="shopping-cart" className="icon"/>
-                    </Col>
-                    
                 </Row>
-                
             </Container>
 
         </div>
