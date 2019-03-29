@@ -1,5 +1,5 @@
 $blood-red-color: #b20715;
-$background-dark-gray: #191919;
+$dark-gray: #191919;
 $icons-color: white;
 
 .custom-container {
@@ -9,7 +9,7 @@ $icons-color: white;
 
 .App-header {
     font-size: 40px;
-    background-color: $background-dark-gray;
+    background-color: $dark-gray;
     display:flex;
     flex-direction: row;
     position: -webkit-sticky;
