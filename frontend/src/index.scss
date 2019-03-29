@@ -1,8 +1,12 @@
+@import './components/Header/Header.scss';
+
+
 body {
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont,'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: lighten($dark-gray, 10%);
 }
 
 code {

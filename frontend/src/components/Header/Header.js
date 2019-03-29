@@ -12,9 +12,6 @@ export const Header = (props) => {
 
     return(
         <div className="App-header">
-
-            
-
             <Container className="custom-container">
                 <Row>
                     <Col className="icon">
@@ -43,7 +40,6 @@ export const Header = (props) => {
                     </Col>
                 </Row>
             </Container>
-
         </div>
     )
 }
