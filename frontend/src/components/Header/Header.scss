@@ -4,6 +4,7 @@ $icons-color: white;
 
 .custom-container {
      min-width: 90%;
+     
 }
 
 .App-header {
@@ -11,6 +12,9 @@ $icons-color: white;
     background-color: $background-dark-gray;
     display:flex;
     flex-direction: row;
+    position: -webkit-sticky;
+    position: sticky;
+    top:0;
 }
 
 .logo {
