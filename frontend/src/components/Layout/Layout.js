@@ -24,7 +24,9 @@ class Layout extends Component {
                     onHideNav={()=>this.toggleSideNav(false)}
                     onOpenNav={()=>this.toggleSideNav(true)}
                 />
-                {this.props.children}
+                <main>
+                    {this.props.children}
+                </main>
                 <Footer/>
             </div>
         );

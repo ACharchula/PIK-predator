@@ -1,6 +1,7 @@
 import React from 'react'
 import './Header.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -8,10 +9,12 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import SideNavigation from './SideNavigation/SideNavigation'
 
+const linkStyle = {textDecoration:"none", margin:"auto", padding:"0"};
+
 export const Header = (props) => {
 
     return(
-        <div className="App-header">
+        <header className="App-header">
             <Container className="custom-container">
                 <Row>
                     <Col className="icon">
@@ -19,7 +22,9 @@ export const Header = (props) => {
                         <FontAwesomeIcon icon="bars" onClick={props.onOpenNav} />
                     </Col>
                     <Col className="justify-content-center d-flex">
-                        <p className="logo">PREDATOR</p>
+                        <Link to="/" style={linkStyle} >
+                            <p className="logo">PREDATOR</p>
+                        </Link>
                     </Col>
                     <Col className="justify-content-end d-flex">
                         <InputGroup size="sm" className="searchBar" style={{ maxWidth: "250px" }}>
@@ -35,12 +40,14 @@ export const Header = (props) => {
                                 </InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
-                        <FontAwesomeIcon icon="user" className="icon" />
+                        <Link to="/login" style={linkStyle}>
+                            <FontAwesomeIcon icon="user" className="icon" />
+                        </Link>
                         <FontAwesomeIcon icon="shopping-cart" className="icon" />
                     </Col>
                 </Row>
             </Container>
-        </div>
+        </header>
     )
 }
 

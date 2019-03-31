@@ -1,0 +1,10 @@
+{
+    "asus" : {
+        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/1/pr_2019_1_31_10_35_49_351_09.jpg",
+        "cpu": "Intel core i5-8250U"
+    },
+    "dell" : {
+        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2018/8/pr_2018_8_1_13_39_57_107_05.jpg",
+        "cpu": "Intel Core i7-8750H"
+    }
+}
