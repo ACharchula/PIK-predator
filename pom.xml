@@ -141,14 +141,14 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>deployment</id>
+            <id>nexus</id>
             <name>Internal Releases</name>
-            <url>http://localhost:8081/repository/predator-test-realeses/</url>
+            <url>http://localhost:8081/repository/predator-release/</url>
         </repository>
         <snapshotRepository>
-            <id>deployment</id>
+            <id>nexus</id>
             <name>Internal Snapshot Releases</name>
-            <url>http://localhost:8081/repository/predator-test-snapshot/</url>
+            <url>http://localhost:8081/repository/predator-snapshot/</url>
         </snapshotRepository>
     </distributionManagement>
 
