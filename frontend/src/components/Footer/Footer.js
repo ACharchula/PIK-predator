@@ -2,7 +2,7 @@ import React from 'react'
 import './Footer.scss'
 
 export const Footer = (props) => (
-    <footer class="App-footer">
+    <footer className="App-footer">
         
     </footer>
 )
