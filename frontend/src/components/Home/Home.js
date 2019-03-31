@@ -1,9 +1,42 @@
-import React from 'react'
+import React, { Component } from 'react'
+import JSON from '../../products.json';
+import Product from '../Product/Product';
 
-export const Home = (props) => (
-    <div>
-        <h1>Home Page</h1>
-    </div>
-)
+import './Home.scss';
 
-export default Home
+class Home extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            products: JSON
+        }
+    }
+
+    componentDidMount() {
+        console.log(this.state.products);
+    }
+
+    getProducts = () => {
+        return this.state.products.map((product, i) => {
+            return (
+                    <Product product={product} key={i}  />
+            )
+        })
+    }
+
+
+    render() {
+        return (
+            <div >
+                <div className="Products">
+                    {this.getProducts()}
+                </div>
+            </div>
+        )
+    }
+}
+
+
+export default Home;

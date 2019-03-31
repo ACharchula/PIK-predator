@@ -1,10 +1,32 @@
-{
-    "asus" : {
+[
+    {
+        "name": "asus",
         "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/1/pr_2019_1_31_10_35_49_351_09.jpg",
         "cpu": "Intel core i5-8250U"
     },
-    "dell" : {
+    {
+        "name": "dell",
         "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2018/8/pr_2018_8_1_13_39_57_107_05.jpg",
         "cpu": "Intel Core i7-8750H"
+    },
+    {
+        "name": "Lenovo",
+        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/3/pr_2019_3_7_12_55_49_91_05.jpg",
+        "cpu": "AMD Ryzen 3 2200U"
+    },
+    {
+        "name": "asus",
+        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/1/pr_2019_1_31_10_35_49_351_09.jpg",
+        "cpu": "Intel core i5-8250U"
+    },
+    {
+        "name": "dell",
+        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2018/8/pr_2018_8_1_13_39_57_107_05.jpg",
+        "cpu": "Intel Core i7-8750H"
+    },
+    {
+        "name": "Lenovo",
+        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/3/pr_2019_3_7_12_55_49_91_05.jpg",
+        "cpu": "AMD Ryzen 3 2200U"
     }
-}
+]

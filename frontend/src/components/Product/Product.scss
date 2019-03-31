@@ -1,0 +1,21 @@
+@import '../Header/Header.scss';
+
+.product-tile {
+    width: 300px;
+    height: auto;
+    border: 1px solid $dark-gray;
+    background: white;
+    
+    @media screen and(max-width: 440px) {
+        display:flex;
+        flex-direction: row;
+        width: 100%;
+        height: auto;
+
+        img{
+            width:100px;
+            height: 100px;
+        }
+    }
+}
+
