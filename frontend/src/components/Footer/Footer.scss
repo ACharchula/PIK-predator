@@ -1,6 +1,9 @@
 @import '../Header/Header.scss';
 
-.App-footer{
-    height: 80px;
+$footer-height:80px;
+
+footer{
+    height: $footer-height;
+    // margin-top: -$footer-height;
     background: $dark-gray;
 }
