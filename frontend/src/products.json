@@ -1,32 +1,42 @@
 [
     {
-        "name": "asus",
-        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/1/pr_2019_1_31_10_35_49_351_09.jpg",
+        "name": "Asus Vivobook",
+        "url": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
         "cpu": "Intel core i5-8250U"
     },
     {
-        "name": "dell",
-        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2018/8/pr_2018_8_1_13_39_57_107_05.jpg",
+        "name": "Dell Latitude",
+        "url": "https://www.kuzniewski.pl/zdjecia/category_lab_reviews/dell-latitude-e7470-recenzja.png",
         "cpu": "Intel Core i7-8750H"
     },
     {
-        "name": "Lenovo",
-        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/3/pr_2019_3_7_12_55_49_91_05.jpg",
+        "name": "Lenovo YOGA",
+        "url": "https://www.play.pl/dane/produkty/notebook/lenovo/lenovo-yogabook-windows/TE-LV-YBWIN-NS1-BL/img/1.png",
         "cpu": "AMD Ryzen 3 2200U"
     },
     {
-        "name": "asus",
-        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/1/pr_2019_1_31_10_35_49_351_09.jpg",
+        "name": "Asus Zenbook",
+        "url": "https://prowly-uploads.s3.eu-west-1.amazonaws.com/uploads/landing_page/template_background/36197/ZenBook_13_14_UX333_UX433_Frameless_NanoEdge_display_for_infinity_visual....png",
         "cpu": "Intel core i5-8250U"
     },
     {
-        "name": "dell",
-        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2018/8/pr_2018_8_1_13_39_57_107_05.jpg",
+        "name": "Dell G3",
+        "url": "https://multitech-lb.com/wp-content/uploads/Resized-G3-Inspiron.png",
         "cpu": "Intel Core i7-8750H"
     },
     {
-        "name": "Lenovo",
-        "url": "https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2019/3/pr_2019_3_7_12_55_49_91_05.jpg",
-        "cpu": "AMD Ryzen 3 2200U"
+        "name": "Lenovo X1 Extreme",
+        "url": "https://www04.lenovo.com/medias/lenovo-laptop-thinkpad-x1-extreme-hero.png?context=bWFzdGVyfHJvb3R8MzE5NDk4fGltYWdlL3BuZ3xoMWEvaGJiLzk3OTI5MDE3NzUzOTAucG5nfGRiMTczYzFhYjYwNjY4OGM1NTk0NjQ4YmUzOTFmZGJjMjhhNGYxYjdmM2EzMzlkMmM3MjU2NmNkOWE4NDRhZTg",
+        "cpu": "Intel Core i7 8.gen."
+    },
+    {
+        "name": "Apple Macbook Pro",
+        "url": "https://cdn.shopify.com/s/files/1/1525/0840/products/15-inch-MacBook-Pro-2016_grande_5d1edb5d-1b5b-4cba-b9c2-99162805e678.png?v=1531418987",
+        "cpu": "Intel Core i9 8.gen."
+    },
+    {
+        "name": "Dell XPS 15",
+        "url": "http://choicelaptops.com/wp-content/uploads/2018/06/TR.png",
+        "cpu": "Intel Core i9 8.gen."
     }
 ]

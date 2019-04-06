@@ -40,11 +40,11 @@
 
 .loginForm {
     flex: 1;
-    padding:5px;
-
-    border-right: 1px solid #191919;
+    padding:10px;
+    // max-width: 300px;
+    border-right: 1px solid $dark-gray;
     div {
-      margin:10px 5px;
+      margin:10px 0px;
       
       button {
         width: 100%;
@@ -54,15 +54,18 @@
     @media screen and(max-width: 575px) {
       flex-direction: column;
       border-right: none;
-      border-bottom: 1px solid #191919;
+      border-bottom: 1px solid $dark-gray;
     } 
 
     
 }
 
 .loginField {
- div{
   padding:0;
   margin:0;
- }
+ 
+  div{
+    padding:0;
+    margin:0;
+  }
 }
