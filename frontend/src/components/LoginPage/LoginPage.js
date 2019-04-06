@@ -57,7 +57,7 @@ export const LoginPage = (props) => {
 
                 <div>
                     <Button variant="danger">
-                        Submit
+                        Log in
                     </Button>
                 </div>
             </form>

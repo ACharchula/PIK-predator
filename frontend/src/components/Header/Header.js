@@ -9,7 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import SideNavigation from './SideNavigation/SideNavigation'
 
-const linkStyle = {textDecoration:"none", margin:"auto", padding:"0"};
+const linkStyle = {textDecoration:"none", margin:"auto 0", padding:"0"};
 
 export const Header = (props) => {
 

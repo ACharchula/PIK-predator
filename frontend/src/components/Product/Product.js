@@ -5,7 +5,9 @@ import Image from 'react-bootstrap/Image';
 export const Product = (props) => {
     return (
             <div className="product-tile">
-                <Image src={props.product.url} fluid />
+                <div className="img-wrapper">
+                    <Image src={props.product.url} fluid />
+                </div>
                 <div className="product-details">
                     <h4>
                         {props.product.name}
