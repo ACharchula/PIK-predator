@@ -7,9 +7,9 @@ export const Product = (props) => {
             <div className="product-tile">
                 <Image src={props.product.url} fluid />
                 <div className="product-details">
-                    <h3>
+                    <h4>
                         {props.product.name}
-                    </h3>
+                    </h4>
                     <p>
                         CPU: {props.product.cpu}
                     </p>

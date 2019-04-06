@@ -1,0 +1,68 @@
+@import '../Header/Header.scss';
+
+.loginFormWrapper {
+  color:white;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+
+  h3 {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
+  label {
+    font-size:13px;
+    margin:0;
+    padding:0;
+  }
+
+  button {
+    color: $dark-gray;
+    background: $blood-red-color;
+    border:  $blood-red-color;
+  }
+  
+  .registerInfo {
+    flex: 1;
+    text-align: center;
+    padding:10px;
+  }
+
+  @media screen and(max-width: 575px) {
+      flex-direction: column;
+  
+  }
+}
+
+
+.loginForm {
+    flex: 1;
+    padding:5px;
+
+    border-right: 1px solid #191919;
+    div {
+      margin:10px 5px;
+      
+      button {
+        width: 100%;
+      }
+    }
+
+    @media screen and(max-width: 575px) {
+      flex-direction: column;
+      border-right: none;
+      border-bottom: 1px solid #191919;
+    } 
+
+    
+}
+
+.loginField {
+ div{
+  padding:0;
+  margin:0;
+ }
+}

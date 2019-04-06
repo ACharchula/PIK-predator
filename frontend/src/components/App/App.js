@@ -32,9 +32,9 @@ class App extends Component {
 
     render() {
         return (
-        <div className="App">
+        <div className="App" >
             <BrowserRouter>
-            <Layout>
+                <Layout>
                     <Container>
                         <Switch>
                             <Route path="/" exact component={Home}/>
