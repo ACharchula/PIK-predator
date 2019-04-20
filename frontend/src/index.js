@@ -9,7 +9,9 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import promiseMiddleware from 'redux-promise'
 import rootReducer from './redux/reducers'
+import Auth from './authentication/Auth';
 
+const auth = new Auth();
 
 const store = createStore( 
     rootReducer,
@@ -21,7 +23,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-            <App/>
+            <App auth={auth}/>
     </Provider>
     , document.getElementById('root')
 );

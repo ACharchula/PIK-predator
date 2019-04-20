@@ -13,6 +13,14 @@ const linkStyle = {textDecoration:"none", margin:"auto 0", padding:"0"};
 
 export const Header = (props) => {
 
+    function authenticate() {
+        if (localStorage.getItem('isLoggedIn') === null) {
+            props.auth.login()
+        } else if (localStorage.getItem('isLoggedIn') === 'true') {
+            props.auth.logout()
+        }
+    }
+
     return(
         <header className="App-header">
             <Container className="custom-container">
@@ -44,6 +52,8 @@ export const Header = (props) => {
                             <FontAwesomeIcon icon="user" className="icon" />
                         </Link>
                         <FontAwesomeIcon icon="shopping-cart" className="icon" />
+                        <button onClick={authenticate}> zaloguj</button>
+                        <button onClick={props.auth.getLogin}> login</button>
                     </Col>
                 </Row>
             </Container>

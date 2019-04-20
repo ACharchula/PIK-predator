@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import './App.scss';
 // import axios from 'axios';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import Container from 'react-bootstrap/Container'
 import Layout from '../Layout/Layout'
 
 import Home from '../Home/Home';
 import LoginPage from '../LoginPage/LoginPage';
+import Callback from'../Callback/Callback';
+import history from '../../authentication/History';
 
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -19,8 +21,16 @@ class App extends Component {
     state = {};
 
     componentDidMount() {
-        //setInterval(this.hello, 250);
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+          this.props.auth.renewSession();
+        }
     }
+
+    handleAuthentication = (nextState, replace) => {
+        if (/access_token|id_token|error/.test(nextState.location.hash)) {
+          this.props.auth.handleAuthentication();
+        }
+      }
 
     // hello = () => {
     //     axios.get('/api/hello')
@@ -31,20 +41,25 @@ class App extends Component {
     // };
 
     render() {
+        console.log(this.props.auth.getAccessToken())
         return (
         <div className="App" >
-            <BrowserRouter>
-                <Layout>
+            <Router history={history}>
+                <Layout auth={this.props.auth}>
                     <Container>
                         <Switch>
                             <Route path="/" exact component={Home}/>
                             <Route path="/login" exact component={LoginPage}/>
+                            <Route path="/callback" render={(props) => {
+                                this.handleAuthentication(props);
+                                return <Callback {...props} /> 
+                                }}/>
                         </Switch>
                         <p>IT is test</p>
                         
                     </Container>
                 </Layout>
-            </BrowserRouter>
+            </Router>
                 
                
             </div>
