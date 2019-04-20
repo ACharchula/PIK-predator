@@ -8,6 +8,8 @@ import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import SideNavigation from './SideNavigation/SideNavigation'
+import Button from 'react-bootstrap/Button'
+
 
 const linkStyle = {textDecoration:"none", margin:"auto 0", padding:"0"};
 
@@ -17,6 +19,12 @@ export const Header = (props) => {
         if (localStorage.getItem('isLoggedIn') === null) {
             props.auth.login()
         } else if (localStorage.getItem('isLoggedIn') === 'true') {
+            props.auth.logout()
+        }
+    }
+
+    const logout = () => {
+        if(localStorage.getItem('isLoggedIn') === 'true') {
             props.auth.logout()
         }
     }
@@ -48,12 +56,22 @@ export const Header = (props) => {
                                 </InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
-                        <Link to="/login" style={linkStyle}>
-                            <FontAwesomeIcon icon="user" className="icon" />
-                        </Link>
+
+                        <div className="loginDrop">
+                            <div className="loginIcon">
+                                <Link to="/login" style={linkStyle}>
+                                    <FontAwesomeIcon icon="user" />
+                                </Link>
+                            </div>
+                            <div className="dropDown">
+                                <Button onClick={authenticate} variant="secondary">Log in</Button>
+                                <Button onClick={logout} variant="secondary">Log out</Button>
+                                <Button onClick={props.auth.getLogin} variant="secondary">Profile</Button>
+                            </div>
+
+                        </div>
+
                         <FontAwesomeIcon icon="shopping-cart" className="icon" />
-                        <button onClick={authenticate}> zaloguj</button>
-                        <button onClick={props.auth.getLogin}> login</button>
                     </Col>
                 </Row>
             </Container>

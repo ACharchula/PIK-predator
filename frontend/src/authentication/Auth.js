@@ -1,35 +1,26 @@
 import history from './History';
 import auth0 from 'auth0-js';
+import { createBrotliCompress } from 'zlib';
 
 export default class Auth {
   accessToken;
   idToken;
   expiresAt;
+  userProfile;
 
   auth = new auth0.WebAuth({
     domain: 'pik-predator.eu.auth0.com',
     clientID: 'cCHK0Y5vavf8LS1Yqt2ZX4KgVCzIpMNf',
     redirectUri: 'http://localhost:3000/callback',
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile'
   });
 
-  constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
-    this.getAccessToken = this.getAccessToken.bind(this);
-    this.getIdToken = this.getIdToken.bind(this);
-    this.renewSession = this.renewSession.bind(this);
-    this.getLogin = this.getLogin.bind(this);
-  }
-
-  login() {
+  login = () => {
     this.auth.authorize();
   }
 
-  handleAuthentication() {
+  handleAuthentication = () => {
     this.auth.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
@@ -41,15 +32,15 @@ export default class Auth {
     });
   }
 
-  getAccessToken() {
+  getAccessToken = () => {
     return this.accessToken;
   }
 
-  getIdToken() {
+  getIdToken = () => {
     return this.idToken;
   }
 
-  setSession(authResult) {
+  setSession = (authResult) => {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
 
@@ -63,7 +54,7 @@ export default class Auth {
     history.replace('/');
   }
 
-  renewSession() {
+  renewSession = () => {
     this.auth.checkSession({}, (err, authResult) => {
        if (authResult && authResult.accessToken && authResult.idToken) {
          this.setSession(authResult);
@@ -75,7 +66,7 @@ export default class Auth {
     });
   }
 
-  logout() {
+  logout = () => {
     // Remove tokens and expiry time
     this.accessToken = null;
     this.idToken = null;
@@ -92,24 +83,23 @@ export default class Auth {
     history.replace('/');
   }
 
-  isAuthenticated() {
+  isAuthenticated = () => {
     // Check whether the current time is past the
     // access token's expiry time
     let expiresAt = this.expiresAt;
     return new Date().getTime() < expiresAt;
   }
 
-  getLogin() {
-    this.auth.parseHash(window.location.hash, function(err, authResult) {
-            if (err) {
-            return console.log(err);
-            }
-            this.auth.client.userInfo(authResult.accessToken, function(err, user) {
-                // This method will make a request to the /userinfo endpoint
-                // and return the user object, which contains the user's information,
-                // similar to the response below.
-            });
+  getLogin = () => {
+    
+    if(this.accessToken){
+      this.auth.client.userInfo(this.accessToken, (err, profile) => {
+        if(profile){
+          this.userProfile = profile;
+        }
+        console.log(this.userProfile.name);
       });
+    } 
 
       //console.log(result)
   }
