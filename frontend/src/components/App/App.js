@@ -41,7 +41,6 @@ class App extends Component {
     // };
 
     render() {
-        console.log(this.props.auth.getAccessToken())
         return (
         <div className="App" >
             <Router history={history}>
@@ -60,9 +59,7 @@ class App extends Component {
                     </Container>
                 </Layout>
             </Router>
-                
-               
-            </div>
+        </div>
         );
     }
 }
