@@ -1,7 +1,6 @@
 import history from './History';
 import auth0 from 'auth0-js';
-import { dispatch } from 'redux';
-import { requestLogin, successfulLogin, failedLogin, successfulLogout } from "../redux/actions";
+import { failedLogin, successfulLogin, successfulLogout } from "../redux/actions";
 import store from '../index.js';
 
 export default class Auth {
@@ -19,7 +18,6 @@ export default class Auth {
   });
 
   login = () => {
-    store.dispatch(requestLogin());
     this.auth.authorize();
   }
 
@@ -27,9 +25,10 @@ export default class Auth {
     this.auth.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
+        store.dispatch(successfulLogin());
       } else if (err) {
         history.replace('/');
-        console.log(err);
+        store.dispatch(failedLogin());
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
@@ -46,14 +45,12 @@ export default class Auth {
   setSession = (authResult) => {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
-    console.log(authResult);
 
     // Set the time that the access token will expire at
     let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
     this.accessToken = authResult.accessToken;
     this.idToken = authResult.idToken;
     this.expiresAt = expiresAt;
-    store.dispatch(successfulLogin());
     // navigate to the home route
     history.replace('/');
   }
@@ -77,11 +74,7 @@ export default class Auth {
     this.expiresAt = 0;
 
     // Remove isLoggedIn flag from localStorage
-    console.log("before: " + localStorage.getItem('state'));
-
     localStorage.removeItem('isLoggedIn');
-
-    console.log("after: " + localStorage.getItem('state'));
 
     this.auth.logout({
       return_to: window.location.origin
