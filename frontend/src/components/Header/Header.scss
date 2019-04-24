@@ -58,8 +58,7 @@ $icons-color: lighten($dark-gray,30%);
     left:0;
     top:100%;
     border-radius: 0 20px 20px 20px;
-    width: 122px;
-  	//height: 100px;
+    width: 110px;
     color: $dark-gray;
     background:white;
     font-size: 20px;
@@ -70,13 +69,11 @@ $icons-color: lighten($dark-gray,30%);
 	button{
 	  margin: 5px auto ;
 	  width:80%;
-	  //padding:10px;
 	  background: $dark-gray;
 	  border-radius: 20px;
 	  -webkit-box-sizing: border-box;
 	  -moz-box-sizing: border-box;
 	  box-sizing: border-box;
-	  //color: $dark-gray;
 	  &:hover {
 		border:1px solid white;
 	  }

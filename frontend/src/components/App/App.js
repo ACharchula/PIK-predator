@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container'
 import Layout from '../Layout/Layout'
 
 import Home from '../Home/Home';
-import LoginPage from '../LoginPage/LoginPage';
 import Callback from'../Callback/Callback';
 import history from '../../authentication/History';
 
@@ -48,8 +47,7 @@ class App extends Component {
                     <Container>
                         <Switch>
                             <Route path="/" exact component={Home}/>
-                            <Route path="/login" exact component={LoginPage}/>
-                            <Route path="/callback" render={(props) => {
+                            <Route path="/callback" exact render={(props) => {
                                 this.handleAuthentication(props);
                                 return <Callback {...props} /> 
                                 }}/>
