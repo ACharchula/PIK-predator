@@ -6,24 +6,16 @@ const SideNavItems = (props) => {
     const items = [
         {
             type: "option",
-            text: 'Home',
+            text: 'CPUs',
         },
         {
             type: "option",
-            text: 'News'
+            text: 'Storage'
         },
         {
             type: "option",
-            text: 'Videos',
-        },
-        {
-            type: "option",
-            text: 'Sign in',
-        },
-        {
-            type: "option",
-            text: 'Sign out',
-        },
+            text: 'Display',
+        }
     ]
 
     const showItems = () => {

@@ -14,10 +14,6 @@ class Home extends Component {
         }
     }
 
-    componentDidMount() {
-        console.log(this.state.products);
-    }
-
     getProducts = () => {
         return this.state.products.map((product, i) => {
             return (
