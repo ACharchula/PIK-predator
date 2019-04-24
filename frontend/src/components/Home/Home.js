@@ -24,7 +24,7 @@ class Home extends Component {
                     <Product product={product} key={i}  />
             )
         })
-    }
+    };
 
 
     render() {
