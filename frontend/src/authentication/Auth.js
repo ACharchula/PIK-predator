@@ -12,7 +12,7 @@ export default class Auth {
   auth = new auth0.WebAuth({
     domain: 'pik-predator.eu.auth0.com',
     clientID: 'cCHK0Y5vavf8LS1Yqt2ZX4KgVCzIpMNf',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: (process.env.NODE_ENV === 'production') ? 'https://pik-predator.herokuapp.com/callback' : 'http://localhost:3000/callback',
     responseType: 'token id_token',
     scope: 'openid profile'
   });

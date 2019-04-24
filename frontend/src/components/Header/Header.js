@@ -60,16 +60,18 @@ export class Header extends Component {
 
                             <div className="loginDrop">
                                 <div className="loginIcon">
-                                    <Link to="/login" style={linkStyle}>
-                                        <FontAwesomeIcon icon="user"/>
-                                    </Link>
+                                    <FontAwesomeIcon icon="user"/>
                                 </div>
                                 <div className="dropDown">
                                     { this.props.login.login_status !== undefined && this.props.login.login_status === "logged_in" ?
-                                        <Button onClick={this.logout} variant="secondary">Log out</Button> :
+                                        <Button onClick={this.logout} variant="secondary">Log out</Button>:
                                         <Button onClick={this.login} variant="secondary">Log in</Button>
                                     }
-                                    <Button onClick={this.props.auth.getLogin} variant="secondary">Profile</Button>
+                                    { this.props.login.login_status !== undefined && this.props.login.login_status === "logged_in" ?
+                                        <Button onClick={this.props.auth.getLogin} variant="secondary">Profile</Button>:
+                                        null
+                                    }
+
                                 </div>
 
                             </div>

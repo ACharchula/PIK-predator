@@ -7,13 +7,13 @@ class Layout extends Component {
 
     state = {
         showNav: false,
-    }
+    };
 
     toggleSideNav = (status) => {
         this.setState({
             showNav: status
         })
-    }
+    };
 
 
     render() {

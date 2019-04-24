@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class HelloController {
 
     @Autowired
-    private var repository: UsersRepository? = null
+    private lateinit var repository: UsersRepository
 
     @RequestMapping("/api/hello")
     fun hello(): String {
@@ -20,17 +20,17 @@ class HelloController {
     @RequestMapping("/api/example")
     fun example(): String {
 
-        repository?.deleteAll()
-        repository?.save(User("Wisza", "haslo"))
-        repository?.save(User("Antonio", "haslo"))
+        repository.deleteAll()
+        repository.save(User("Wisza", "haslo"))
+        repository.save(User("Antonio", "haslo"))
 
-        for (customer in repository?.findAll()!!) {
+        for (customer in repository.findAll()) {
             println(customer)
         }
 
         println()
-        println(repository!!.findByLogin("Wisza"))
-        println(repository!!.findByPassword("haslo"))
+        println(repository.findByLogin("Wisza"))
+        println(repository.findByPassword("haslo"))
 
         return "cokolwiek"
     }
