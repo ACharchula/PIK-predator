@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import { shallow,mount } from 'enzyme';
+import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { faBars, faShoppingCart, faUser, faSearch } from '@fortawesome/free-soli
 library.add(faBars, faShoppingCart, faUser, faSearch);
 
 describe('Header', () => {
-    //let wrapper;
     const initialState = { login:{login_status: "logged_out"}};
     const mockStore = configureStore();
     let store, wrapper;
@@ -26,7 +25,6 @@ describe('Header', () => {
     });
 
     it('renders loginDropdown', () => {
-        // console.log(wrapper.debug());
         expect(wrapper.find('.loginDrop').length).toEqual(1);
     })
 

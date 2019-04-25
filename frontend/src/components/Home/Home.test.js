@@ -1,14 +1,9 @@
 import React from 'react';
 import Home from './Home';
 import { mount } from 'enzyme';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faShoppingCart, faUser, faSearch } from '@fortawesome/free-solid-svg-icons'
-import loading from "../Callback/loading.svg";
-import LoginDropdown from "../Header/LoginDropdown/LoginDropdown.test";
 
 library.add(faBars, faShoppingCart, faUser, faSearch);
 

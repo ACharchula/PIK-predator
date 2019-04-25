@@ -40,13 +40,11 @@ describe('LoginDropdown', () => {
     });
 
     it('Finds button login', ()=> {
-        console.log(wrapper.debug());
         expect(wrapper.findWhere(x => x.text() === "Log in").find('button').length).toEqual(1);
         expect(wrapper.find("button").length).toEqual(1);
     });
 
     it('Changes state to logged_in, finds logout button', ()=> {
-        console.log(mAuth);
         wrapper.unmount();
         store = mockStore({login:{login_status: "logged_in"}});
         wrapper = mount(<Provider store={store}><LoginDropdown LoginDropdown auth={mAuth}/></Provider>);
