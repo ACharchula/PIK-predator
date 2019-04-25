@@ -22,3 +22,7 @@ In order to run tests use this command:
   
 You will be given some statistics in terminal, but you can view details opening index.html, that is created in
 coverage directory.
+
+<h2>Deployed app<h2>
+    
+    https://pik-predator.herokuapp.com/
