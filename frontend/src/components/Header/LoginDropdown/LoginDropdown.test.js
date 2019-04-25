@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginDropdown from './LoginDropdown';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
@@ -8,7 +8,6 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faUser);
-
 
 describe('LoginDropdown', () => {
     const initialState = { login:{login_status: "logged_out"}};
@@ -28,9 +27,10 @@ describe('LoginDropdown', () => {
         expect(wrapper.find('.loginDrop').length).toEqual(1);
     });
 
+    it('renders log in button when logged out', () => {
+        if(store.getState().login.login_status === "logged_out") {
+            expect(wrapper.findWhere(x => x.text() === "Log in").find('button').length).toEqual(1);
+        }
+    });
 
-    /*afterEach(() => {
-        wrapper.unmount();
-    });*/
-
-})
+});

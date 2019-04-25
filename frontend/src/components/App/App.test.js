@@ -1,9 +1,6 @@
 import React from 'react';
 import App from './App';
 import { shallow } from 'enzyme';
-import {Route, Switch} from "react-router";
-import LoginPage from "../LoginPage/LoginPage";
-
 
 describe('App', () => {
   let wrapper;

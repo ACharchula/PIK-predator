@@ -1,4 +1,4 @@
-import loginReducer from './loginReducer';
+import rootReducer from '../reducers';
 import {initialState} from './loginReducer';
 import {
     LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
@@ -7,21 +7,22 @@ import {
 
 describe('login reducer', () => {
     it('should return the initial state', () => {
-        expect(loginReducer(undefined, {})).toMatchSnapshot()
+        expect(rootReducer(undefined, {})).toMatchSnapshot()
     });
 
     it('should handle LOGIN_SUCCESS', () => {
         expect(
-            loginReducer(initialState,
+            rootReducer(initialState,
                 {
                     type: 'LOGIN_SUCCESS'
                 })
         ).toMatchSnapshot()
     });
 
+
     it('should handle LOGIN_FAILURE', () => {
         expect(
-            loginReducer(initialState,
+            rootReducer(initialState,
                 {
                     type: 'LOGIN_FAILURE'
                 })
@@ -30,7 +31,7 @@ describe('login reducer', () => {
 
     it('should handle LOGOUT_SUCCESS', () => {
         expect(
-            loginReducer(initialState,
+            rootReducer(initialState,
                 {
                     type: 'LOGOUT_SUCCESS'
                 })
