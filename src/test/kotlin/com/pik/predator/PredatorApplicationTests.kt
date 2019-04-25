@@ -1,6 +1,6 @@
 package com.pik.predator
 
-import com.pik.predator.controller.HelloController
+import com.pik.predator.controller.ExampleController
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.context.SpringBootTest
@@ -13,7 +13,7 @@ class PredatorApplicationTests {
 
     @Test
     fun testHelloController() {
-        val helloController = HelloController()
+        val helloController = ExampleController()
         assertEquals("tak to ja, PREDATOR", helloController.hello())
     }
 }

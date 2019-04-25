@@ -10,7 +10,7 @@ import com.pik.predator.db.repository.OrderRepository
 import org.springframework.beans.factory.annotation.Autowired
 
 @RestController
-class HelloController {
+class ExampleController {
 
     @Autowired
     private lateinit var productRepository: ProductRepository
@@ -34,6 +34,14 @@ class HelloController {
                 1.5f, "matte", "1920x1080", "14",
                 "1233123 mah", "0.3 Mpx", "black", "2 years", 12))
 
+        productRepository.save(Product(2, "bardzo fajny laptop", 10000.toBigDecimal(), "google.com",
+                "Intel Core i7 8550H", "2.4-4.5 Ghz", "Ultrabook",
+                "Asus", "UX12345", "Windows 10", "USB 3.0",
+                "SSD", "1 TB", "Nvidia 1050", "2 GB",
+                "WiFi", "20x20x20", "DDR4", "16 GB",
+                1.5f, "matte", "1920x1080", "14",
+                "1233123 mah", "0.3 Mpx", "black", "2 years", 12))
+
         return productRepository.findAll()
     }
 
@@ -42,9 +50,13 @@ class HelloController {
 
         orderRepository.deleteAll()
         orderRepository.save(Order(1, "a@gmail.com", "Dominik", "W",
-                "Marszalkowska", "12", "3A", "02-212", "Warsaw",
-                "Paypal", arrayListOf(BasicProductInfo("Asus", "UX123", 3000.toBigDecimal()),
-                BasicProductInfo("Dell", "XPS 13", 1000.toBigDecimal()))))
+                "Marszalkowska", "12", "3A", "02-212", "Warsaw", "Paypal",
+                arrayListOf(
+                    BasicProductInfo(8, "Asus", "UX123", 3000.toBigDecimal()),
+                    BasicProductInfo(9, "Dell", "XPS 13", 1000.toBigDecimal())
+                )
+            )
+        )
 
 
         return orderRepository.findAll()
