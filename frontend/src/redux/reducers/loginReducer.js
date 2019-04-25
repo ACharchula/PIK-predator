@@ -2,7 +2,11 @@ import {
      LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
 } from '../actions';
 
-export default function(state={}, action) {
+export const initialState = {
+    login_status : "logged_out"
+}
+
+export default function loginReducer(state = initialState, action) {
 
     switch (action.type) {
         case LOGIN_SUCCESS:

@@ -1,7 +1,7 @@
 import React from 'react';
 import SideNav from 'react-simple-sidenav';
 import SideNavItems from './SideNavItems';
-import { BackgroundColor } from '../../../config'
+import { BackgroundColor } from '../../../config';
 
 const SideNavigation = (props) => {
     return(
