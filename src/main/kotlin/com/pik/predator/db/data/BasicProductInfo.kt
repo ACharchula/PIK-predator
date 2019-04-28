@@ -8,3 +8,6 @@ data class BasicProductInfo(
         var model: String,
         var price: BigDecimal
 )
+
+fun Product.mapToBasicInfo() = BasicProductInfo(productId, manufacturer, model, price)
+fun List<Product>.mapToBasicInfo() = map { it.mapToBasicInfo() }

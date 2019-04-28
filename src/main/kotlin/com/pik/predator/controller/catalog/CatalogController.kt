@@ -4,6 +4,7 @@ import com.pik.predator.db.data.BasicProductInfo
 import com.pik.predator.db.data.Product
 import com.pik.predator.db.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class CatalogController {
-
-    @Autowired
-    private lateinit var productRepository: ProductRepository
+class CatalogController(
+    @Autowired private val productRepository: ProductRepository
+) {
 
     @GetMapping("/catalog/all")
     fun getAllProducts(): List<BasicProductInfo> {
@@ -24,11 +24,11 @@ class CatalogController {
     }
 
     @GetMapping("/catalog/{productId}")
-    fun getProductDetails(@PathVariable productId: Int): ResponseEntity<Product> {
+    fun getProductDetails(@PathVariable productId: Int): Product? {
         return productRepository.findById(productId)
             .let { product ->
-                if (product.isPresent) ResponseEntity.ok(product.get())
-                else ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+                if (product.isPresent) product.get()
+                else null
             }
     }
 

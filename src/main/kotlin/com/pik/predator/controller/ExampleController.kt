@@ -29,7 +29,7 @@ class ExampleController {
         productRepository.save(Product(1, "fajny laptop", 5000.toBigDecimal(), "google.com",
                 "Intel Core i7 8550H", "2.4-4.5 Ghz", "Ultrabook",
                 "Asus", "UX12345", "Windows 10", listOf("USB 3.0"),
-                "SSD", "1 TB", "Nvidia 1050", "2 GB",
+                "SSD", 1000, "Nvidia 1050", 2,
                 "20x20x20", "DDR4", "16 GB",
                 1.5f, "matte", "1920x1080", "14",
                 "1233123 mah", "0.3 Mpx", "black", "2 years", 12))
@@ -37,7 +37,7 @@ class ExampleController {
         productRepository.save(Product(2, "bardzo fajny laptop", 10000.toBigDecimal(), "google.com",
                 "Intel Core i7 8550H", "2.4-4.5 Ghz", "Ultrabook",
                 "Asus", "UX12345", "Windows 10", listOf("USB 3.0"),
-                "SSD", "1 TB", "Nvidia 1050", "2 GB",
+                "SSD", 1500, "Nvidia 1050", 4,
                 "20x20x20", "DDR4", "16 GB",
                 1.5f, "matte", "1920x1080", "14",
                 "1233123 mah", "0.3 Mpx", "black", "2 years", 12))
