@@ -35,10 +35,9 @@ class CatalogController {
     @GetMapping("/catalog")
     fun filterProducts(@RequestParam params: Map<String, String>): List<BasicProductInfo> {
         return Filters(params).let { filters ->
-            productRepository.findAll().asSequence()
+            productRepository.findAll()
                 .filter { item -> filters.accept(item) }
                 .map { BasicProductInfo(it.productId, it.manufacturer, it.model, it.price) }
-                .toList()
         }
     }
 }
