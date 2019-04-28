@@ -12,6 +12,40 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
+class Filters(private val map: Map<String, String>) {
+
+    val priceFrom = map["priceFrom"]?.toBigDecimal() ?: BigDecimal.ZERO
+    val priceTo = map["priceTo"]?.toBigDecimal() ?: BigDecimal(Int.MAX_VALUE)
+    val processors = acceptedValuesOf(Product::processor.name)
+    val processorClocks = acceptedValuesOf(Product::processorClock.name)
+    val types = acceptedValuesOf(Product::type.name)
+    val manufacturers = acceptedValuesOf(Product::manufacturer.name)
+    val operatingSystems = acceptedValuesOf(Product::operatingSystem.name)
+    val portTypes = acceptedValuesOf(Product::portTypes.name)
+    val hardDrive = map[Product::hardDrive.name]
+    val memorySizes = acceptedValuesOf(Product::memorySize.name)
+    val graphicCardsManufacturers = acceptedValuesOf("graphicCardManufacturer")
+    val graphicVRAMs = acceptedValuesOf(Product::graphicVRAM.name)
+    val ramTypes = acceptedValuesOf(Product::ramType.name)
+    val ramSizes = acceptedValuesOf(Product::ramSize.name)
+    val weightFrom = map["weightFrom"]?.toFloat() ?: 0f
+    val weightTo = map["weightTo"]?.toFloat() ?: Float.MAX_VALUE
+    val displayTypes = acceptedValuesOf(Product::displayType.name)
+    val displayResolutions = acceptedValuesOf(Product::displayResolution.name)
+    val screenSizes = acceptedValuesOf(Product::screenSize.name)
+    val colors = acceptedValuesOf(Product::color.name)
+    val warranties = acceptedValuesOf(Product::warranty.name)
+
+    private fun acceptedValuesOf(filterName: String): List<String> {
+        return map
+                .filterKeys { it.contains(filterName) }
+                .mapKeys { it.key.split("[", "]")[1] }
+                .values.toList()
+    }
+
+    operator fun get(filter: String) = map[filter]
+}
+
 @RestController
 class CatalogController {
 
@@ -21,10 +55,10 @@ class CatalogController {
     @GetMapping("/catalog/all")
     fun getAllProducts(): List<BasicProductInfo> {
         return productRepository.findAll()
-            .map { BasicProductInfo(it.productId, it.producer, it.model, it.price) }
+            .map { BasicProductInfo(it.productId, it.manufacturer, it.model, it.price) }
     }
 
-    @GetMapping("catalog/{productId}")
+    @GetMapping("/catalog/{productId}")
     fun getProductDetails(@PathVariable productId: Int): ResponseEntity<Product> {
         return productRepository.findById(productId)
             .let { product ->
@@ -34,58 +68,34 @@ class CatalogController {
     }
 
     @GetMapping("/catalog")
-    fun filterProducts(
-           @RequestParam(required = false) price: BigDecimal?,
-           @RequestParam(required = false) processor: String?,
-           @RequestParam(required = false) processorSpeed: String?,
-           @RequestParam(required = false) type: String?,
-           @RequestParam(required = false) producer: String?,
-           @RequestParam(required = false) model: String?,
-           @RequestParam(required = false) operatingSystem: String?,
-           @RequestParam(required = false) portTypes: String?,
-           @RequestParam(required = false) hardDrive: String?,
-           @RequestParam(required = false) memorySize: String?,
-           @RequestParam(required = false) graphicCoprocessor: String?,
-           @RequestParam(required = false) graphicVRAM: String?,
-           @RequestParam(required = false) wirelessConnection: String?,
-           @RequestParam(required = false) itemDimensions: String?,
-           @RequestParam(required = false) ramType: String?,
-           @RequestParam(required = false) ramSize: String?,
-           @RequestParam(required = false) weight: Float?,
-           @RequestParam(required = false) displayType: String?,
-           @RequestParam(required = false) displayResolution: String?,
-           @RequestParam(required = false) screenSize: String?,
-           @RequestParam(required = false) battery: String?,
-           @RequestParam(required = false) camera: String?,
-           @RequestParam(required = false) colour: String?,
-           @RequestParam(required = false) guarantee: String?)
-    : List<BasicProductInfo> {
+    fun filterProducts(@RequestParam params: Map<String, String>): List<BasicProductInfo> {
+        val filters = Filters(params)
+
         return productRepository.findAll().asSequence()
-                .filter { it.price == price || price == null }
-                .filter { it.processor == processor || processor == null }
-                .filter { it.processorSpeed == processorSpeed || processorSpeed == null }
-                .filter { it.type == type || type == null }
-                .filter { it.producer == producer || producer == null }
-                .filter { it.model == model || model == null }
-                .filter { it.operatingSystem == operatingSystem || operatingSystem == null }
-                .filter { it.portTypes == portTypes || portTypes == null }
-                .filter { it.hardDrive == hardDrive || hardDrive == null }
-                .filter { it.memorySize == memorySize || memorySize == null }
-                .filter { it.graphicCoprocessor == graphicCoprocessor || graphicCoprocessor == null }
-                .filter { it.graphicVRAM == graphicVRAM || graphicVRAM == null }
-                .filter { it.wirelessConnection == wirelessConnection || wirelessConnection == null }
-                .filter { it.itemDimensions == itemDimensions || itemDimensions == null }
-                .filter { it.ramType == ramType || ramType == null }
-                .filter { it.ramSize == ramSize || ramSize == null }
-                .filter { it.weight == weight || weight == null }
-                .filter { it.displayType == displayType || displayType == null }
-                .filter { it.displayResolution == displayResolution || displayResolution == null }
-                .filter { it.screenSize == screenSize || screenSize == null }
-                .filter { it.battery == battery || battery == null }
-                .filter { it.camera == camera || camera == null }
-                .filter { it.colour == colour || colour == null }
-                .filter { it.guarantee == guarantee || guarantee == null }
-                .map { BasicProductInfo(it.productId, it.producer, it.model, it.price) }
+                .filter { item -> item.price in filters.priceFrom..filters.priceTo }
+                .filter { item -> item.processor in filters.processors }
+                .filter { item -> item.processorClock in filters.processorClocks }
+                .filter { item -> item.type in filters.types }
+                .filter { item -> item.manufacturer in filters.manufacturers }
+                .filter { item -> item.operatingSystem in filters.operatingSystems }
+                .filter { item -> item.portTypes.containsAll(filters.portTypes) }
+                .filter { item -> item.hardDrive == filters.hardDrive || filters.hardDrive == null }
+                .filter { item -> item.memorySize in filters.memorySizes }
+                .filter { item ->
+                    filters.graphicCardsManufacturers.any { manufacturer ->
+                        item.graphicCard.contains(manufacturer)
+                    }
+                }
+                .filter { item -> item.graphicVRAM in filters.graphicVRAMs }
+                .filter { item -> item.ramType in filters.ramTypes }
+                .filter { item -> item.ramSize in filters.ramSizes }
+                .filter { item -> item.weight in filters.weightFrom..filters.weightTo }
+                .filter { item -> item.displayType in filters.displayTypes }
+                .filter { item -> item.displayResolution in filters.displayResolutions }
+                .filter { item -> item.screenSize in filters.screenSizes }
+                .filter { item -> item.color in filters.colors }
+                .filter { item -> item.warranty in filters.warranties }
+                .map { BasicProductInfo(it.productId, it.manufacturer, it.model, it.price) }
                 .toList()
     }
 }
