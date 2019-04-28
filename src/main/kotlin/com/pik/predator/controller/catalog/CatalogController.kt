@@ -34,29 +34,11 @@ class CatalogController {
 
     @GetMapping("/catalog")
     fun filterProducts(@RequestParam params: Map<String, String>): List<BasicProductInfo> {
-        return with(Filters(params)) {
+        return Filters(params).let { filters ->
             productRepository.findAll().asSequence()
-                    .filter { item -> priceFilter.accept(item) }
-                    .filter { item -> processorsFilter.accept(item) }
-                    .filter { item -> processorClocksFilter.accept(item) }
-                    .filter { item -> typesFilter.accept(item) }
-                    .filter { item -> manufacturersFilter.accept(item) }
-                    .filter { item -> operatingSystemsFilter.accept(item) }
-                    .filter { item -> portTypesFilter.accept(item) }
-                    .filter { item -> hardDriveFilter.accept(item) }
-                    .filter { item -> memorySizesFilter.accept(item) }
-                    .filter { item -> graphicCardsManufacturersFilter.accept(item) }
-                    .filter { item -> graphicVRAMsFilter.accept(item) }
-                    .filter { item -> ramTypesFilter.accept(item) }
-                    .filter { item -> ramSizesFilter.accept(item) }
-                    .filter { item -> weightFilter.accept(item) }
-                    .filter { item -> displayTypesFilter.accept(item) }
-                    .filter { item -> displayResolutionsFilter.accept(item) }
-                    .filter { item -> screenSizesFilter.accept(item) }
-                    .filter { item -> colorsFilter.accept(item) }
-                    .filter { item -> warrantiesFilter.accept(item) }
-                    .map { BasicProductInfo(it.productId, it.manufacturer, it.model, it.price) }
-                    .toList()
+                .filter { item -> filters.accept(item) }
+                .map { BasicProductInfo(it.productId, it.manufacturer, it.model, it.price) }
+                .toList()
         }
     }
 }
