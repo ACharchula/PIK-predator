@@ -10,7 +10,7 @@
   <profiles>
     <profile>
       <id>nexus</id>
-      <!--Enable snapshots for the built in central repo to direct -->
+      <!--Enable snapshots for the built in central repository to direct -->
       <!--all requests to nexus via the mirror -->
       <repositories>
         <repository>

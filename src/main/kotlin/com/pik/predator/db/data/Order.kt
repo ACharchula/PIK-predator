@@ -18,9 +18,3 @@ data class Order(
         var paymentMethod: String,
         var products: List<BasicProductInfo>
 )
-
-data class BasicProductInfo(
-        var producer: String,
-        var model: String,
-        var price: BigDecimal
-)
