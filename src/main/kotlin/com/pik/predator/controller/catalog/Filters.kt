@@ -63,7 +63,7 @@ class Filters(private val map: Map<String, String>) {
         ListedValuesFilter(Product::color),
         ListedValuesFilter(Product::warranty),
         AtLeastOneValueMatchFilter(Product::graphicCard, "graphicCardManufacturer"),
-        ListToListFilter(Product::portTypes),
+        ListToListFilter(Product::portTypes, "portType"),
         RangeFilter<BigDecimal>({ it?.toBigDecimal() }, BigDecimal.ZERO, BigDecimal(Int.MAX_VALUE), Product::price),
         RangeFilter( { it?.toFloat() }, 0f, Float.MAX_VALUE, Product::weight),
         RangeFilter( { it?.toInt() }, 0, Int.MAX_VALUE, Product::hardDriveSize),

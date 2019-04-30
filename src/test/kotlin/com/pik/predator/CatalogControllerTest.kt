@@ -32,7 +32,7 @@ class CatalogControllerTest {
             manufacturer = "Dell",
             model = "UX12345",
             operatingSystem = "Windows 10",
-            portTypes = listOf("USB 3.0"),
+            portTypes = listOf("USB 2.0"),
             hardDriveType = "HDD",
             hardDriveSize = 1000,
             graphicCard = "Inte HD Graphics 5500",
@@ -42,12 +42,12 @@ class CatalogControllerTest {
             ramSize = 8,
             weight = 1.5f,
             displayType = "matte",
-            displayResolution = "1920x1080",
-            screenSize = "14",
+            displayResolution = "1360x768",
+            screenSize = "15",
             battery = "1233123 mah",
             camera = "0.3 Mpx",
-            color = "black",
-            warranty = "2 years",
+            color = "white",
+            warranty = "1 year",
             quantityInMagazine = 1
         ),
         Product(
@@ -61,7 +61,7 @@ class CatalogControllerTest {
             manufacturer = "Lenovo",
             model = "Thinkpad T480s",
             operatingSystem = "Windows 10",
-            portTypes = listOf("USB 3.0"),
+            portTypes = listOf("USB 2.0", "USB 3.0"),
             hardDriveType = "SSD",
             hardDriveSize = 1500,
             graphicCard = "AMD Radeon R9 380",
@@ -90,7 +90,7 @@ class CatalogControllerTest {
             manufacturer = "Asus",
             model = "Predator",
             operatingSystem = "Windows 10",
-            portTypes = listOf("USB 3.0"),
+            portTypes = listOf("USB 2.0", "USB 3.0", "USB C"),
             hardDriveType = "SSD",
             hardDriveSize = 2000,
             graphicCard = "Nvidia 2080 Ti",
@@ -99,13 +99,13 @@ class CatalogControllerTest {
             ramType = "DDR4X",
             ramSize = 32,
             weight = 2.0f,
-            displayType = "matte",
-            displayResolution = "1920x1080",
-            screenSize = "14",
+            displayType = "super-matte",
+            displayResolution = "4096x3112",
+            screenSize = "17",
             battery = "1233123 mah",
             camera = "0.3 Mpx",
-            color = "black",
-            warranty = "2 years",
+            color = "black-red",
+            warranty = "5 years",
             quantityInMagazine = 12
         )
     )
@@ -129,28 +129,6 @@ class CatalogControllerTest {
     @Test
     fun testGetProductDetails() {
         assertEquals(products[0], catalogController.getProductDetails(0))
-    }
-
-    @Test
-    fun testFilterPrice() {
-        assertEquals(
-            products.filter { it.price in 2000.toBigDecimal()..8000.toBigDecimal() }.mapToBasicInfo(),
-            catalogController.filterProducts(mapOf(
-                "priceFrom" to "2000",
-                "priceTo" to "8000"
-            ))
-        )
-    }
-
-    @Test
-    fun testFilterWeight() {
-        assertEquals(
-            products.filter { it.weight in 1.8f..2.2f }.mapToBasicInfo(),
-            catalogController.filterProducts(mapOf(
-                "weightFrom" to "1.8",
-                "weightTo" to "2.2"
-            ))
-        )
     }
 
     @Test
@@ -197,12 +175,67 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterHardDriveSize() {
+    fun testFilterRamType() {
         assertEquals(
-            products.filter { it.hardDriveSize in 1000..1500 }.mapToBasicInfo(),
+            products.filter { it.ramType == "DDR4" || it.ramType == "DDR4X" }.mapToBasicInfo(),
             catalogController.filterProducts(mapOf(
-                "hardDriveSizeFrom" to "1000",
-                "hardDriveSizeTo" to "1500"
+                "ramType1" to "DDR4",
+                "ramType2" to "DDR4X"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterDisplayType() {
+        assertEquals(
+            products.filter { it.displayType == "matte" }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "displayType1" to "matte"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterDisplayResolution() {
+        assertEquals(
+            products.filter { it.displayResolution == "1920x1080" || it.displayResolution == "4096x3112" }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "displayResolution1" to "1920x1080",
+                "displayResolution2" to "4096x3112"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterScreenSzie() {
+        assertEquals(
+            products.filter { it.screenSize == "14" || it.screenSize == "15" }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "screenSize1" to "14",
+                "screenSize2" to "15"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterColor() {
+        assertEquals(
+            //czarny jak piekło, czerwony jak ogień
+            products.filter { it.color == "black" || it.color == "black-red" }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "color1" to "black",
+                "color2" to "black-red"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterWarranty() {
+        assertEquals(
+            products.filter { it.warranty == "2 years" || it.warranty == "5 years" }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "warranty1" to "2 years",
+                "warranty2" to "5 years"
             ))
         )
     }
@@ -219,6 +252,50 @@ class CatalogControllerTest {
     }
 
     @Test
+    fun testFilterPortTypes() {
+        assertEquals(
+            products.filter { it.portTypes.containsAll(listOf("USB 2.0", "USB 3.0")) }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "portType1" to "USB 2.0",
+                "portType2" to "USB 3.0"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterPrice() {
+        assertEquals(
+            products.filter { it.price in 2000.toBigDecimal()..8000.toBigDecimal() }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "priceFrom" to "2000",
+                "priceTo" to "8000"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterWeight() {
+        assertEquals(
+            products.filter { it.weight in 1.8f..2.2f }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "weightFrom" to "1.8",
+                "weightTo" to "2.2"
+            ))
+        )
+    }
+
+    @Test
+    fun testFilterHardDriveSize() {
+        assertEquals(
+            products.filter { it.hardDriveSize in 1000..1500 }.mapToBasicInfo(),
+            catalogController.filterProducts(mapOf(
+                "hardDriveSizeFrom" to "1000",
+                "hardDriveSizeTo" to "1500"
+            ))
+        )
+    }
+
+    @Test
     fun testFilterGraphicVRAM() {
         assertEquals(
             products.filter { it.graphicVRAM in 2..4 }.mapToBasicInfo(),
@@ -230,20 +307,15 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterRamType() {
+    fun testFilterRamSize() {
         assertEquals(
-            products.filter { it.ramType == "DDR4" || it.ramType == "DDR4X" }.mapToBasicInfo(),
+            products.filter { it.ramSize in 16..32 }.mapToBasicInfo(),
             catalogController.filterProducts(mapOf(
-                "ramType1" to "DDR4",
-                "ramType2" to "DDR4X"
+                "ramSizeFrom" to "16",
+                "ramSizeTo" to "32"
             ))
         )
     }
 
-//    @Test
-//    fun testFilterRamSize() {
-//        assertEquals(
-//            products.findLast { it.ramSize in  }
-//        )
-//    }
+
 }
