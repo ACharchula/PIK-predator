@@ -11,9 +11,10 @@ library.add(faBars, faShoppingCart, faUser, faSearch);
 
 describe('Home', () => {
     const initialState = { products:[{
-            "name": "Asus Vivobook",
-            "url": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
-            "cpu": "Intel core i5-8250U"
+            "manufacturer": "Asus",
+            "model": "Vivobook",
+            "imageUrl": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
+            "processor": "Intel core i5-8250U"
     }]};
     let wrapper;
 
