@@ -1,42 +1,50 @@
 [
     {
-        "name": "Asus Vivobook",
-        "url": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
-        "cpu": "Intel core i5-8250U"
+        "manufacturer": "Asus",
+        "model": "Vivobook",
+        "imageUrl": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
+        "processor": "Intel core i5-8250U"
     },
     {
-        "name": "Dell Latitude",
-        "url": "https://www.kuzniewski.pl/zdjecia/category_lab_reviews/dell-latitude-e7470-recenzja.png",
-        "cpu": "Intel Core i7-8750H"
+        "manufacturer": "Dell",
+        "model": "Latitude",
+        "imageUrl": "https://www.kuzniewski.pl/zdjecia/category_lab_reviews/dell-latitude-e7470-recenzja.png",
+        "processor": "Intel Core i7-8750H"
     },
     {
-        "name": "Lenovo YOGA",
-        "url": "https://www.play.pl/dane/produkty/notebook/lenovo/lenovo-yogabook-windows/TE-LV-YBWIN-NS1-BL/img/1.png",
-        "cpu": "AMD Ryzen 3 2200U"
+        "manufacturer": "Lenovo",
+        "model": "YOGA",
+        "imageUrl": "https://www.play.pl/dane/produkty/notebook/lenovo/lenovo-yogabook-windows/TE-LV-YBWIN-NS1-BL/img/1.png",
+        "processor": "AMD Ryzen 3 2200U"
     },
     {
-        "name": "Asus Zenbook",
-        "url": "https://prowly-uploads.s3.eu-west-1.amazonaws.com/uploads/landing_page/template_background/36197/ZenBook_13_14_UX333_UX433_Frameless_NanoEdge_display_for_infinity_visual....png",
-        "cpu": "Intel core i5-8250U"
+        "manufacturer": "Asus",
+        "model":"Zenbook",
+        "imageUrl": "https://prowly-uploads.s3.eu-west-1.amazonaws.com/uploads/landing_page/template_background/36197/ZenBook_13_14_UX333_UX433_Frameless_NanoEdge_display_for_infinity_visual....png",
+        "processor": "Intel core i5-8250U"
     },
     {
-        "name": "Dell G3",
-        "url": "https://multitech-lb.com/wp-content/uploads/Resized-G3-Inspiron.png",
-        "cpu": "Intel Core i7-8750H"
+        "manufacturer": "Dell",
+        "model":"G3",
+        "imageUrl": "https://multitech-lb.com/wp-content/uploads/Resized-G3-Inspiron.png",
+        "processor": "Intel Core i7-8750H"
     },
     {
-        "name": "Lenovo X1 Extreme",
-        "url": "https://www04.lenovo.com/medias/lenovo-laptop-thinkpad-x1-extreme-hero.png?context=bWFzdGVyfHJvb3R8MzE5NDk4fGltYWdlL3BuZ3xoMWEvaGJiLzk3OTI5MDE3NzUzOTAucG5nfGRiMTczYzFhYjYwNjY4OGM1NTk0NjQ4YmUzOTFmZGJjMjhhNGYxYjdmM2EzMzlkMmM3MjU2NmNkOWE4NDRhZTg",
-        "cpu": "Intel Core i7 8.gen."
+        "manufacturer": "Lenovo",
+        "model":"X1 Extreme",
+        "imageUrl": "https://www04.lenovo.com/medias/lenovo-laptop-thinkpad-x1-extreme-hero.png?context=bWFzdGVyfHJvb3R8MzE5NDk4fGltYWdlL3BuZ3xoMWEvaGJiLzk3OTI5MDE3NzUzOTAucG5nfGRiMTczYzFhYjYwNjY4OGM1NTk0NjQ4YmUzOTFmZGJjMjhhNGYxYjdmM2EzMzlkMmM3MjU2NmNkOWE4NDRhZTg",
+        "processor": "Intel Core i7 8.gen."
     },
     {
-        "name": "Apple Macbook Pro",
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Macbook_pro.png/300px-Macbook_pro.png",
-        "cpu": "Intel Core i9 8.gen."
+        "manufacturer": "Apple",
+        "model":"Macbook Pro",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Macbook_pro.png/300px-Macbook_pro.png",
+        "processor": "Intel Core i9 8.gen."
     },
     {
-        "name": "Dell XPS 15",
-        "url": "http://choicelaptops.com/wp-content/uploads/2018/06/TR.png",
-        "cpu": "Intel Core i9 8.gen."
+        "manufacturer": "Dell",
+        "model":"XPS 15",
+        "imageUrl": "http://choicelaptops.com/wp-content/uploads/2018/06/TR.png",
+        "processor": "Intel Core i9 8.gen."
     }
 ]
