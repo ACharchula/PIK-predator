@@ -156,10 +156,10 @@ class CatalogControllerTest {
     @Test
     fun testFilterManufacturers() {
         assertEquals(
-            products.filter { it.manufacturer == "Lenovo" || it.type == "Asus" }.mapToBasicInfo(),
+            products.filter { it.manufacturer == "Lenovo" || it.manufacturer == "Asus" }.mapToBasicInfo(),
             catalogController.filterProducts(mapOf(
                 "manufacturer1" to "Lenovo",
-                "manufacturer2" to "Lenovo2"
+                "manufacturer2" to "Asus"
             ))
         )
     }
