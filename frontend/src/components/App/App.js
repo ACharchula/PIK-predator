@@ -8,6 +8,7 @@ import Layout from '../Layout/Layout'
 import Home from '../Home/Home';
 import Callback from'../Callback/Callback';
 import history from '../../authentication/History';
+import ProductView from '../ProductView/ProductView';
 
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -51,6 +52,7 @@ class App extends Component {
                                 this.handleAuthentication(props);
                                 return <Callback {...props} /> 
                                 }}/>
+                            <Route path="/product/:id" exact component={ProductView}/>
                         </Switch>
                         <p>IT is test</p>
                         
