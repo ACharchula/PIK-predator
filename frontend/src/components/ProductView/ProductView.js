@@ -207,6 +207,6 @@ class ProductView extends Component {
         )
     }
 }
-
+//PORTS HAS TO BE ADDED
 
 export default ProductView;
