@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './Home';
 import { mount } from 'enzyme';
+import { MemoryRouter} from 'react-router-dom';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faShoppingCart, faUser, faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -11,14 +12,18 @@ library.add(faBars, faShoppingCart, faUser, faSearch);
 
 describe('Home', () => {
     const initialState = { products:[{
-            "name": "Asus Vivobook",
-            "url": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
-            "cpu": "Intel core i5-8250U"
+            "manufacturer": "Asus",
+            "model": "Vivobook",
+            "imageUrl": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
+            "processor": "Intel core i5-8250U"
     }]};
     let wrapper;
 
     beforeEach(() => {
-        wrapper = mount(<Home />);
+        wrapper = mount(
+            <MemoryRouter>
+                <Home />
+            </MemoryRouter>);
     });
 
     test('Products are set properly', () => {
