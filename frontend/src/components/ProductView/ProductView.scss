@@ -16,6 +16,7 @@
   .right-column {
     width: 35%;
     margin-top: 60px;
+    padding-right: 40px;
   }
 
   .left-column img {
@@ -45,7 +46,7 @@
 
   .product-description h2 {
     font-weight: 300;
-    font-size: 40px;
+    font-size: 30px;
     color: #43484D;
     letter-spacing: -2px;
   }
@@ -54,6 +55,7 @@
     font-weight: 300;
     color: #86939E;
     line-height: 24px;
+    text-align: justify;
   }
 
   .product-price {
@@ -80,6 +82,8 @@
   }
   .cart-btn:hover {
     background-color: #660000;
+    color: white;
+    text-decoration: none;
   }
 
   @media (max-width: 940px) {

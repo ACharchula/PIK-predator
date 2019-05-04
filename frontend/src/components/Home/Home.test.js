@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './Home';
 import { mount } from 'enzyme';
+import { MemoryRouter} from 'react-router-dom';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faShoppingCart, faUser, faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +20,10 @@ describe('Home', () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = mount(<Home />);
+        wrapper = mount(
+            <MemoryRouter>
+                <Home />
+            </MemoryRouter>);
     });
 
     test('Products are set properly', () => {

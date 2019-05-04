@@ -119,7 +119,7 @@ class ProductView extends Component {
                     </div>
                 </div>
 
-                <table class="table table-hover specs">
+                <table className="table table-hover specs">
                 <tbody>
                     <tr>
                         <td>Product type: </td>
