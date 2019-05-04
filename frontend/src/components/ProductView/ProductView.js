@@ -41,7 +41,7 @@ class ProductView extends Component {
     }
 
     getProductInfo(id) {
-        axios.get(`http://localhost:8080/catalog/${id}`)
+        axios.get(`https://pik-predator.herokuapp.com/catalog/${id}`)
         .then(response => {
             const descriptionResult = response.data.description;
             const priceResult = response.data.price;
