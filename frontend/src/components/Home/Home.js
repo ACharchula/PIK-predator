@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import JSON from '../../products.json';
 import axios from 'axios';
 import Product from '../Product/Product';
 
