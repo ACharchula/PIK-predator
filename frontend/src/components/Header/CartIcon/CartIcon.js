@@ -10,7 +10,7 @@ const CartIcon = ({cart}) => {
         <div className="cart-icon">
             <Link to="/cart" style={linkStyle}>
                 <div className="cart-counter">
-                    {cart.products.length > 0 ? <p>{cart.products.length}</p> : null}
+                    {cart !== undefined &&cart.products.length > 0 ? <p>{cart.products.length}</p> : null}
                 </div>
                 <FontAwesomeIcon icon="shopping-cart" className="icon"/>
             </Link>

@@ -16,7 +16,7 @@ describe('Home', () => {
             "model": "Vivobook",
             "imageUrl": "https://www.asus.com/websites/global/products/5hcFTTB98JtqhrE6/img/common/response/asus-vivobook.png",
             "processor": "Intel core i5-8250U"
-    }]};
+        }]};
     let wrapper;
 
     beforeEach(() => {
@@ -29,7 +29,7 @@ describe('Home', () => {
     test('Products are set properly', () => {
         wrapper.setState(initialState);
         expect(wrapper.length).toBe(1);
-        expect(wrapper.contains(initialState)).toBe(true);
+        expect(wrapper.state()).toEqual(initialState);
     });
 
     afterEach(() => {

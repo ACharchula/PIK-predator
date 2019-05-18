@@ -2,6 +2,9 @@
 
 exports[`login reducer should handle LOGIN_FAILURE 1`] = `
 Object {
+  "cart": Object {
+    "products": Array [],
+  },
   "login": Object {
     "login_status": "logged_out",
   },
@@ -10,6 +13,9 @@ Object {
 
 exports[`login reducer should handle LOGIN_SUCCESS 1`] = `
 Object {
+  "cart": Object {
+    "products": Array [],
+  },
   "login": Object {
     "login_status": "logged_in",
   },
@@ -18,6 +24,9 @@ Object {
 
 exports[`login reducer should handle LOGOUT_SUCCESS 1`] = `
 Object {
+  "cart": Object {
+    "products": Array [],
+  },
   "login": Object {
     "login_status": "logged_out",
   },
@@ -26,6 +35,9 @@ Object {
 
 exports[`login reducer should return the initial state 1`] = `
 Object {
+  "cart": Object {
+    "products": Array [],
+  },
   "login": Object {
     "login_status": "logged_out",
   },
