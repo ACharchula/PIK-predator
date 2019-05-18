@@ -44,7 +44,9 @@ export function Header(props) {
                             </InputGroup.Append>
                         </InputGroup>
                         <LoginDropdown id="login-dropdown" auth={props.auth}/>
-                        <FontAwesomeIcon icon="shopping-cart" className="icon"/>
+                        <Link to="/cart" style={linkStyle}>
+                            <FontAwesomeIcon icon="shopping-cart" className="icon"/>
+                        </Link>
                     </Col>
                 </Row>
             </Container>

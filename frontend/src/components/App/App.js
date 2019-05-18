@@ -10,6 +10,8 @@ import Callback from'../Callback/Callback';
 import history from '../../authentication/History';
 import ProductView from '../Product/ProductView/ProductView';
 
+import CartContainer from '../../containers/CartContainer';
+
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faShoppingCart, faUser, faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -45,6 +47,7 @@ class App extends Component {
                                 return <Callback {...props} /> 
                                 }}/>
                             <Route path="/product/:id" exact component={ProductView}/>
+                            <Route path="/cart" exact component={CartContainer}/>
                         </Switch>
                         <p>IT is test</p>
                         

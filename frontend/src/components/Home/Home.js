@@ -11,16 +11,23 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            products: JSON
+            products: []
         }
+    }
+
+    componentDidMount() {
+        this.getProducts();
     }
 
     getProducts = () => {
         axios.get('https://pik-predator.herokuapp.com/catalog/all')
             .then(response => this.setState({products: response.data}));
+    };
+
+    renderProducts = () => {
         return this.state.products.map((product, i) => {
             return (
-                    <Product product={product} key={i}  />
+                <Product product={product} key={i}  />
             )
         })
     };
@@ -30,7 +37,7 @@ class Home extends Component {
         return (
             <div >
                 <div className="Products">
-                    {this.getProducts()}
+                    {this.renderProducts()}
                 </div>
             </div>
         )

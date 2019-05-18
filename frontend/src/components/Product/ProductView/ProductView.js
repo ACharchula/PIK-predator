@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios/index';
-import { Link } from 'react-router-dom'
 
 //redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addToCart} from "../../../redux/actions";
+import { addToCart } from "../../../redux/actions";
 
 //bootstrap
 import Button from "react-bootstrap/Button";

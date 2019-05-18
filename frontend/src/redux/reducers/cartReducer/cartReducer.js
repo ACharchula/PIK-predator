@@ -1,5 +1,5 @@
 import {
-    ADD_PRODUCT_TO_CART
+    ADD_PRODUCT_TO_CART, GET_PRODUCTS
 } from '../../actions';
 
 export const initialState = {
@@ -16,6 +16,10 @@ export default function cartReducer(state = initialState, action) {
             return {
                 ...state,
                 products
+            };
+        case GET_PRODUCTS:
+            return {
+                ...state
             };
         default:
             return {
