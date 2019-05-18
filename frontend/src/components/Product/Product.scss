@@ -9,6 +9,11 @@
     border-radius: 5px;
     color: white;
 
+    &:hover{
+        opacity:0.7;
+        transform: scale(1.01);
+    }
+
     .img-wrapper{
         margin:0;
         padding:0;

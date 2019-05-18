@@ -1,11 +1,11 @@
 import React from 'react'
 import './Product.scss';
 import Image from 'react-bootstrap/Image';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export const Product = (props) => {
     return (
-        <Link to={{pathname: '/product/'.concat(props.product.productId)}}>
+        <Link to={{pathname: '/product/'.concat(props.product.productId)}} style={{textDecoration:"none"}}>
             <div className="product-tile">
                 <div className="img-wrapper">
                     <Image src={props.product.imageUrl} fluid />

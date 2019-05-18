@@ -39,7 +39,7 @@ class App extends Component {
         <div className="App" >
             <Router history={history}>
                 <Layout auth={this.props.auth}>
-                    <Container>
+                    <Container style={{marginTop:"0"}}>
                         <Switch>
                             <Route path="/" exact component={Home}/>
                             <Route path="/callback" exact render={(props) => {
