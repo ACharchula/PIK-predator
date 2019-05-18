@@ -9,9 +9,11 @@ const CartIcon = ({cart}) => {
     return (
         <div className="cart-icon">
             <Link to="/cart" style={linkStyle}>
-                <div className="cart-counter">
-                    {cart !== undefined &&cart.products.length > 0 ? <p>{cart.products.length}</p> : null}
-                </div>
+                {cart !== undefined &&cart.products.length > 0 ?
+                    <div className="cart-counter">
+                         <p>{cart.products.length}</p>
+                    </div>
+                    :null }
                 <FontAwesomeIcon icon="shopping-cart" className="icon"/>
             </Link>
         </div>
