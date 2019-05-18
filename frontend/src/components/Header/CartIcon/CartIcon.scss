@@ -6,15 +6,9 @@
 
 .cart-counter {
   position: absolute;
-  top:5px;
+  top:7px;
   right:0px;
-  background: $blood-red-color;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  color:white;
+  color: $blood-red-color;
   font-size: 20px;
-  font-weight: lighter;
-  text-align: center;
-
+  font-weight: bold;
 }
