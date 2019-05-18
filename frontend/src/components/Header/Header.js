@@ -9,9 +9,9 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import SideNavigation from './SideNavigation/SideNavigation'
 import LoginDropdown from './LoginDropdown/LoginDropdown';
+import CartIcon from './CartIcon/CartIcon';
 
-
-const linkStyle = {textDecoration: "none", margin: "auto 0", padding: "0"};
+export const linkStyle = {textDecoration: "none", margin: "auto 0", padding: "0"};
 
 
 export function Header(props) {
@@ -44,9 +44,7 @@ export function Header(props) {
                             </InputGroup.Append>
                         </InputGroup>
                         <LoginDropdown id="login-dropdown" auth={props.auth}/>
-                        <Link to="/cart" style={linkStyle}>
-                            <FontAwesomeIcon icon="shopping-cart" className="icon"/>
-                        </Link>
+                        <CartIcon/>
                     </Col>
                 </Row>
             </Container>

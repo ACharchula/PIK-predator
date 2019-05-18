@@ -1,9 +1,9 @@
 import {
-     LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
+    LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS
 } from '../actions';
 
 export const initialState = {
-    login_status : "logged_out"
+    login_status: "logged_out",
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -22,7 +22,7 @@ export default function loginReducer(state = initialState, action) {
         case LOGOUT_SUCCESS:
             return {
                 ...state,
-                login_status: "logged_out"
+                login_status: "logged_out",
             };
         default:
             return {
