@@ -1,39 +1,52 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import axios from 'axios/index';
 import { Link } from 'react-router-dom'
+
+//redux
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addToCart} from "../../../redux/actions";
+
+//bootstrap
+import Button from "react-bootstrap/Button";
 
 import './ProductView.scss';
 
 class ProductView extends Component {
 
-    state = {
-        description: "",//
-        price: 0,//
-        imageUrl: "",//
-        processor: "",//
-        processorClock: "",//
-        type: "",//
-        manufacturer: "",//
-        operatingSystem: "",//
-        portTypes: [],
-        hardDriveType: "",//
-        hardDriveSize: 0,//
-        graphicCard: "", //
-        graphicVRAM: 0, //
-        itemDimensions: "", //
-        ramType: "",//
-        ramSize: 0,//
-        weight: 0.0, //
-        displayType: "",//
-        displayResolution: "",//
-        screenSize: "",//
-        battery: "",
-        camera: "",
-        color: "",
-        warranty: "",
-        quantityInMagazine: 0,
-        model: ""
+    constructor(props) {
+        super(props);
+        this.state = {
+            description: "",
+            price: 0,
+            imageUrl: "",
+            processor: "",
+            processorClock: "",
+            type: "",
+            manufacturer: "",
+            operatingSystem: "",
+            portTypes: [],
+            hardDriveType: "",
+            hardDriveSize: 0,
+            graphicCard: "",
+            graphicVRAM: 0,
+            itemDimensions: "",
+            ramType: "",
+            ramSize: 0,
+            weight: 0.0,
+            displayType: "",
+            displayResolution: "",
+            screenSize: "",
+            battery: "",
+            camera: "",
+            color: "",
+            warranty: "",
+            quantityInMagazine: 0,
+            model: ""
+        };
+
     }
+
 
     componentDidMount() {
         const id = this.props.match.params.id;
@@ -43,69 +56,47 @@ class ProductView extends Component {
     getProductInfo(id) {
         axios.get(`https://pik-predator.herokuapp.com/catalog/${id}`)
         .then(response => {
-            const descriptionResult = response.data.description;
-            const priceResult = response.data.price;
-            const imageUrlResult = response.data.imageUrl;
-            const processorResult = response.data.processor;
-            const processorClockResult = response.data.processorClock;
-            const typeResult = response.data.type;
-            const manufacturerResult = response.data.manufacturer;
-            const operatingSystemResult = response.data.operatingSystem;
-            const portTypesResult = response.data.portTypes;
-            const hardDriveTypeResult = response.data.hardDriveType;
-            const hardDriveSizeResult = response.data.hardDriveSize;
-            const graphicCardResult = response.data.graphicCard;
-            const graphicVRAMResult = response.data.graphicVRAM;
-            const itemDimensionsResult = response.data.itemDimensions;
-            const ramTypeResult = response.data.ramType;
-            const ramSizeResult = response.data.ramSize;
-            const weightResult = response.data.weight;
-            const displayTypeResult = response.data.displayType;
-            const displayResolutionResult = response.data.displayResolution;
-            const screenSizeResult = response.data.screenSize;
-            const batteryResult = response.data.battery;
-            const cameraResult = response.data.camera;
-            const colorResult = response.data.color;
-            const warrantyResult = response.data.warranty;
-            const quantityInMagazineResult = response.data.quantityInMagazine;
-            const modelResult = response.data.model;
 
             this.setState({
-                description: descriptionResult,
-                price: priceResult,
-                imageUrl: imageUrlResult,
-                processor: processorResult,
-                processorClock: processorClockResult,
-                type: typeResult,
-                manufacturer: manufacturerResult,
-                operatingSystem: operatingSystemResult,
-                portTypes: portTypesResult,
-                hardDriveType: hardDriveTypeResult,
-                hardDriveSize: hardDriveSizeResult,
-                graphicCard: graphicCardResult,
-                graphicVRAM: graphicVRAMResult,
-                itemDimensions: itemDimensionsResult,
-                ramType: ramTypeResult,
-                ramSize: ramSizeResult,
-                weight: weightResult,
-                displayType: displayTypeResult,
-                displayResolution: displayResolutionResult,
-                screenSize: screenSizeResult,
-                battery: batteryResult,
-                camera: cameraResult,
-                color: colorResult,
-                warranty: warrantyResult,
-                quantityInMagazine: quantityInMagazineResult,
-                model: modelResult
+                description: response.data.description,
+                price: response.data.price,
+                imageUrl: response.data.imageUrl,
+                processor: response.data.processor,
+                processorClock: response.data.processorClock,
+                type: response.data.type,
+                manufacturer: response.data.manufacturer,
+                operatingSystem: response.data.operatingSystem,
+                portTypes: response.data.portTypes,
+                hardDriveType: response.data.hardDriveType,
+                hardDriveSize: response.data.hardDriveSize,
+                graphicCard: response.data.graphicCard,
+                graphicVRAM: response.data.graphicVRAM,
+                itemDimensions: response.data.itemDimensions,
+                ramType: response.data.ramType,
+                ramSize: response.data.ramSize,
+                weight: response.data.weight,
+                displayType: response.data.displayType,
+                displayResolution: response.data.displayResolution,
+                screenSize: response.data.screenSize,
+                battery: response.data.battery,
+                camera: response.data.camera,
+                color: response.data.color,
+                warranty: response.data.warranty,
+                quantityInMagazine: response.data.quantityInMagazine,
+                model: response.data.model
             })
         })
     }
+
+    addProductToCart = () => {
+        this.props.addToCart(this.state);
+    };
 
     render() {
         return (
             <div className="ProductView">
                 <div className="left-column">
-                    <img src={this.state.imageUrl} alt=""></img>
+                    <img src={this.state.imageUrl} alt={"Image of " + this.state.model}/>
                 </div>
                 <div className="right-column">
                     <div className="product-description">
@@ -115,7 +106,7 @@ class ProductView extends Component {
                     </div>
                     <div className="product-price">
                         <span>{this.state.price} PLN</span>
-                        <Link to="#" className="cart-btn">Add to cart</Link>
+                        <Button className="cart-btn" variant={"danger"} onClick={this.addProductToCart}>Add to cart</Button>
                     </div>
                 </div>
 
@@ -126,12 +117,12 @@ class ProductView extends Component {
                         <td>{this.state.type}</td>
                     </tr>
                     <tr>
-                        <td>Processor: </td>
-                        <td>{this.state.processorClock}</td>
+                        <td>CPU: </td>
+                        <td>{this.state.processor}</td>
                     </tr>
                     <tr>
-                        <td>Proccessor clock: </td>
-                        <td>{this.state.type}</td>
+                        <td>CPU clock: </td>
+                        <td>{this.state.processorClock}</td>
                     </tr>
                     <tr>
                         <td>Operating system: </td>
@@ -194,7 +185,7 @@ class ProductView extends Component {
                         <td>{this.state.color}</td>
                     </tr>
                     <tr>
-                        <td>Warriany: </td>
+                        <td>Warranty: </td>
                         <td>{this.state.warranty}</td>
                     </tr>
                     <tr>
@@ -209,4 +200,16 @@ class ProductView extends Component {
 }
 //PORTS HAS TO BE ADDED
 
-export default ProductView;
+const mapStateToProps = (state) => {
+    return {
+        login: state.login,
+        cart: state.cart
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ addToCart }, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductView);

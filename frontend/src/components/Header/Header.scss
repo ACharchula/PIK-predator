@@ -1,55 +1,57 @@
 $blood-red-color: #b20715;
 $dark-gray: #191919;
-$icons-color: lighten($dark-gray,30%);
+$icons-color: lighten($dark-gray, 30%);
 
 .custom-container {
-     min-width: 90%;
-     
+  min-width: 90%;
+  margin-top: 0;
 }
 
 .App-header {
-    font-size: 40px;
-    background-color: $dark-gray;
-    display:flex;
-    flex-direction: row;
-    position: -webkit-sticky;
-    position: sticky;
-    top:0;
+  margin-top: 0;
+  font-size: 40px;
+  background-color: $dark-gray;
+  display: flex;
+  flex-direction: row;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 .logo {
-    font-family: 'Metal Mania', cursive;
-    color: $blood-red-color;
-    margin:auto 0;
+  font-family: 'Metal Mania', cursive;
+  color: $blood-red-color;
+  margin: auto 0;
 }
 
 .icon {
-    color: $icons-color;
-    font-size: 30px;
-    margin: auto 10px;
+  color: $icons-color;
+  font-size: 30px;
+  margin: auto 10px;
 }
 
- .icon :hover{
-     color: white;
-     cursor: pointer;
- }
+.icon :hover {
+  color: white;
+  cursor: pointer;
+}
 
 .searchBar {
-    span {
-        border-color: $icons-color; 
-        background: $icons-color;
+  span {
+	border-color: $icons-color;
+	background: $icons-color;
 
-        svg {
-            color: $dark-gray;
-        }
-    }
+	svg {
+	  color: $dark-gray;
+	}
+  }
 
-    div :hover {
-        cursor: pointer;
-        border-color: white; 
-        background: white;
-    }
-    margin: 15px;
+  div :hover {
+	cursor: pointer;
+	border-color: white;
+	background: white;
+  }
+
+  margin: 15px;
 }
 
 

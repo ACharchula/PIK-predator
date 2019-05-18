@@ -17,12 +17,7 @@ class Home extends Component {
 
     getProducts = () => {
         axios.get('https://pik-predator.herokuapp.com/catalog/all')
-            .then(response=> {
-                const notebooks = response.data;
-                this.setState({products: notebooks});
-
-                }
-            )
+            .then(response => this.setState({products: response.data}));
         return this.state.products.map((product, i) => {
             return (
                     <Product product={product} key={i}  />

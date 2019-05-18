@@ -29,7 +29,8 @@ const store = createStore(
 
 store.subscribe(()=> {
     saveState({
-        login: store.getState().login
+        login: store.getState().login,
+        cart: store.getState().cart
     });
 });
 

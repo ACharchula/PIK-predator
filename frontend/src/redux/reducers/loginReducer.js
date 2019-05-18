@@ -4,7 +4,7 @@ import {
 
 export const initialState = {
     login_status : "logged_out"
-}
+};
 
 export default function loginReducer(state = initialState, action) {
 

@@ -11,13 +11,14 @@ import SideNavigation from './SideNavigation/SideNavigation'
 import LoginDropdown from './LoginDropdown/LoginDropdown';
 
 
-const linkStyle = {textDecoration:"none", margin:"auto 0", padding:"0"};
+const linkStyle = {textDecoration: "none", margin: "auto 0", padding: "0"};
+
 
 export function Header(props) {
 
     return (
         <header className="App-header">
-            <Container className="custom-container">
+            <Container className="custom-container" style={{marginTop: "0"}}>
                 <Row>
                     <Col className="icon">
                         <SideNavigation {...props} />
