@@ -18,7 +18,7 @@ export function Header(props) {
 
     return (
         <header className="App-header">
-            <Container className="custom-container" style={{marginTop: "0"}}>
+            <Container style={{marginTop: "0"}}>
                 <Row>
                     <Col className="icon">
                         <SideNavigation {...props} />
