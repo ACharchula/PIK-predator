@@ -9,6 +9,7 @@ import './LoginDropdown.scss';
 class LoginDropdown extends  Component {
 
 
+
     login = () => {
         if (localStorage.getItem('isLoggedIn') === null) {
             this.props.auth.login();

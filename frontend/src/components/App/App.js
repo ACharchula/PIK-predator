@@ -8,7 +8,9 @@ import Layout from '../Layout/Layout'
 import Home from '../Home/Home';
 import Callback from'../Callback/Callback';
 import history from '../../authentication/History';
-import ProductView from '../ProductView/ProductView';
+import ProductView from '../Product/ProductView/ProductView';
+
+import CartContainer from '../../containers/CartContainer';
 
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -30,15 +32,7 @@ class App extends Component {
         if (/access_token|id_token|error/.test(nextState.location.hash)) {
           this.props.auth.handleAuthentication();
         }
-      }
-
-    // hello = () => {
-    //     axios.get('/api/hello')
-    //     .then(response => response.data)
-    //     .then(message => {
-    //     this.setState({message: message});
-    //         });
-    // };
+    };
 
     render() {
         return (
@@ -53,9 +47,8 @@ class App extends Component {
                                 return <Callback {...props} /> 
                                 }}/>
                             <Route path="/product/:id" exact component={ProductView}/>
+                            <Route path="/cart" exact component={CartContainer}/>
                         </Switch>
-                        <p>IT is test</p>
-                        
                     </Container>
                 </Layout>
             </Router>

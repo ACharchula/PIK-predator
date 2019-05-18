@@ -1,6 +1,6 @@
 import history from './History';
 import auth0 from 'auth0-js';
-import { failedLogin, successfulLogin, successfulLogout } from "../redux/actions";
+import {clearCart, failedLogin, successfulLogin, successfulLogout} from "../redux/actions";
 import store from '../index.js';
 
 export default class Auth {
@@ -83,8 +83,9 @@ export default class Auth {
     // navigate to the home route
     history.replace('/');
     store.dispatch(successfulLogout());
+    store.dispatch(clearCart());
     console.log("after dispatch: " + localStorage.getItem('state'));
-  }
+  };
 
 
   isAuthenticated = () => {
@@ -103,7 +104,7 @@ export default class Auth {
         }
         console.log(this.userProfile);
       });
-    } 
+    }
 
   }
 }

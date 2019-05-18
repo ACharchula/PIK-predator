@@ -9,15 +9,16 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import SideNavigation from './SideNavigation/SideNavigation'
 import LoginDropdown from './LoginDropdown/LoginDropdown';
+import CartIcon from './CartIcon/CartIcon';
 
+export const linkStyle = {textDecoration: "none", margin: "auto 0", padding: "0"};
 
-const linkStyle = {textDecoration:"none", margin:"auto 0", padding:"0"};
 
 export function Header(props) {
 
     return (
         <header className="App-header">
-            <Container className="custom-container">
+            <Container className="custom-container" style={{marginTop: "0"}}>
                 <Row>
                     <Col className="icon">
                         <SideNavigation {...props} />
@@ -43,7 +44,7 @@ export function Header(props) {
                             </InputGroup.Append>
                         </InputGroup>
                         <LoginDropdown id="login-dropdown" auth={props.auth}/>
-                        <FontAwesomeIcon icon="shopping-cart" className="icon"/>
+                        <CartIcon/>
                     </Col>
                 </Row>
             </Container>

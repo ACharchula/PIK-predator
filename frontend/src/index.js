@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import promiseMiddleware from 'redux-promise'
+import thunk from 'redux-thunk'
 import rootReducer from './redux/reducers'
 import Auth from './authentication/Auth';
 
@@ -22,14 +23,15 @@ const store = createStore(
     rootReducer,
     persistedState,
     compose(
-        applyMiddleware(promiseMiddleware),
+        applyMiddleware(promiseMiddleware, thunk),
         window.devToolsExtension ? window.devToolsExtension() : f => f
     )
 )
 
 store.subscribe(()=> {
     saveState({
-        login: store.getState().login
+        login: store.getState().login,
+        cart: store.getState().cart
     });
 });
 

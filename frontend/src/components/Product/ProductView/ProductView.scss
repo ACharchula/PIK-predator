@@ -1,3 +1,6 @@
+@import '../../Header/Header.scss';
+
+
 .ProductView {
     margin: 20px auto;
     display: flex;
@@ -72,18 +75,14 @@
    
   .cart-btn {
     display: inline-block;
-    background-color: #800000;
+    background-color: $blood-red-color;
+    border-color: $blood-red-color;
     border-radius: 6px;
     font-size: 16px;
     color: #FFFFFF;
     text-decoration: none;
     padding: 12px 30px;
     transition: all .5s;
-  }
-  .cart-btn:hover {
-    background-color: #660000;
-    color: white;
-    text-decoration: none;
   }
 
   @media (max-width: 940px) {
