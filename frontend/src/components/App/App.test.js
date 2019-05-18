@@ -11,10 +11,8 @@ describe('App', () => {
     );
   });
 
-  test('should be right name', () => {
-    expect(
-      wrapper.contains(<p>IT is test</p>)
-    ).toBe(true);
+  test('should render App', () => {
+    expect(wrapper.length).toEqual(1);
   })
 
 })

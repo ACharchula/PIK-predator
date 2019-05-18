@@ -49,8 +49,6 @@ class App extends Component {
                             <Route path="/product/:id" exact component={ProductView}/>
                             <Route path="/cart" exact component={CartContainer}/>
                         </Switch>
-                        <p>IT is test</p>
-                        
                     </Container>
                 </Layout>
             </Router>

@@ -1,25 +1,30 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { removeProductFromCart, clearCart } from "../redux/actions";
 
 import CartItemsList from '../components/CartItemsList/CartItemsList';
 
-const CartContainer = ({login, cart}) => {
+const CartContainer = (props) => {
     return (
         <div>
-            <h1>Your Cart</h1>
-            <CartItemsList products={cart.products}/>
+            <CartItemsList products={props.cart.products} removeItem={props.removeProductFromCart} clearCart={props.clearCart}/>
         </div>
     );
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         login: state.login,
         cart: state.cart
     };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ removeProductFromCart, clearCart }, dispatch);
 }
 
 export default connect(
-    mapStateToProps,
+    mapStateToProps, mapDispatchToProps
 )(CartContainer);
 
