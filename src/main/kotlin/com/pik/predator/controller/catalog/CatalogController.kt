@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class CatalogController(
-    @Autowired private val productRepository: ProductRepository
+    private val productRepository: ProductRepository
 ) {
     /**
      * Returns all products from the catalog
@@ -39,9 +39,9 @@ class CatalogController(
     /**
      * Filters products by given filters
      * Example query: /catalog?priceFrom=1000&priceTo=2000&manufacturer1=Asus&manufacturer2=Lenovo
-     * which coresponds to following filters:
+     * which corresponds to following filters:
      * - price between 1000 and 2000
-     * - mnanufacturer Asus or Lenovo
+     * - manufacturer Asus or Lenovo
      * @param filterParams the map of filters
      * @return the filtered list of product basic infos
      */

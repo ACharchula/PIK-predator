@@ -16,8 +16,7 @@ import java.util.*
 @RunWith(SpringRunner::class)
 class CatalogControllerTest {
 
-    @Mock
-    lateinit var productRepository: ProductRepository
+    @Mock lateinit var productRepository: ProductRepository
     private lateinit var catalogController: CatalogController
 
     private val products = listOf(
