@@ -2,6 +2,7 @@ package com.pik.predator.controller
 
 import com.pik.predator.db.data.BasicProductInfo
 import com.pik.predator.db.data.Cart
+import com.pik.predator.db.data.Order
 import com.pik.predator.db.data.mapToBasicInfo
 import com.pik.predator.db.repository.CartRepository
 import com.pik.predator.db.repository.OrderRepository
@@ -35,31 +36,60 @@ class CartController(
     }
 
     /**
-     * Adds product to the cart
+     * Adds list of products to the cart
      * @param userId id of the user who owns this cart
      * @param productIds list of ids of the products to be added (given in request body)
      */
     @PostMapping("/users/{userId}/cart")
     @CrossOrigin
-    fun addProductToCart(@PathVariable userId: Int, @RequestBody productIds: List<Int>, response: HttpServletResponse) {
+    fun addProductsToCart(@PathVariable userId: Int, @RequestBody productIds: List<Int>, response: HttpServletResponse) {
         val cart: Cart =
             cartRepository.findByUserId(userId)
                 .letNullable(
-                    onNotNull = { cart -> response.ok(); cart },
-                    onNull = { response.created(); createCart(userId) }
+                    onNotNull = { cart ->
+                        response.ok()
+                        cart
+                    },
+                    onNull = {
+                        response.created()
+                        Cart(
+                            sequenceGenerator.nextId(Cart.SEQUENCE_NAME),
+                            userId,
+                            emptyMutableList()
+                        )
+                    }
                 )
 
         for (productId in productIds) {
             productRepository.getById(productId)
                 ?.let { product ->
-                    cart.items += product.mapToBasicInfo()
+                    cart.items.add(product.mapToBasicInfo())
                     cartRepository.save(cart)
                 }
         }
     }
 
     /**
-     * Deletes all contents from the cart
+     * Removes given product from cart
+     * @param userId id of the user who owns this cart
+     * @param productId id of the product to be removed
+     */
+    @DeleteMapping("users/{userId}/cart/{productId}")
+    @CrossOrigin
+    fun removeProductFromCart(@PathVariable userId: Int, @PathVariable productId: Int, response: HttpServletResponse) {
+        cartRepository.findByUserId(userId)
+            .letNullable(
+                onNotNull = { cart ->
+                    cart.items.removeIf { it.productId == productId }
+                    cartRepository.save(cart)
+                    response.ok()
+                },
+                onNull = { response.notFound() }
+            )
+    }
+
+    /**
+     * Clears all contents from the cart
      * @param userId id of the user who owns this cart
      */
     @DeleteMapping("/users/{userId}/cart")
@@ -76,21 +106,45 @@ class CartController(
     }
 
     /**
-     * Creates order from this cart's contents
+     * Creates order from this cart's contents and returns its URI location in response
      * @param userId id of the user who owns this cart
      */
-    @PostMapping("/carts/{userId}/checkout")
+    @PostMapping("/users/{userId}/cart/checkout")
     @CrossOrigin
-    fun checkout(@PathVariable("userId") userId: Int, response: HttpServletResponse) {
+    fun checkout(@PathVariable("userId") userId: Int, @RequestBody checkoutRequest: CheckoutRequest, response: HttpServletResponse) {
         cartRepository.findByUserId(userId)
             .letNullable(
                 onNotNull = { cart ->
-                    //TODO create repository and return its location in response
+                    val order = Order(
+                        sequenceGenerator.nextId(Order.SEQUENCE_NAME),
+                        checkoutRequest.firstName,
+                        checkoutRequest.lastName,
+                        checkoutRequest.email,
+                        checkoutRequest.street,
+                        checkoutRequest.houseNumber,
+                        checkoutRequest.localNumber,
+                        checkoutRequest.postalCode,
+                        checkoutRequest.city,
+                        checkoutRequest.paymentMethod,
+                        cart.items
+                    )
+                    orderRepository.save(order)
+                    response.created()
+                    response.setHeader("Location", "/orders/${order.orderId}")
                 },
                 onNull = { response.notFound() }
             )
     }
-
-    private fun createCart(userId: Int): Cart =
-        Cart(sequenceGenerator.nextId(Cart.SEQUENCE_NAME), userId, emptyMutableList())
 }
+
+data class CheckoutRequest(
+    var firstName: String,
+    var lastName: String,
+    var email: String,
+    var street: String,
+    var houseNumber: String,
+    var localNumber: String,
+    var postalCode: String,
+    var city: String,
+    var paymentMethod: String
+)

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Cart(
     @Id var cartId: Int,
     var userId: Int,
-    val items: MutableList<BasicProductInfo>
+    var items: MutableList<BasicProductInfo>
 ) {
     companion object {
         @Transient const val SEQUENCE_NAME = "cart_sequence"

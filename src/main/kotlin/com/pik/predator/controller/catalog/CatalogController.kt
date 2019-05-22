@@ -2,9 +2,9 @@ package com.pik.predator.controller.catalog
 
 import com.pik.predator.db.data.BasicProductInfo
 import com.pik.predator.db.data.Product
-import com.pik.predator.db.data.mapToBasicInfo
+import com.pik.predator.db.data.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
-import org.springframework.beans.factory.annotation.Autowired
+import com.pik.predator.helpers.getById
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -18,7 +18,7 @@ class CatalogController(
     @CrossOrigin
     @GetMapping("/catalog/all")
     fun getAllProducts(): List<BasicProductInfo> {
-        return productRepository.findAll().mapToBasicInfo()
+        return productRepository.findAll().mapToBasicInfoList()
     }
 
     /**
@@ -29,11 +29,7 @@ class CatalogController(
     @CrossOrigin
     @GetMapping("/catalog/{productId}")
     fun getProductDetails(@PathVariable productId: Int): Product? {
-        return productRepository.findById(productId)
-            .let { product ->
-                if (product.isPresent) product.get()
-                else null
-            }
+        return productRepository.getById(productId)
     }
 
     /**
@@ -52,7 +48,7 @@ class CatalogController(
             .let { filters ->
                 productRepository.findAll()
                     .filter { item -> filters.accept(item) }
-                    .mapToBasicInfo()
+                    .mapToBasicInfoList()
             }
     }
 }

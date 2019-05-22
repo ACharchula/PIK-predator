@@ -11,4 +11,4 @@ data class BasicProductInfo(
 )
 
 fun Product.mapToBasicInfo() = BasicProductInfo(productId, manufacturer, model, price,imageUrl)
-fun List<Product>.mapToBasicInfo() = map { it.mapToBasicInfo() }
+fun List<Product>.mapToBasicInfoList() = map { it.mapToBasicInfo() }

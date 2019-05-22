@@ -42,7 +42,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .forRS256(apiAudience, issuer)
             .configure(http)
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/carts/*").authenticated()
-            .antMatchers(HttpMethod.POST, "/carts/*").authenticated()
+            .antMatchers(HttpMethod.GET, "/users/*").authenticated()
+            .antMatchers(HttpMethod.POST, "/users/*").authenticated()
     }
 }
