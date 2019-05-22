@@ -2,7 +2,6 @@ package com.pik.predator
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.catalog.CatalogController
-import com.pik.predator.db.data.Product
 import com.pik.predator.db.data.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
 import org.junit.Assert.*
@@ -12,105 +11,20 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.junit.Before
 import org.mockito.Mock
 import java.util.*
+import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpServletResponse.*
 
 @RunWith(SpringRunner::class)
 class CatalogControllerTest {
-
-    private val products = listOf(
-        Product(
-            productId = 1,
-            description = "fajny laptop",
-            price = 5000.toBigDecimal(),
-            imageUrl = "google.com",
-            processor = "Intel Core i7 8550H",
-            processorClock = "2.4-4.5 Ghz",
-            type = "Laptop 2w1",
-            manufacturer = "Dell",
-            model = "UX12345",
-            operatingSystem = "Windows 10",
-            portTypes = listOf("USB 2.0"),
-            hardDriveType = "HDD",
-            hardDriveSize = 1000,
-            graphicCard = "Inte HD Graphics 5500",
-            graphicVRAM = 2,
-            itemDimensions = "20x20x20",
-            ramType = "DDR3",
-            ramSize = 8,
-            weight = 1.5f,
-            displayType = "matte",
-            displayResolution = "1360x768",
-            screenSize = "15",
-            battery = "1233123 mah",
-            camera = "0.3 Mpx",
-            color = "white",
-            warranty = "1 year",
-            quantityInMagazine = 1
-        ),
-        Product(
-            productId = 2,
-            description = "bardzo fajny laptop",
-            price = 10000.toBigDecimal(),
-            imageUrl = "google.com",
-            processor = "Intel Core i7 8600U",
-            processorClock = "2.4-4.5 Ghz",
-            type = "Ultrabook",
-            manufacturer = "Lenovo",
-            model = "Thinkpad T480s",
-            operatingSystem = "Windows 10",
-            portTypes = listOf("USB 2.0", "USB 3.0"),
-            hardDriveType = "SSD",
-            hardDriveSize = 1500,
-            graphicCard = "AMD Radeon R9 380",
-            graphicVRAM = 4,
-            itemDimensions = "20x20x20",
-            ramType = "DDR4",
-            ramSize = 16,
-            weight = 2.0f,
-            displayType = "matte",
-            displayResolution = "1920x1080",
-            screenSize = "14",
-            battery = "1233123 mah",
-            camera = "0.3 Mpx",
-            color = "black",
-            warranty = "2 years",
-            quantityInMagazine = 12
-        ),
-        Product(
-            productId = 3,
-            description = "super fajny laptop",
-            price = 20000.toBigDecimal(),
-            imageUrl = "google.com",
-            processor = "Intel Core i9 9900T",
-            processorClock = "3.6-5.0 Ghz",
-            type = "Gaming",
-            manufacturer = "Asus",
-            model = "Predator",
-            operatingSystem = "Windows 10",
-            portTypes = listOf("USB 2.0", "USB 3.0", "USB C"),
-            hardDriveType = "SSD",
-            hardDriveSize = 2000,
-            graphicCard = "Nvidia 2080 Ti",
-            graphicVRAM = 8,
-            itemDimensions = "20x20x20",
-            ramType = "DDR4X",
-            ramSize = 32,
-            weight = 2.0f,
-            displayType = "super-matte",
-            displayResolution = "4096x3112",
-            screenSize = "17",
-            battery = "1233123 mah",
-            camera = "0.3 Mpx",
-            color = "black-red",
-            warranty = "5 years",
-            quantityInMagazine = 12
-        )
-    )
 
     //tested object
     private lateinit var catalogController: CatalogController
 
     //dependencies
     @Mock lateinit var productRepository: ProductRepository
+
+    //other mocks
+    @Mock lateinit var response: HttpServletResponse
 
     @Before
     fun setup() {
@@ -121,26 +35,50 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testGetAllProducts() {
+    fun `when get all products then products are returned`() {
         assertEquals(
             products.mapToBasicInfoList(),
-            catalogController.getAllProducts()
+            catalogController.getAllProducts(response)
         )
     }
 
     @Test
-    fun testGetProductDetails() {
-        assertEquals(products[0], catalogController.getProductDetails(1))
+    fun `when get all products then response status is 200 OK`() {
+        catalogController.getAllProducts(response)
+        response.verifyStatus(SC_OK)
+    }
+
+    @Test
+    fun `when get product details then details are returned`() {
+        assertEquals(products[0], catalogController.getProductDetails(1, response))
+    }
+
+    @Test
+    fun `when get details of existing product then response status is 200 OK`() {
+        catalogController.getProductDetails(1, response)
+        response.verifyStatus(SC_OK)
+    }
+
+    @Test
+    fun `when get details of non existing product then response status is 404 NOT FOUND`() {
+        catalogController.getProductDetails(8, response)
+        response.verifyStatus(SC_NOT_FOUND)
+    }
+
+    @Test
+    fun `when filter then response is 200 OK`() {
+        catalogController.getProducts(emptyMap(), response)
+        response.verifyStatus(SC_OK)
     }
 
     @Test
     fun testFilterProcessors() {
         assertEquals(
             products.filter { it.processor == "Intel Core i7 8550H" || it.processor == "Intel Core i7 8600U" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "processor1" to "Intel Core i7 8550H",
                 "processor2" to "Intel Core i7 8600U"
-            ))
+            ), response)
         )
     }
 
@@ -148,10 +86,10 @@ class CatalogControllerTest {
     fun testFilterTypes() {
         assertEquals(
             products.filter { it.type == "Ultrabook" || it.type == "Gaming" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "type1" to "Ultrabook",
                 "type2" to "Gaming"
-            ))
+            ), response)
         )
     }
 
@@ -159,10 +97,10 @@ class CatalogControllerTest {
     fun testFilterManufacturers() {
         assertEquals(
             products.filter { it.manufacturer == "Lenovo" || it.manufacturer == "Asus" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "manufacturer1" to "Lenovo",
                 "manufacturer2" to "Asus"
-            ))
+            ), response)
         )
     }
 
@@ -170,9 +108,9 @@ class CatalogControllerTest {
     fun testFilterHardDriveType() {
         assertEquals(
             products.filter { it.hardDriveType == "HDD" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "hardDriveType" to "HDD"
-            ))
+            ), response)
         )
     }
 
@@ -180,10 +118,10 @@ class CatalogControllerTest {
     fun testFilterRamType() {
         assertEquals(
             products.filter { it.ramType == "DDR4" || it.ramType == "DDR4X" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "ramType1" to "DDR4",
                 "ramType2" to "DDR4X"
-            ))
+            ), response)
         )
     }
 
@@ -191,9 +129,9 @@ class CatalogControllerTest {
     fun testFilterDisplayType() {
         assertEquals(
             products.filter { it.displayType == "matte" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "displayType1" to "matte"
-            ))
+            ), response)
         )
     }
 
@@ -201,10 +139,10 @@ class CatalogControllerTest {
     fun testFilterDisplayResolution() {
         assertEquals(
             products.filter { it.displayResolution == "1920x1080" || it.displayResolution == "4096x3112" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "displayResolution1" to "1920x1080",
                 "displayResolution2" to "4096x3112"
-            ))
+            ), response)
         )
     }
 
@@ -212,10 +150,10 @@ class CatalogControllerTest {
     fun testFilterScreenSzie() {
         assertEquals(
             products.filter { it.screenSize == "14" || it.screenSize == "15" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "screenSize1" to "14",
                 "screenSize2" to "15"
-            ))
+            ), response)
         )
     }
 
@@ -224,10 +162,10 @@ class CatalogControllerTest {
         assertEquals(
             //czarny jak piekło, czerwony jak ogień
             products.filter { it.color == "black" || it.color == "black-red" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "color1" to "black",
                 "color2" to "black-red"
-            ))
+            ), response)
         )
     }
 
@@ -235,10 +173,10 @@ class CatalogControllerTest {
     fun testFilterWarranty() {
         assertEquals(
             products.filter { it.warranty == "2 years" || it.warranty == "5 years" }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "warranty1" to "2 years",
                 "warranty2" to "5 years"
-            ))
+            ), response)
         )
     }
 
@@ -246,10 +184,10 @@ class CatalogControllerTest {
     fun testFilterGraphicCardManufacturer() {
         assertEquals(
             products.filter { it.graphicCard.contains("NVIDIA") || it.graphicCard.contains("AMD") }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "graphicCardManufacturer1" to "NVIDIA",
                 "graphicCardManufacturer2" to "AMD"
-            ))
+            ), response)
         )
     }
 
@@ -257,10 +195,10 @@ class CatalogControllerTest {
     fun testFilterPortTypes() {
         assertEquals(
             products.filter { it.portTypes.containsAll(listOf("USB 2.0", "USB 3.0")) }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "portType1" to "USB 2.0",
                 "portType2" to "USB 3.0"
-            ))
+            ), response)
         )
     }
 
@@ -268,10 +206,10 @@ class CatalogControllerTest {
     fun testFilterPrice() {
         assertEquals(
             products.filter { it.price in 2000.toBigDecimal()..8000.toBigDecimal() }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "priceFrom" to "2000",
                 "priceTo" to "8000"
-            ))
+            ), response)
         )
     }
 
@@ -279,10 +217,10 @@ class CatalogControllerTest {
     fun testFilterWeight() {
         assertEquals(
             products.filter { it.weight in 1.8f..2.2f }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "weightFrom" to "1.8",
                 "weightTo" to "2.2"
-            ))
+            ), response)
         )
     }
 
@@ -290,10 +228,10 @@ class CatalogControllerTest {
     fun testFilterHardDriveSize() {
         assertEquals(
             products.filter { it.hardDriveSize in 1000..1500 }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "hardDriveSizeFrom" to "1000",
                 "hardDriveSizeTo" to "1500"
-            ))
+            ), response)
         )
     }
 
@@ -301,10 +239,10 @@ class CatalogControllerTest {
     fun testFilterGraphicVRAM() {
         assertEquals(
             products.filter { it.graphicVRAM in 2..4 }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "graphicVRAMFrom" to "2",
                 "graphicVRAMTo" to "4"
-            ))
+            ), response)
         )
     }
 
@@ -312,10 +250,10 @@ class CatalogControllerTest {
     fun testFilterRamSize() {
         assertEquals(
             products.filter { it.ramSize in 16..32 }.mapToBasicInfoList(),
-            catalogController.filterProducts(mapOf(
+            catalogController.getProducts(mapOf(
                 "ramSizeFrom" to "16",
                 "ramSizeTo" to "32"
-            ))
+            ), response)
         )
     }
 
