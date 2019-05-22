@@ -34,7 +34,7 @@ class ExampleController {
                 " unbelievably powerful laptop, with the latest Intel Core i7 processor, 16GB of 2133MHz LPDDR3 RAM," +
                 " and 512GB SATA SSD and the latest USB-C port that supports display. So there’s no need to worry " +
                 "about what you can or can’t do with ZenBook 3-it’s practically unstoppable. ",
-                5000.toBigDecimal(), "https://www.asus.com/media/global/products/RFg3mM0IrjWtUMLG/BMKAkwkgXRLjrqxt_setting_fff_1_90_end_500.png",
+                5000.toBigDecimal(), "https://www.asus.com/media/global/items/RFg3mM0IrjWtUMLG/BMKAkwkgXRLjrqxt_setting_fff_1_90_end_500.png",
                 "Intel® Core™ i7 7500U ", "2.7-3.5 Ghz", "Ultrabook",
                 "Asus", "Vivobook UX390UA", "Windows 10", listOf("USB 3.1 C"),
                 "SSD", 512, " Intel HD Graphics", 32,
@@ -134,7 +134,7 @@ class ExampleController {
                 "Marszalkowska", "12", "3A", "02-212", "Warsaw", "Paypal",
                 arrayListOf(
                     BasicProductInfo(8, "Asus", "Vivobook UX390UA", 3000.toBigDecimal(),"https://m.media-amazon.com/images/S/aplus-media/vc/b401d03a-66dd-4906-a62d-3465271b68ed.jpg"),
-                    BasicProductInfo(9, "Dell", "XPS 13", 1000.toBigDecimal(),"https://www.asus.com/media/global/products/RFg3mM0IrjWtUMLG/BMKAkwkgXRLjrqxt_setting_fff_1_90_end_500.png")
+                    BasicProductInfo(9, "Dell", "XPS 13", 1000.toBigDecimal(),"https://www.asus.com/media/global/items/RFg3mM0IrjWtUMLG/BMKAkwkgXRLjrqxt_setting_fff_1_90_end_500.png")
                 )
             )
         )

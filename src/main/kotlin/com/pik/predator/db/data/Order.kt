@@ -7,9 +7,9 @@ import java.math.BigDecimal
 @Document(collection = "Orders")
 data class Order(
         @Id var orderId: Int,
-        var email: String,
         var firstName: String,
         var lastName: String,
+        var email: String,
         var street: String,
         var houseNumber: String,
         var localNumber: String,
@@ -17,4 +17,8 @@ data class Order(
         var city: String,
         var paymentMethod: String,
         var products: List<BasicProductInfo>
-)
+) {
+    companion object {
+        @Transient const val SEQUENCE_NAME = "order_sequence"
+    }
+}
