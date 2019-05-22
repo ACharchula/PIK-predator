@@ -1,4 +1,4 @@
-package com.pik.predator.controller
+package com.pik.predator.controller.cart
 
 import com.pik.predator.db.data.BasicProductInfo
 import com.pik.predator.db.data.Cart

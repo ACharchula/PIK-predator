@@ -2,7 +2,6 @@ package com.pik.predator.db.data
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import java.math.BigDecimal
 
 @Document(collection = "Orders")
 data class Order(
@@ -16,7 +15,8 @@ data class Order(
         var postalCode: String,
         var city: String,
         var paymentMethod: String,
-        var products: List<BasicProductInfo>
+        var products: List<BasicProductInfo>,
+        var isPaid: Boolean = false
 ) {
     companion object {
         @Transient const val SEQUENCE_NAME = "order_sequence"

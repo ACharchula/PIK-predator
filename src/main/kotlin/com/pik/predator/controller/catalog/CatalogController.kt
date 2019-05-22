@@ -4,8 +4,12 @@ import com.pik.predator.db.data.BasicProductInfo
 import com.pik.predator.db.data.Product
 import com.pik.predator.db.data.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
+import com.pik.predator.helpers.applyNullable
 import com.pik.predator.helpers.getById
+import com.pik.predator.helpers.notFound
+import com.pik.predator.helpers.ok
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletResponse
 
 @RestController
 class CatalogController(
@@ -15,10 +19,12 @@ class CatalogController(
      * Returns all products from the catalog
      * @return list of basic infos about the products
      */
+    @Deprecated("use GET /catalog without parameters")
     @CrossOrigin
     @GetMapping("/catalog/all")
-    fun getAllProducts(): List<BasicProductInfo> {
+    fun getAllProducts(response: HttpServletResponse): List<BasicProductInfo> {
         return productRepository.findAll().mapToBasicInfoList()
+            .also { response.ok() }
     }
 
     /**
@@ -28,8 +34,12 @@ class CatalogController(
      */
     @CrossOrigin
     @GetMapping("/catalog/{productId}")
-    fun getProductDetails(@PathVariable productId: Int): Product? {
+    fun getProductDetails(@PathVariable productId: Int, response: HttpServletResponse): Product? {
         return productRepository.getById(productId)
+            .applyNullable(
+                onNotNull = { response.ok() },
+                onNull = { response.notFound() }
+            )
     }
 
     /**
@@ -43,9 +53,10 @@ class CatalogController(
      */
     @CrossOrigin
     @GetMapping("/catalog")
-    fun filterProducts(@RequestParam filterParams: Map<String, String>): List<BasicProductInfo> {
+    fun getProducts(@RequestParam filterParams: Map<String, String>, response: HttpServletResponse): List<BasicProductInfo> {
         return Filters(filterParams)
             .let { filters ->
+                response.ok()
                 productRepository.findAll()
                     .filter { item -> filters.accept(item) }
                     .mapToBasicInfoList()
