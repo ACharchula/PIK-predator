@@ -5,7 +5,7 @@ import com.pik.predator.controller.catalog.CatalogController
 import com.pik.predator.db.data.Product
 import com.pik.predator.db.data.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
-import junit.framework.Assert.*
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringRunner

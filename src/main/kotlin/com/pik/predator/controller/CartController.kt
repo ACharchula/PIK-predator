@@ -62,11 +62,9 @@ class CartController(
 
         for (productId in productIds) {
             productRepository.getById(productId)
-                ?.let { product ->
-                    cart.items.add(product.mapToBasicInfo())
-                    cartRepository.save(cart)
-                }
+                ?.let { product -> cart.items.add(product.mapToBasicInfo()) }
         }
+        cartRepository.save(cart)
     }
 
     /**
@@ -80,9 +78,13 @@ class CartController(
         cartRepository.findByUserId(userId)
             .letNullable(
                 onNotNull = { cart ->
-                    cart.items.removeIf { it.productId == productId }
-                    cartRepository.save(cart)
-                    response.ok()
+                    val removed = cart.items.removeIf { it.productId == productId }
+
+                    if (removed) {
+                        cartRepository.save(cart)
+                        response.ok()
+                    }
+                    else response.notFound()
                 },
                 onNull = { response.notFound() }
             )
@@ -98,7 +100,8 @@ class CartController(
         cartRepository.findByUserId(userId)
             .letNullable(
                 onNotNull = { cart ->
-                    cartRepository.delete(cart)
+                    cart.items.clear()
+                    cartRepository.save(cart)
                     response.ok()
                 },
                 onNull = { response.notFound() }
