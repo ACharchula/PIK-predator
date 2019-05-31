@@ -15,10 +15,17 @@ import './SearchBar.scss';
 class SearchBar extends Component{
 
     handleChange(event) {
-        console.log(event.target.value);
         let fieldVal = event.target.value;
-        let pos = this.props.filter.filters.map(function(e) { return e.property; }).indexOf('manufacturer');
-        this.props.removeFilter(pos);
+        let pos;
+        console.log(this.props.filter.filters[0]);
+        if(this.props.filter.filters[0]!==null) {
+            console.log("o tu!");
+            pos = this.props.filter.filters.map(function (e) {
+                return e.property;
+            }).indexOf('manufacturer');
+        }
+        //this.props.removeFilter(pos); works on mozilla, doesn't work on chrome
+        this.props.clearFilters();
         this.props.addFilter({property:'manufacturer', value: fieldVal});
        // this.props.addFilter({property:'manufacturer', value: fieldVal});
     }
