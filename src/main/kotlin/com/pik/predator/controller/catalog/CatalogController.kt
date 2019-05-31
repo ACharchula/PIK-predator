@@ -8,6 +8,7 @@ import com.pik.predator.helpers.applyNullable
 import com.pik.predator.helpers.getById
 import com.pik.predator.helpers.notFound
 import com.pik.predator.helpers.ok
+import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
@@ -61,5 +62,11 @@ class CatalogController(
                     .filter { item -> filters.accept(item) }
                     .mapToBasicInfoList()
             }
+    }
+
+    @CrossOrigin
+    @GetMapping("/catalog/metadata/{attributeName}")
+    fun getProductAttributesInfo(@PathVariable attributeName: String): List<String> {
+        return productRepository.getAttributesInfo(attributeName)
     }
 }
