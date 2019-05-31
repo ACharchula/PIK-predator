@@ -1,4 +1,4 @@
-package com.pik.predator
+package com.pik.predator.controller
 
 import com.nhaarman.mockitokotlin2.verify
 import com.pik.predator.db.entities.Product

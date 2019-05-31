@@ -16,12 +16,15 @@ interface SequenceGenerator {
 class IncrementalSequenceGenerator(
     private val mongoOperations: MongoOperations
 ) : SequenceGenerator {
+
     override fun nextId(sequenceName: String): Int {
-        val counter: DatabaseSequence? = mongoOperations.findAndModify(
+        return mongoOperations.findAndModify(
             Query.query(Criteria.where("_id").`is`(sequenceName)),
-            Update().inc("seq", 1), FindAndModifyOptions.options().returnNew(true).upsert(true),
+            Update().inc("seq", 1),
+            FindAndModifyOptions.options().returnNew(true).upsert(true),
             DatabaseSequence::class.java
-        )
-        return counter?.seq ?: 1
+        ).let { counter: DatabaseSequence? ->
+            counter?.seq ?: 1
+        }
     }
 }

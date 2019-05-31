@@ -1,4 +1,4 @@
-package com.pik.predator
+package com.pik.predator.controller
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.catalog.CatalogController
@@ -31,6 +31,9 @@ class CatalogControllerTest {
         whenever(productRepository.findAll()).thenReturn(products)
         whenever(productRepository.findById(1)).thenReturn(Optional.of(products[0]))
         whenever(productRepository.findById(2)).thenReturn(Optional.of(products[1]))
+        whenever(productRepository.findById(3)).thenReturn(Optional.of(products[2]))
+        whenever(productRepository.getDistinctValuesForAttribute("displayType")).thenReturn(listOf("matte", "super-matte"))
+        whenever(productRepository.getDistinctValuesForAttribute("someCrazyAttribute")).thenReturn(null)
         catalogController = CatalogController(productRepository)
     }
 
@@ -257,5 +260,32 @@ class CatalogControllerTest {
         )
     }
 
+    @Test
+    fun `when get distinct values for attribute then proper values are returned`() {
+        assertEquals(
+            listOf("matte", "super-matte"),
+            catalogController.getProductDistinctValuesForAttribute("displayType", response)
+        )
+    }
+
+    @Test
+    fun `when get distinct values for not existing attribute then null is returned`() {
+        assertEquals(
+            null,
+            catalogController.getProductDistinctValuesForAttribute("someCrazyAttribute", response)
+        )
+    }
+
+    @Test
+    fun `when get distinct values then response status is 200 OK`() {
+        catalogController.getProductDistinctValuesForAttribute("displayType", response)
+        response.verifyStatus(SC_OK)
+    }
+
+    @Test
+    fun `when get distinct values for not existing attribute then response status is 404 NOT FOUND`() {
+        catalogController.getProductDistinctValuesForAttribute("someCrazyAttribute", response)
+        response.verifyStatus(SC_NOT_FOUND)
+    }
 
 }

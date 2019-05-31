@@ -8,9 +8,9 @@ class ProductRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : ProductRepositoryCustom {
 
-    override fun getAttributesInfo(attributeName: String): List<String> {
+    override fun getDistinctValuesForAttribute(attributeName: String): List<String>? {
         val list = mutableListOf<String>()
         mongoTemplate.getCollection("Products").distinct(attributeName, String::class.java).into(list)
-        return list
+        return if (list.isNotEmpty()) list else null
     }
 }

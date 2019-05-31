@@ -1,4 +1,4 @@
-package com.pik.predator
+package com.pik.predator.controller
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.order.OrderController
@@ -63,6 +63,34 @@ class OrderControllerTest {
     @Test
     fun `when mark non existing order as paid then response status is 404 NOT FOUND`() {
         orderController.markOrderAsPaid(2, response)
+        response.verifyStatus(SC_NOT_FOUND)
+    }
+
+    @Test
+    fun `when get order info then info is returned`() {
+        assertEquals(
+            order,
+            orderController.getOrderInfo(1, response)
+        )
+    }
+
+    @Test
+    fun `when get order info then response status is 200 OK`() {
+        orderController.getOrderInfo(1, response)
+        response.verifyStatus(SC_OK)
+    }
+
+    @Test
+    fun `when get order info of not existing order then null is returned`() {
+        assertEquals(
+            null,
+            orderController.getOrderInfo(2, response)
+        )
+    }
+
+    @Test
+    fun `when get order info of not existing order the response status is 404 NOT FOUND`() {
+        orderController.getOrderInfo(2, response)
         response.verifyStatus(SC_NOT_FOUND)
     }
 }

@@ -65,7 +65,11 @@ class CatalogController(
 
     @CrossOrigin
     @GetMapping("/catalog/metadata/{attributeName}")
-    fun getProductAttributesInfo(@PathVariable attributeName: String): List<String> {
-        return productRepository.getAttributesInfo(attributeName)
+    fun getProductDistinctValuesForAttribute(@PathVariable attributeName: String, response: HttpServletResponse): List<String>? {
+        return productRepository.getDistinctValuesForAttribute(attributeName)
+            .applyNullable(
+                onNotNull = { response.ok() },
+                onNull = { response.notFound() }
+            )
     }
 }
