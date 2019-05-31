@@ -1,9 +1,8 @@
 package com.pik.predator.db.repository
 
-import com.pik.predator.db.data.Product
+import com.pik.predator.db.entities.Product
 import org.springframework.data.mongodb.repository.MongoRepository
-import java.util.*
 
-interface ProductRepository : MongoRepository<Product, Int> {
+interface ProductRepository : MongoRepository<Product, Int>, ProductRepositoryCustom {
 
 }

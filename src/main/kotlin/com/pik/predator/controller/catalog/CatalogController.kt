@@ -1,8 +1,8 @@
 package com.pik.predator.controller.catalog
 
-import com.pik.predator.db.data.BasicProductInfo
-import com.pik.predator.db.data.Product
-import com.pik.predator.db.data.mapToBasicInfoList
+import com.pik.predator.db.dto.BasicProductInfo
+import com.pik.predator.db.entities.Product
+import com.pik.predator.db.dto.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
 import com.pik.predator.helpers.applyNullable
 import com.pik.predator.helpers.getById
@@ -61,5 +61,15 @@ class CatalogController(
                     .filter { item -> filters.accept(item) }
                     .mapToBasicInfoList()
             }
+    }
+
+    @CrossOrigin
+    @GetMapping("/catalog/metadata/{attributeName}")
+    fun getProductDistinctValuesForAttribute(@PathVariable attributeName: String, response: HttpServletResponse): List<String>? {
+        return productRepository.getDistinctValuesForAttribute(attributeName)
+            .applyNullable(
+                onNotNull = { response.ok() },
+                onNull = { response.notFound() }
+            )
     }
 }

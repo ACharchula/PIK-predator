@@ -1,8 +1,8 @@
-package com.pik.predator
+package com.pik.predator.controller
 
 import com.nhaarman.mockitokotlin2.verify
-import com.pik.predator.db.data.Product
-import com.pik.predator.db.data.mapToBasicInfo
+import com.pik.predator.db.entities.Product
+import com.pik.predator.db.dto.mapToBasicInfo
 import javax.servlet.http.HttpServletResponse
 
 internal val products = listOf(

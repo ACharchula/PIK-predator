@@ -1,10 +1,11 @@
-package com.pik.predator
+package com.pik.predator.controller
 
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.cart.CartController
-import com.pik.predator.controller.cart.CheckoutRequest
-import com.pik.predator.db.data.*
+import com.pik.predator.db.dto.CheckoutRequest
+import com.pik.predator.db.dto.BasicProductInfo
+import com.pik.predator.db.entities.*
 import com.pik.predator.db.repository.CartRepository
 import com.pik.predator.db.repository.OrderRepository
 import com.pik.predator.db.repository.ProductRepository
@@ -17,9 +18,21 @@ import org.mockito.Mock
 import org.springframework.test.context.junit4.SpringRunner
 import org.junit.Assert.*
 import org.mockito.Spy
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.*
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 
 @RunWith(SpringRunner::class)
 class CartControllerTest {
