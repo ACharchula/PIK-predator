@@ -3,8 +3,10 @@ import axios from 'axios';
 import Product from '../Product/Product';
 
 import './Home.scss';
+import {connect} from "react-redux";
 
 class Home extends Component {
+
 
     constructor(props) {
         super(props);
@@ -23,7 +25,30 @@ class Home extends Component {
             .then(response => this.setState({products: response.data}));
     };
 
+    filterProducts = () => {
+        let tempString="";
+        if(this.props.filter.filters!==[]) this.props.filter.filters.forEach(function addToString(item,index,array) {
+            console.log(item);
+            if(item!==null&&item!==undefined&&item.value!=='') {
+                for (var p in item) {
+                    tempString+="=";
+                    if (item.hasOwnProperty(p)) {
+                        tempString += item[p]
+                    }
+                }
+                tempString='?'+tempString.substr(1);
+                console.log(tempString);
+            }
+        });
+        if(tempString!=="") axios.get(`https://pik-predator.herokuapp.com/catalog${tempString}`)
+            .then(response => this.setState({products: response.data}));
+        else this.getProducts();
+        console.log(this.products);
+    };
+
+
     renderProducts = () => {
+        this.filterProducts();
         return this.state.products.map((product, i) => {
             return (
                 <Product product={product} key={i}  />
@@ -44,4 +69,12 @@ class Home extends Component {
 }
 
 
-export default Home;
+//export default Home;
+
+const mapStateToProps = (state) => {
+    return {
+        filter: state.filter,
+    }
+}
+
+export default connect(mapStateToProps)(Home);
