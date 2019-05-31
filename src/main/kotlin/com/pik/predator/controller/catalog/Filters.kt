@@ -1,6 +1,6 @@
 package com.pik.predator.controller.catalog
 
-import com.pik.predator.db.data.Product
+import com.pik.predator.db.entities.Product
 import java.math.BigDecimal
 import kotlin.reflect.KProperty1
 

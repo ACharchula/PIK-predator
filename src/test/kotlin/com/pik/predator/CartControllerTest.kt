@@ -3,8 +3,9 @@ package com.pik.predator
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.cart.CartController
-import com.pik.predator.controller.cart.CheckoutRequest
-import com.pik.predator.db.data.*
+import com.pik.predator.db.dto.CheckoutRequest
+import com.pik.predator.db.dto.BasicProductInfo
+import com.pik.predator.db.entities.*
 import com.pik.predator.db.repository.CartRepository
 import com.pik.predator.db.repository.OrderRepository
 import com.pik.predator.db.repository.ProductRepository

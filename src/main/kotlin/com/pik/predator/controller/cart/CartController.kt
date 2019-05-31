@@ -1,9 +1,10 @@
 package com.pik.predator.controller.cart
 
-import com.pik.predator.db.data.BasicProductInfo
-import com.pik.predator.db.data.Cart
-import com.pik.predator.db.data.Order
-import com.pik.predator.db.data.mapToBasicInfo
+import com.pik.predator.db.dto.BasicProductInfo
+import com.pik.predator.db.dto.CheckoutRequest
+import com.pik.predator.db.entities.Cart
+import com.pik.predator.db.entities.Order
+import com.pik.predator.db.dto.mapToBasicInfo
 import com.pik.predator.db.repository.CartRepository
 import com.pik.predator.db.repository.OrderRepository
 import com.pik.predator.db.repository.ProductRepository
@@ -52,17 +53,14 @@ class CartController(
                     },
                     onNull = {
                         response.created()
-                        Cart(
-                            sequenceGenerator.nextId(Cart.SEQUENCE_NAME),
-                            userId,
-                            emptyMutableList()
-                        )
+                        Cart(sequenceGenerator.nextId(Cart.SEQUENCE_NAME), userId, emptyMutableList())
                     }
                 )
 
         for (productId in productIds) {
-            productRepository.getById(productId)
-                ?.let { product -> cart.items.add(product.mapToBasicInfo()) }
+            productRepository.getById(productId)?.let {
+                product -> cart.items.add(product.mapToBasicInfo())
+            }
         }
         cartRepository.save(cart)
     }
@@ -139,15 +137,3 @@ class CartController(
             )
     }
 }
-
-data class CheckoutRequest(
-    var firstName: String,
-    var lastName: String,
-    var email: String,
-    var street: String,
-    var houseNumber: String,
-    var localNumber: String,
-    var postalCode: String,
-    var city: String,
-    var paymentMethod: String
-)

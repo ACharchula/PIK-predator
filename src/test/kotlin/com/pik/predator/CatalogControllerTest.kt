@@ -2,7 +2,7 @@ package com.pik.predator
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.catalog.CatalogController
-import com.pik.predator.db.data.mapToBasicInfoList
+import com.pik.predator.db.dto.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
 import org.junit.Assert.*
 import org.junit.Test

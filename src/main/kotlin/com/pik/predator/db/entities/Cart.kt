@@ -1,5 +1,6 @@
-package com.pik.predator.db.data
+package com.pik.predator.db.entities
 
+import com.pik.predator.db.dto.BasicProductInfo
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 

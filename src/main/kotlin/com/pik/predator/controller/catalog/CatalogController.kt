@@ -1,14 +1,13 @@
 package com.pik.predator.controller.catalog
 
-import com.pik.predator.db.data.BasicProductInfo
-import com.pik.predator.db.data.Product
-import com.pik.predator.db.data.mapToBasicInfoList
+import com.pik.predator.db.dto.BasicProductInfo
+import com.pik.predator.db.entities.Product
+import com.pik.predator.db.dto.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
 import com.pik.predator.helpers.applyNullable
 import com.pik.predator.helpers.getById
 import com.pik.predator.helpers.notFound
 import com.pik.predator.helpers.ok
-import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 

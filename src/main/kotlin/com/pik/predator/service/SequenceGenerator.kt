@@ -1,6 +1,6 @@
 package com.pik.predator.service
 
-import com.pik.predator.db.data.DatabaseSequence
+import com.pik.predator.db.entities.DatabaseSequence
 import org.springframework.data.mongodb.core.FindAndModifyOptions
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.query.Criteria

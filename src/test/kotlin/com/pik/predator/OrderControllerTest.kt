@@ -2,7 +2,7 @@ package com.pik.predator
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.order.OrderController
-import com.pik.predator.db.data.Order
+import com.pik.predator.db.entities.Order
 import com.pik.predator.db.repository.OrderRepository
 import org.junit.Before
 import org.junit.Test
