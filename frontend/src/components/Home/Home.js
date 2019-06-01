@@ -32,21 +32,23 @@ class Home extends Component {
     }
 
     filterProducts = () => {
-        let tempString="";
+        let queryString="";
         if(this.props.filter.filters!==[]) this.props.filter.filters.forEach(function addToString(item,index,array) {
             console.log(item);
             if(item!==null&&item!==undefined&&item.value!=='') {
+                let tempString="";
                 for (var p in item) {
                     tempString+="=";
                     if (item.hasOwnProperty(p)) {
                         tempString += item[p]
                     }
                 }
-                tempString='?'+tempString.substr(1);
-                console.log(tempString);
+                if(index===0) queryString='?'+tempString.substr(1);
+                else queryString=queryString+'&'+tempString.substr(1);
+                console.log(queryString);
             }
         });
-        if(tempString!=="") axios.get(`https://pik-predator.herokuapp.com/catalog${tempString}`)
+        if(queryString!=="") axios.get(`https://pik-predator.herokuapp.com/catalog${queryString}`)
             .then(response => this.setState({products: response.data}));
         else this.getProducts();
         console.log(this.products);

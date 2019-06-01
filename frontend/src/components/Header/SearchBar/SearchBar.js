@@ -19,15 +19,12 @@ class SearchBar extends Component{
         let pos;
         console.log(this.props.filter.filters[0]);
         if(this.props.filter.filters[0]!==null) {
-            console.log("o tu!");
             pos = this.props.filter.filters.map(function (e) {
                 return e.property;
             }).indexOf('query');
         }
-        this.props.removeFilter(pos); //works on mozilla, doesn't work on chrome
-        //this.props.clearFilters();
+        this.props.removeFilter(pos);
         this.props.addFilter({property:'query', value: fieldVal});
-       // this.props.addFilter({property:'manufacturer', value: fieldVal});
     }
 
     render()  {
