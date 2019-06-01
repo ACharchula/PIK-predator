@@ -26,7 +26,7 @@ class SearchBar extends Component{
         }
         //this.props.removeFilter(pos); works on mozilla, doesn't work on chrome
         this.props.clearFilters();
-        this.props.addFilter({property:'manufacturer', value: fieldVal});
+        this.props.addFilter({property:'query', value: fieldVal});
        // this.props.addFilter({property:'manufacturer', value: fieldVal});
     }
 
