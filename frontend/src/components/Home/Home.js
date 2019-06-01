@@ -25,6 +25,12 @@ class Home extends Component {
             .then(response => this.setState({products: response.data}));
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.filter !== this.props.filter) {
+            this.filterProducts();
+        }
+    }
+
     filterProducts = () => {
         let tempString="";
         if(this.props.filter.filters!==[]) this.props.filter.filters.forEach(function addToString(item,index,array) {
@@ -48,7 +54,6 @@ class Home extends Component {
 
 
     renderProducts = () => {
-        this.filterProducts();
         return this.state.products.map((product, i) => {
             return (
                 <Product product={product} key={i}  />
