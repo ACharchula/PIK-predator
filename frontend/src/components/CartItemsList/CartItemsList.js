@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './CartItemsList.scss';
 import CartItem from './CartItem/CartItem';
 import Button from "react-bootstrap/Button";

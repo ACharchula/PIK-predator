@@ -23,7 +23,7 @@ const supportedPaymentMethods = [
       // Close the payment request UI.
       return paymentResponse.complete()
       .then(() => {
-        fetch(`http://localhost:8080/users/2/cart/checkout`, {
+        fetch(`https://pik-predator.herokuapp.com/users/2/cart/checkout`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const supportedPaymentMethods = [
             firstName: target.firstName.value,
             lastName: target.lastName.value,
             email: target.email.value,
-            street: target.email.value,
+            street: target.street.value,
             houseNumber: target.houseNumber.value,
             localNumber: target.localNumber.value,
             postalCode: target.postalCode.value,
