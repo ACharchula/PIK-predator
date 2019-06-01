@@ -24,7 +24,7 @@ class CartController(
     /**
      * Returns all products in the cart
      * @param userId id of the user who owns this cart
-     * @return acceptedValues of basic infos about products in cart
+     * @return list of basic infos about products in cart
      */
     @GetMapping("/users/{userId}/cart")
     @CrossOrigin
@@ -37,9 +37,9 @@ class CartController(
     }
 
     /**
-     * Adds acceptedValues of products to the cart
+     * Adds list of products to the cart
      * @param userId id of the user who owns this cart
-     * @param productIds acceptedValues of ids of the products to be added (given in request body)
+     * @param productIds list of ids of the products to be added (given in request body)
      */
     @PostMapping("/users/{userId}/cart")
     @CrossOrigin

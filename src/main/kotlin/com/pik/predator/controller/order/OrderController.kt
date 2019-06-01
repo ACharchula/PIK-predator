@@ -16,7 +16,7 @@ class OrderController(
     @CrossOrigin
     fun getOrderInfo(@PathVariable orderId: Int, response: HttpServletResponse): Order? {
         return orderRepository.getById(orderId)
-            .applyNullable(
+            .alsoNullable(
                 onNotNull = { response.ok() },
                 onNull = { response.notFound() }
             )

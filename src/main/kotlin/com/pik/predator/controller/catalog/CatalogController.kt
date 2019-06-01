@@ -14,7 +14,7 @@ class CatalogController(
 ) {
     /**
      * Returns all products from the catalog
-     * @return acceptedValues of basic infos about the products
+     * @return list of basic infos about the products
      */
     @Deprecated("use GET /catalog without parameters")
     @CrossOrigin
@@ -31,7 +31,7 @@ class CatalogController(
      * - price between 1000 and 2000
      * - manufacturer Asus or Lenovo
      * @param filterParams the map of filters
-     * @return the filtered acceptedValues of product basic infos
+     * @return the filtered list of product basic infos
      */
     @CrossOrigin
     @GetMapping("/catalog")
