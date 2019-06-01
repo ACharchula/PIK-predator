@@ -4,15 +4,17 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.catalog.CatalogController
 import com.pik.predator.db.dto.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
-import org.junit.Assert.*
+import com.pik.predator.helpers.containsIgnoreCase
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.springframework.test.context.junit4.SpringRunner
-import org.junit.Before
 import org.mockito.Mock
+import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
 import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpServletResponse.*
+import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
+import javax.servlet.http.HttpServletResponse.SC_OK
 
 @RunWith(SpringRunner::class)
 class CatalogControllerTest {
@@ -75,7 +77,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterProcessors() {
+    fun `test filter processors`() {
         assertEquals(
             products.filter { it.processor == "Intel Core i7 8550H" || it.processor == "Intel Core i7 8600U" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -86,7 +88,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterTypes() {
+    fun `test filter types`() {
         assertEquals(
             products.filter { it.type == "Ultrabook" || it.type == "Gaming" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -97,7 +99,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterManufacturers() {
+    fun `test filter manufacturers`() {
         assertEquals(
             products.filter { it.manufacturer == "Lenovo" || it.manufacturer == "Asus" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -108,7 +110,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterHardDriveType() {
+    fun `test filter hard drive types`() {
         assertEquals(
             products.filter { it.hardDriveType == "HDD" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -118,7 +120,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterRamType() {
+    fun `test filter ram types`() {
         assertEquals(
             products.filter { it.ramType == "DDR4" || it.ramType == "DDR4X" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -129,7 +131,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterDisplayType() {
+    fun `test filter display types`() {
         assertEquals(
             products.filter { it.displayType == "matte" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -139,7 +141,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterDisplayResolution() {
+    fun `test filter display resolutions`() {
         assertEquals(
             products.filter { it.displayResolution == "1920x1080" || it.displayResolution == "4096x3112" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -150,7 +152,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterScreenSzie() {
+    fun `test filter screen sizes`() {
         assertEquals(
             products.filter { it.screenSize == "14" || it.screenSize == "15" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -161,7 +163,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterColor() {
+    fun `test filter colors`() {
         assertEquals(
             //czarny jak piekło, czerwony jak ogień
             products.filter { it.color == "black" || it.color == "black-red" }.mapToBasicInfoList(),
@@ -173,7 +175,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterWarranty() {
+    fun `test filter warranties`() {
         assertEquals(
             products.filter { it.warranty == "2 years" || it.warranty == "5 years" }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -184,9 +186,9 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterGraphicCardManufacturer() {
+    fun `test filter graphic card manufacturers`() {
         assertEquals(
-            products.filter { it.graphicCard.contains("NVIDIA") || it.graphicCard.contains("AMD") }.mapToBasicInfoList(),
+            products.filter { it.graphicCard.contains("Nvidia") || it.graphicCard.contains("AMD") }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
                 "graphicCardManufacturer1" to "NVIDIA",
                 "graphicCardManufacturer2" to "AMD"
@@ -195,7 +197,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterPortTypes() {
+    fun `test filter port types`() {
         assertEquals(
             products.filter { it.portTypes.containsAll(listOf("USB 2.0", "USB 3.0")) }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -206,7 +208,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterPrice() {
+    fun `test filter price`() {
         assertEquals(
             products.filter { it.price in 2000.toBigDecimal()..8000.toBigDecimal() }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -217,7 +219,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterWeight() {
+    fun `test filter weight`() {
         assertEquals(
             products.filter { it.weight in 1.8f..2.2f }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -228,7 +230,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterHardDriveSize() {
+    fun `test filter hard drive sizes`() {
         assertEquals(
             products.filter { it.hardDriveSize in 1000..1500 }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -239,7 +241,7 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterGraphicVRAM() {
+    fun `test filter graphic VRAM`() {
         assertEquals(
             products.filter { it.graphicVRAM in 2..4 }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
@@ -250,12 +252,88 @@ class CatalogControllerTest {
     }
 
     @Test
-    fun testFilterRamSize() {
+    fun `test filter RAM sizes`() {
         assertEquals(
             products.filter { it.ramSize in 16..32 }.mapToBasicInfoList(),
             catalogController.getProducts(mapOf(
                 "ramSizeFrom" to "16",
                 "ramSizeTo" to "32"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `when apply ListedValuesFilter then filtering should not be case sensitive`() {
+        assertEquals(
+            products.filter { it.color == "black" || it.color == "black-red" }.mapToBasicInfoList(),
+            catalogController.getProducts(mapOf(
+                "color1" to "Black",
+                "color2" to "black-RED"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `when apply ListToListFilter then filtering should not be case sensitive`() {
+        assertEquals(
+            products.filter { it.portTypes.containsAll(listOf("USB 2.0", "USB 3.0")) }.mapToBasicInfoList(),
+            catalogController.getProducts(mapOf(
+                "portType1" to "usb 2.0",
+                "portType2" to "Usb 3.0"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `when apply IsContainedByAtLeastOneAcceptedValueFilter then filtering should not be case sensitive`() {
+        assertEquals(
+            products.filter { it.graphicCard.contains("Nvidia") || it.graphicCard.contains("AMD") }.mapToBasicInfoList(),
+            catalogController.getProducts(mapOf(
+                "graphicCardManufacturer1" to "NVIDIA",
+                "graphicCardManufacturer2" to "amd"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `test search by model and manufacturer`() {
+        assertEquals(
+            products.filter { it.model.containsIgnoreCase("as") || it.manufacturer.containsIgnoreCase("as") }.mapToBasicInfoList(),
+            catalogController.getProducts(mapOf(
+                "query" to "as"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `test search without filtering`() {
+        assertEquals(
+            productListFromIds(1, 2),
+            catalogController.getProducts(mapOf(
+                "query" to "l"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `test filter without searching`() {
+        assertEquals(
+            productListFromIds(2, 3),
+            catalogController.getProducts(mapOf(
+                "ramSizeFrom" to "16",
+                "ramSizeTo" to "32"
+            ), response)
+        )
+    }
+
+    @Test
+    fun `test search with filtering`() {
+        assertEquals(
+            productListFromIds(2),
+            catalogController.getProducts(mapOf(
+                "ramSizeFrom" to "16",
+                "ramSizeTo" to "32",
+                "query" to "l"
             ), response)
         )
     }

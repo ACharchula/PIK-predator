@@ -1,6 +1,8 @@
 package com.pik.predator.controller.catalog
 
 import com.pik.predator.db.entities.Product
+import com.pik.predator.helpers.containsAllIgnoreCase
+import com.pik.predator.helpers.containsIgnoreCase
 import java.math.BigDecimal
 import kotlin.reflect.KProperty1
 
@@ -10,7 +12,7 @@ class Filters(private val map: Map<String, String>) {
             protected val property: KProperty1<Product, T>,
             alternativeName: String?
     ) {
-        protected val list = acceptedValuesOf(alternativeName ?: property.name)
+        protected val acceptedValues: List<String> = acceptedValuesOf(alternativeName ?: property.name)
         fun accept(product: Product): Boolean = doAccept(property.get(product))
         abstract fun doAccept(value: T): Boolean
     }
@@ -19,21 +21,21 @@ class Filters(private val map: Map<String, String>) {
             property: KProperty1<Product, String>,
             alternativeName: String? = null
     ) : Filter<String>(property, alternativeName) {
-        override fun doAccept(value: String): Boolean = list.contains(value) || list.isEmpty()
+        override fun doAccept(value: String): Boolean = acceptedValues.containsIgnoreCase(value) || acceptedValues.isEmpty()
     }
 
     inner class ListToListFilter(
             property: KProperty1<Product, List<String>>,
             alternativeName: String? = null
     ) : Filter<List<String>>(property, alternativeName) {
-        override fun doAccept(value: List<String>): Boolean = value.containsAll(list)
+        override fun doAccept(value: List<String>): Boolean = value.containsAllIgnoreCase(acceptedValues)
     }
 
-    inner class AtLeastOneValueMatchFilter(
+    inner class IsContainedByAtLeastOneAcceptedValueFilter(
             property: KProperty1<Product, String>,
             alternativeName: String? = null
     ) : Filter<String>(property, alternativeName) {
-        override fun doAccept(value: String): Boolean = list.any { manufacturer -> value.contains(manufacturer) } || list.isEmpty()
+        override fun doAccept(value: String): Boolean = acceptedValues.any { acceptedValue -> value.containsIgnoreCase(acceptedValue) } || acceptedValues.isEmpty()
     }
 
     inner class RangeFilter<T : Comparable<T>>(
@@ -62,7 +64,7 @@ class Filters(private val map: Map<String, String>) {
         ListedValuesFilter(Product::screenSize),
         ListedValuesFilter(Product::color),
         ListedValuesFilter(Product::warranty),
-        AtLeastOneValueMatchFilter(Product::graphicCard, "graphicCardManufacturer"),
+        IsContainedByAtLeastOneAcceptedValueFilter(Product::graphicCard, "graphicCardManufacturer"),
         ListToListFilter(Product::portTypes, "portType"),
         RangeFilter<BigDecimal>({ it?.toBigDecimal() }, BigDecimal.ZERO, BigDecimal(Int.MAX_VALUE), Product::price),
         RangeFilter( { it?.toFloat() }, 0f, Float.MAX_VALUE, Product::weight),
