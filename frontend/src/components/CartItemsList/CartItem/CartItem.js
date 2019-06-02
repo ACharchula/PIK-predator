@@ -13,11 +13,11 @@ const CartItem = ({product, index, removeItem}) => {
                     <Image src={product.imageUrl} fluid/>
                 </div>
                 <div className="product-details-price">
-                    <p>{product.model} {product.processor}/{product.ramSize}/{product.hardDriveSize}/{product.operatingSystem}</p>
+                    <p>{product.manufacturer} {product.model}</p>
                     <p>Price: {product.price} PLN</p>
                 </div>
             </div>
-            <Button className="clear-button remove-button" size="sm" variant="danger" onClick={()=>removeItem(index)}>X</Button>
+            <Button className="clear-button remove-button" size="sm" variant="danger" onClick={()=>removeItem(index,product)}>X</Button>
         </div>
     );
 };

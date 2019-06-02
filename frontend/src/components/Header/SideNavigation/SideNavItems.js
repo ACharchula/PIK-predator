@@ -20,7 +20,7 @@ class SideNavItems extends Component {
                 },
                 {
                     type: "option",
-                    text: "Hard Drive Type",
+                    text: "Hard Drive Type"
                     columnName: 'hardDriveType',
                     options: []
                 },
@@ -97,6 +97,7 @@ class SideNavItems extends Component {
             )
         })
     }
+
     render = () => {
         return (
             <div>
@@ -105,6 +106,7 @@ class SideNavItems extends Component {
         )
     }
 }
+
 
 const mapStateToProps = (state) => {
     return {
