@@ -23,7 +23,7 @@ const store = createStore(
     rootReducer,
     persistedState,
     compose(
-        applyMiddleware(promiseMiddleware, thunk),
+        applyMiddleware(thunk, promiseMiddleware ),
         window.devToolsExtension ? window.devToolsExtension() : f => f
     )
 )
