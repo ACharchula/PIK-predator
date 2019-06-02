@@ -2,6 +2,7 @@ import history from './History';
 import auth0 from 'auth0-js';
 import {clearCart, failedLogin, successfulLogin, successfulLogout} from "../redux/actions";
 import store from '../index.js';
+import axios from "axios";
 
 export default class Auth {
   accessToken;
@@ -27,7 +28,25 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         store.dispatch(successfulLogin());
-        localStorage.setItem('id', this.getAccessToken())
+        localStorage.setItem('id', this.getAccessToken());
+          if(store.getState().cart && store.getState().cart.products && store.getState().cart.products.length > 0){
+              const productIds = store.getState().cart.products.map( product => {
+                  return parseInt(product.id);
+              });
+              const author = 'Bearer '.concat(localStorage.getItem('id'));
+              axios({
+                  method:'post',
+                  url: URL + 'users/2/cart',
+                  headers:{
+                      'Content-Type': 'application/json',
+                      'Authorization': author,
+                  },
+                  data: productIds
+              }).then(
+                  (response) => { console.log(response) },
+                  (error) => { console.log(error) }
+              );
+          }
       } else if (err) {
         history.replace('/');
         store.dispatch(failedLogin());
