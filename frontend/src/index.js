@@ -31,7 +31,8 @@ const store = createStore(
 store.subscribe(()=> {
     saveState({
         login: store.getState().login,
-        cart: store.getState().cart
+        cart: store.getState().cart,
+        filter: store.getState().filter
     });
 });
 

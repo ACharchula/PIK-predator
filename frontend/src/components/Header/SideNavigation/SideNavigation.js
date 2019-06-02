@@ -1,6 +1,7 @@
 import React from 'react';
 import SideNav from 'react-simple-sidenav';
 import SideNavItems from './SideNavItems';
+import PriceBars from './PriceBar/PriceBars'
 import { BackgroundColor } from '../../../config';
 
 const SideNavigation = (props) => {
@@ -15,7 +16,8 @@ const SideNavigation = (props) => {
                     maxWidth:'220px',
                 }}
             >
-                <SideNavItems/>
+                <PriceBars {...props} />
+                <SideNavItems {...props}/>
             </SideNav>
         </div>
     )
