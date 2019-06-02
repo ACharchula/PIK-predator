@@ -59,7 +59,7 @@ export const removeProductFromCart = (index,product) => {
             const url = 'https://pik-predator.herokuapp.com/users/2/cart/'.concat(product.productId);
 
             axios({
-                method: 'post',
+                method: 'delete',
                 url: url,
                 headers: {
                     'Content-Type': 'application/json',
