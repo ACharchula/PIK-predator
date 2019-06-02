@@ -8,14 +8,36 @@ export const SET_CART = 'SET_CART';
 
 
 export const addToCart = (product) => {
-    // if(localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") == true){
-    //
-    // }
+    return dispatch => {
+        if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
+            console.log('true');
+            const author = 'Bearer '.concat(localStorage.getItem('id'));
+
+            let productsIds = [];
+            productsIds.push(product.id);
+
+            axios({
+                method: 'post',
+                url: 'https://pik-predator.herokuapp.com/users/2/cart',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': author,
+                },
+                data: productsIds
+            }).then(response => {
+                console.log(response.data);
+                dispatch(addToReduxCart(product));
+            });
+        }
+    };
+};
+
+export const addToReduxCart = (product) => {
     return {
         type: ADD_PRODUCT_TO_CART,
         product
     }
-};
+}
 
 export const getProducts = () => {
     return {
