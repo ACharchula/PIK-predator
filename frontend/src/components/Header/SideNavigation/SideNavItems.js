@@ -26,7 +26,7 @@ const SideNavItems = (props) => {
                 </div>
             )
         })
-    } 
+    }
 
     return(
        <div>

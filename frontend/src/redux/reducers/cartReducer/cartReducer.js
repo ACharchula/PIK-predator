@@ -1,5 +1,5 @@
 import {
-    ADD_PRODUCT_TO_CART, GET_PRODUCTS, REMOVE_PRODUCT_FROM_CART, CLEAR_CART
+    ADD_PRODUCT_TO_CART, GET_PRODUCTS, REMOVE_PRODUCT_FROM_CART, CLEAR_CART, SET_CART
 } from '../../actions';
 
 export const initialState = {
@@ -7,7 +7,8 @@ export const initialState = {
 };
 
 export default function cartReducer(state = initialState, action) {
-    const { product, index } = action;
+    const { product, index, cartProducts } = action;
+
     let products = state.products.slice(0);
     switch (action.type) {
         case ADD_PRODUCT_TO_CART:
@@ -30,6 +31,11 @@ export default function cartReducer(state = initialState, action) {
             return {
                 ...state,
                 products:[]
+            };
+        case SET_CART:
+            return {
+                ...state,
+                products: cartProducts
             };
         default:
             return {
