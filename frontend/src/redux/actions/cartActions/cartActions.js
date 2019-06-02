@@ -10,7 +10,6 @@ export const SET_CART = 'SET_CART';
 export const addToCart = (product) => {
     return dispatch => {
         if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
-            console.log('true');
             const author = 'Bearer '.concat(localStorage.getItem('id'));
 
             let productsIds = [];
@@ -25,10 +24,9 @@ export const addToCart = (product) => {
                 },
                 data: productsIds
             }).then(response => {
-                console.log(response.data);
                 dispatch(addToReduxCart(product));
             });
-        }
+        } else dispatch(addToReduxCart(product));
     };
 };
 
@@ -37,7 +35,7 @@ export const addToReduxCart = (product) => {
         type: ADD_PRODUCT_TO_CART,
         product
     }
-}
+};
 
 export const getProducts = () => {
     return {
@@ -45,12 +43,35 @@ export const getProducts = () => {
     }
 };
 
-export const removeProductFromCart = (index) => {
+export const removeFromReduxCart = (index) => {
     return {
         type: REMOVE_PRODUCT_FROM_CART,
         index
     }
 };
+
+export const removeProductFromCart = (index,product) => {
+    return dispatch => {
+        console.log(product);
+        if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
+            const author = 'Bearer '.concat(localStorage.getItem('id'));
+
+            // const url = 'https://pik-predator.herokuapp.com/users/2/cart/'.concat(product.productId);
+            const url = 'http://localhost:8080/users/2/cart/'.concat(product.productId);
+
+            axios({
+                method: 'get',
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': author,
+                },
+            }).then(response => {
+                dispatch(removeFromReduxCart(index));
+            });
+        } else dispatch(removeFromReduxCart(index));
+    };
+}
 
 export const clearCart = () => {
     return {
