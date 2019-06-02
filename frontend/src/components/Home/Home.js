@@ -13,15 +13,16 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             products: []
         }
+
     }
 
+
     componentDidMount() {
-        if(this.props.filter.filters!==[]) this.props.clearFilters();
-        this.getProducts();
+        //if(this.props.filter.filters!==[]) this.props.clearFilters();
+        this.filterProducts();
     }
 
     getProducts = () => {

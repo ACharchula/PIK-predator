@@ -1,8 +1,5 @@
 import './SideNavigation.scss';
 import React, { Component } from 'react'
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import {connect} from "react-redux";
@@ -29,8 +26,8 @@ class SideNavItems extends Component {
                 },
                 {
                     type: "option",
-                    text: 'Graphics Card',
-                    columnName: 'graphicCard',
+                    text: 'Display',
+                    columnName: 'displayResolution',
                     options: []
                 }
             ]
@@ -51,7 +48,7 @@ class SideNavItems extends Component {
         //this.props.clearFilters();
         let pos=0;
         let values =event.target.name.split('_');
-        console.log(event.target.name)
+        console.log(event.target.value)
         let type=values[0];
         let value=values[1];
         let flag=0;
@@ -98,7 +95,6 @@ class SideNavItems extends Component {
                             {this.getCheckboxes(item)}
                         </Form.Group>
                     </Form>
-
                 </div>
             )
         })

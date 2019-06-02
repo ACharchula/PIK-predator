@@ -1,0 +1,23 @@
+@import 'SideNavigation.scss';
+
+
+.priceBar {
+  span {
+	border-color: $icons-color;
+	background: $icons-color;
+
+	svg {
+	  color: $dark-gray;
+	}
+  }
+
+  div :hover {
+	  cursor: pointer;
+	  border-color: white;
+	  background: white;
+  }
+//  margin: 8px;
+  padding: 10px;
+}
+
+
