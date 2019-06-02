@@ -40,6 +40,7 @@ class SideNavItems extends Component {
                 .then(response => {
                     item.options = response.data;
                 })
+            return item;
         });
     };
 
