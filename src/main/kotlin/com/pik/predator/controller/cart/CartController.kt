@@ -135,7 +135,8 @@ class CartController(
                     clearCart(userId, response)
 
                     response.created()
-                    response.setHeader("Location", "/orders/${order.orderId}")
+                    response.setHeader("Access-Control-Expose-Headers", "Location")
+                    response.setHeader("Location", "${order.orderId}")
                 },
                 onNull = { response.notFound() }
             )
