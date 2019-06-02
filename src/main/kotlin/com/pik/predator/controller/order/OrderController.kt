@@ -5,16 +5,14 @@ import com.pik.predator.db.dto.mapToSummaryInfoList
 import com.pik.predator.db.entities.Order
 import com.pik.predator.db.repository.OrderRepository
 import com.pik.predator.helpers.*
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
+@RestController
 class OrderController(
     private val orderRepository: OrderRepository
 ) {
-    @GetMapping("orders/{orderId")
+    @GetMapping("/orders/{orderId}")
     @CrossOrigin
     fun getOrderInfo(@PathVariable orderId: Int, response: HttpServletResponse): Order? {
         return orderRepository.getById(orderId)
@@ -38,7 +36,7 @@ class OrderController(
             )
     }
 
-    @PostMapping("/users/{userId}/orders")
+    @GetMapping("/users/{userId}/orders")
     @CrossOrigin
     fun getOrdersOfUser(@PathVariable userId: String, response: HttpServletResponse): List<SummaryOrderInfo> {
         return orderRepository.findByUserId(userId)

@@ -31,7 +31,7 @@ class CartItemsList extends React.Component {
                     { products.length > 0 ?
                         <ButtonToolbar>
                             <Button className="clear-button" size="sm"variant="danger"onClick={() => this.setState({ modalShow: true })}>Pay</Button>
-                            <PaymentDialog show={this.state.modalShow} onHide={modalClose}/>
+                            <PaymentDialog show={this.state.modalShow} onHide={modalClose} total={total} />
                         </ButtonToolbar> :
                     null }
                 </div>

@@ -6,11 +6,10 @@ import getConfig from './config'
 
 class PaymentDialog extends React.Component {
 
-    handleSubmit = (event) => {
+    handleSubmit = (event, total) => {
         event.preventDefault();
         this.props.onHide();
-        console.log(this.props)
-        getConfig(event.target);
+        getConfig(event.target, total);
     }
 
     render() {
@@ -27,7 +26,7 @@ class PaymentDialog extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={e => this.handleSubmit(e)}>
+                    <Form onSubmit={e => this.handleSubmit(e, this.props.total)}>
                         <Form.Label>First name</Form.Label>
                         <Form.Control name="firstName" type="text" placeholder="Enter first name" /> <br/>
                         <Form.Label>Last name</Form.Label>

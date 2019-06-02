@@ -1,9 +1,7 @@
 package com.pik.predator.db.dto
 
 import com.pik.predator.db.entities.Order
-import com.pik.predator.db.entities.Product
 import java.math.BigDecimal
-import java.time.LocalDate
 
 data class SummaryOrderInfo(
     var orderId: Int,
@@ -16,7 +14,9 @@ fun Order.mapToSummaryInfo() =
     SummaryOrderInfo(
         orderId,
         products,
-        products.map { it.price }.reduce { acc, bigDecimal -> acc + bigDecimal },
+            if (products.isNotEmpty())
+                products.map { it.price }.reduce { acc, bigDecimal -> acc + bigDecimal }
+            else BigDecimal.ZERO,
         date
     )
 

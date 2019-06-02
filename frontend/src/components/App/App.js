@@ -15,6 +15,7 @@ import CartContainer from '../../containers/CartContainer';
 //fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faShoppingCart, faUser, faSearch } from '@fortawesome/free-solid-svg-icons'
+import UserProfile from '../UserProfile/UserProfile';
 
 library.add(faBars, faShoppingCart, faUser, faSearch);
 
@@ -48,6 +49,7 @@ class App extends Component {
                                 }}/>
                             <Route path="/product/:id" exact component={ProductView}/>
                             <Route path="/cart" exact component={CartContainer}/>
+                            <Route path="/profile" exact component={UserProfile}/>
                         </Switch>
                     </Container>
                 </Layout>

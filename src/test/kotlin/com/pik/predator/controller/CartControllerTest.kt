@@ -274,7 +274,7 @@ class CartControllerTest {
             response
         )
 
-        verify(response).setHeader("Location", "/orders/${sequenceGenerator.nextId(Order.SEQUENCE_NAME)}")
+        verify(response).setHeader("Location", "${sequenceGenerator.nextId(Order.SEQUENCE_NAME)}")
     }
 
     @Test
