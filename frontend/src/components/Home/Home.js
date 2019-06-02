@@ -18,10 +18,8 @@ class Home extends Component {
         }
 
     }
-
-
     componentDidMount() {
-        //if(this.props.filter.filters!==[]) this.props.clearFilters();
+        if(this.props.filter.filters!==[]) this.props.clearFilters();
         this.filterProducts();
     }
 

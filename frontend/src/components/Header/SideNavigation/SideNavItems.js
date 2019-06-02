@@ -48,7 +48,6 @@ class SideNavItems extends Component {
         //this.props.clearFilters();
         let pos=0;
         let values =event.target.name.split('_');
-        console.log(event.target.value)
         let type=values[0];
         let value=values[1];
         let flag=0;
@@ -58,7 +57,6 @@ class SideNavItems extends Component {
                     return e.value;
                 }).indexOf(value);
                 if(pos!==-1) {
-                    console.log(this.props.filter.filters[pos].property+" "+this.props.filter.filters[pos].value);
                     this.props.removeFilter(pos);
                     flag=1;
                     pos=-1;
