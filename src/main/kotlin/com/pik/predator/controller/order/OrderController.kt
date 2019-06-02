@@ -1,5 +1,7 @@
 package com.pik.predator.controller.order
 
+import com.pik.predator.db.dto.SummaryOrderInfo
+import com.pik.predator.db.dto.mapToSummaryInfoList
 import com.pik.predator.db.entities.Order
 import com.pik.predator.db.repository.OrderRepository
 import com.pik.predator.helpers.*
@@ -34,5 +36,15 @@ class OrderController(
                 },
                 onNull = { response.notFound() }
             )
+    }
+
+    @PostMapping("/users/{userId}/orders")
+    @CrossOrigin
+    fun getOrdersOfUser(@PathVariable userId: String, response: HttpServletResponse): List<SummaryOrderInfo> {
+        return orderRepository.findByUserId(userId)
+            .let { orders ->
+                response.ok()
+                orders.mapToSummaryInfoList()
+            }
     }
 }
