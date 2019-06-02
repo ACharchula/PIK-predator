@@ -16,7 +16,8 @@ fun Order.mapToSummaryInfo() =
     SummaryOrderInfo(
         orderId,
         products,
-        products.map { it.price }.reduce { acc, bigDecimal -> acc + bigDecimal },
+        if (products.isNotEmpty()) products.map { it.price }.reduce { acc, bigDecimal -> acc + bigDecimal }
+        else BigDecimal.ZERO,
         date
     )
 
