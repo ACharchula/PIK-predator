@@ -2,6 +2,9 @@ package com.pik.predator.controller
 
 import com.nhaarman.mockitokotlin2.whenever
 import com.pik.predator.controller.order.OrderController
+import com.pik.predator.db.dto.SummaryOrderInfo
+import com.pik.predator.db.dto.mapToSummaryInfo
+import com.pik.predator.db.dto.mapToSummaryInfoList
 import com.pik.predator.db.entities.Order
 import com.pik.predator.db.repository.OrderRepository
 import org.junit.Before
@@ -13,14 +16,21 @@ import javax.servlet.http.HttpServletResponse
 import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringRunner
+import java.time.LocalDate
 import javax.servlet.http.HttpServletResponse.*
 
 @RunWith(SpringRunner::class)
 class OrderControllerTest {
 
-    private val order = Order(
-        1, "John", "Rambo", "john.rambo@vietnam.com", "Wallstreet", "120", "18", "06-300", "New York", "PayPal",
-        productListFromIds(1, 3)
+    private val orders = listOf(
+        Order(
+            1, "1", "John", "Rambo", "john.rambo@vietnam.com", "Wallstreet", "120", "18", "06-300", "New York", "PayPal",
+            productListFromIds(1, 3), LocalDate.of(2019, 6, 2).format(Order.DATE_FORMATTER)
+        ),
+        Order(
+            1, "1", "Bambo", "Mambo", "bambo.mambo@poranekkojota.com", "Jakastam", "120", "18", "06-300", "Warszawa", "PayPal",
+            productListFromIds(1, 2), LocalDate.of(2019, 6, 2).format(Order.DATE_FORMATTER)
+        )
     )
 
     //tested object
@@ -34,7 +44,8 @@ class OrderControllerTest {
 
     @Before
     fun setup() {
-        whenever(orderRepository.findById(1)).thenReturn(Optional.of(order))
+        whenever(orderRepository.findById(1)).thenReturn(Optional.of(orders[0]))
+        whenever(orderRepository.findByUserId("1")).thenReturn(orders)
         orderController = OrderController(orderRepository)
     }
 
@@ -69,7 +80,7 @@ class OrderControllerTest {
     @Test
     fun `when get order info then info is returned`() {
         assertEquals(
-            order,
+            orders[0],
             orderController.getOrderInfo(1, response)
         )
     }
@@ -92,5 +103,41 @@ class OrderControllerTest {
     fun `when get order info of not existing order the response status is 404 NOT FOUND`() {
         orderController.getOrderInfo(2, response)
         response.verifyStatus(SC_NOT_FOUND)
+    }
+
+    @Test
+    fun `test map Order to SummartOrderInfo`() {
+        assertEquals(
+            SummaryOrderInfo(1, productListFromIds(1, 2), 15000.toBigDecimal(), LocalDate.of(2019, 6, 2).format(Order.DATE_FORMATTER)),
+            orders[1].mapToSummaryInfo()
+        )
+    }
+
+    @Test
+    fun `when get orders of user then appropriate orders are returned`() {
+        assertEquals(
+            orders.mapToSummaryInfoList(),
+            orderController.getOrdersOfUser("1", response)
+        )
+    }
+
+    @Test
+    fun `when get orders of user then response status is 200 OK`() {
+        orderController.getOrdersOfUser("1", response)
+        response.verifyStatus(SC_OK)
+    }
+
+    @Test
+    fun `when get orders of user who didnt submited any orders then empty list is returned`() {
+        assertEquals(
+            emptyList<SummaryOrderInfo>(),
+            orderController.getOrdersOfUser("2", response)
+        )
+    }
+
+    @Test
+    fun `when get orders of user who didnt submited any orders then response status is 200 OK`() {
+        orderController.getOrdersOfUser("2", response)
+        response.verifyStatus(SC_OK)
     }
 }

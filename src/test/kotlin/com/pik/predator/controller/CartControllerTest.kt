@@ -33,11 +33,12 @@ import javax.servlet.http.HttpServletResponse.*
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import java.time.LocalDate
 
 @RunWith(SpringRunner::class)
 class CartControllerTest {
 
-    private val cart = Cart(1, 1, emptyMutableList())
+    private val cart = Cart(1, "1", emptyMutableList())
 
     //tested object
     private lateinit var cartController: CartController
@@ -45,7 +46,7 @@ class CartControllerTest {
     //dependencies
     @Spy lateinit var cartRepository: SpyCartRepository
     @Mock lateinit var productRepository: ProductRepository
-    @Mock lateinit var orderRepository: OrderRepository
+    @Spy lateinit var orderRepository: SpyOrderRepository
     @Mock lateinit var sequenceGenerator: SequenceGenerator
 
     //other mocks
@@ -53,8 +54,8 @@ class CartControllerTest {
 
     @Before
     fun setup() {
-        whenever(cartRepository.findByUserId(1)).thenReturn(cart)
-        whenever(cartRepository.findByUserId(2)).thenReturn(null)
+        whenever(cartRepository.findByUserId("1")).thenReturn(cart)
+        whenever(cartRepository.findByUserId("2")).thenReturn(null)
 
         whenever(productRepository.findById(1)).thenReturn(Optional.of(products[0]))
         whenever(productRepository.findById(2)).thenReturn(Optional.of(products[1]))
@@ -68,11 +69,19 @@ class CartControllerTest {
 
     //helpers
     private lateinit var savedCart: Cart
+    private lateinit var savedOrder: Order
 
     abstract inner class SpyCartRepository : CartRepository {
         override fun <S : Cart> save(cart: S): S {
             savedCart = cart
             return cart
+        }
+    }
+
+    abstract inner class SpyOrderRepository : OrderRepository {
+        override fun <S : Order> save(order: S): S {
+            savedOrder = order
+            return order
         }
     }
 
@@ -98,13 +107,13 @@ class CartControllerTest {
     fun `when get products of cart with invalid userId then null is returned`() {
         assertEquals(
             null,
-            cartController.getProductsInCart(2, response)
+            cartController.getProductsInCart("2", response)
         )
     }
 
     @Test
     fun `when get products of cart with invalid userId then response status is 404 NOT FOUND`() {
-        cartController.getProductsInCart(2, response)
+        cartController.getProductsInCart("2", response)
         response.verifyStatus(SC_NOT_FOUND)
     }
 
@@ -129,12 +138,12 @@ class CartControllerTest {
 
     @Test
     fun `when add products to non existing cart then new cart is created`() {
-        cartController.addProductsToCart(2, listOf(1, 2), response)
+        cartController.addProductsToCart("2", listOf(1, 2), response)
 
         verify(cartRepository).save(
             Cart(
                 sequenceGenerator.nextId(Cart.SEQUENCE_NAME),
-                2,
+                "2",
                 productListFromIds(1, 2)
             )
         )
@@ -142,7 +151,7 @@ class CartControllerTest {
 
     @Test
     fun `when add products to non existing cart then resposne status is 201 CREATED`() {
-        cartController.addProductsToCart(2, listOf(1, 2), response)
+        cartController.addProductsToCart("2", listOf(1, 2), response)
         response.verifyStatus(SC_CREATED)
     }
 
@@ -178,7 +187,7 @@ class CartControllerTest {
 
     @Test
     fun `when remove product from non-existing cart then response status is 404 NOT FOUND`() {
-        cartController.removeProductFromCart(2, 1, response)
+        cartController.removeProductFromCart("2", 1, response)
         response.verifyStatus(SC_NOT_FOUND)
     }
 
@@ -203,7 +212,7 @@ class CartControllerTest {
 
     @Test
     fun `when clear non existing cart then response status is 404 NOT FOUND`() {
-        cartController.clearCart(2, response)
+        cartController.clearCart("2", response)
         response.verifyStatus(SC_NOT_FOUND)
     }
 
@@ -219,11 +228,30 @@ class CartControllerTest {
             response
         )
 
-        verify(orderRepository).save(
+        assertEquals(
+            savedOrder,
             Order(
                 sequenceGenerator.nextId(Order.SEQUENCE_NAME),
+                cart.userId,
                 "John", "Rambo", "john.rambo@vietnam.com", "Wallstreet", "120", "18", "06-300", "New York", "PayPal",
-                productListFromIds(1, 3))
+                productListFromIds(1, 3), LocalDate.now().format(Order.DATE_FORMATTER))
+        )
+
+    }
+
+    @Test
+    fun `when checkout existing cart then this cart is cleared`() {
+        cart.items = productListFromIds(1, 2, 3)
+
+        cartController.checkout(
+            cart.userId,
+            CheckoutRequest("John", "Rambo", "john.rambo@vietnam.com", "Wallstreet", "120", "18", "06-300", "New York", "PayPal"),
+            response
+        )
+
+        assertEquals(
+            emptyList<BasicProductInfo>(),
+            savedCart.items
         )
     }
 
@@ -252,7 +280,7 @@ class CartControllerTest {
     @Test
     fun `when checkout non existing cart then response status is 404 NOT FOUND`() {
         cartController.checkout(
-            2,
+            "2",
             CheckoutRequest("John", "Rambo", "john.rambo@vietnam.com", "Wallstreet", "120", "18", "06-300", "New York", "PayPal"),
             response
         )
