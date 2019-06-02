@@ -20,7 +20,7 @@ class SideNavItems extends Component {
                 },
                 {
                     type: "option",
-                    text: "Hard Drive Type"
+                    text: "Hard Drive Type",
                     columnName: 'hardDriveType',
                     options: []
                 },
