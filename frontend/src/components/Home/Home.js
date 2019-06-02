@@ -4,6 +4,9 @@ import Product from '../Product/Product';
 
 import './Home.scss';
 import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {clearFilters} from "../../redux/actions";
+
 
 class Home extends Component {
 
@@ -17,6 +20,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        if(this.props.filter.filters!==[]) this.props.clearFilters();
         this.getProducts();
     }
 
@@ -51,7 +55,6 @@ class Home extends Component {
         if(queryString!=="") axios.get(`https://pik-predator.herokuapp.com/catalog${queryString}`)
             .then(response => this.setState({products: response.data}));
         else this.getProducts();
-        console.log(this.products);
     };
 
 
@@ -83,5 +86,9 @@ const mapStateToProps = (state) => {
         filter: state.filter,
     }
 }
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({clearFilters}, dispatch);
+}
 
-export default connect(mapStateToProps)(Home);
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

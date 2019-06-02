@@ -1,112 +1,127 @@
-import React from 'react';
 import './SideNavigation.scss';
+import React, { Component } from 'react'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {addFilter, clearFilters, removeFilter} from "../../../redux/actions";
 
-//class SideNavItems extends Component {
+class SideNavItems extends Component {
 
-const SideNavItems = (props) => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [
+                {
+                    type: "option",
+                    text: 'CPU',
+                    columnName: 'processor',
+                    options: []
+                },
+                {
+                    type: "option",
+                    text: "Hard Drive Type",
+                    columnName: 'hardDriveType',
+                    options: []
+                },
+                {
+                    type: "option",
+                    text: 'Graphics Card',
+                    columnName: 'graphicCard',
+                    options: []
+                }
+            ]
+        };
+    }
 
-    const items = [
-        {
-            type: "option",
-            text: 'CPU',
-            columnName:'processor',
-            options:[]
-        },
-        {
-            type: "option",
-            text: "Hard Drive Type",
-            columnName: 'hardDriveType',
-            options:[]
-        },
-        {
-            type: "option",
-            text: 'Graphics Card',
-            columnName: 'graphicCard',
-            options:[]
-        }
-    ]
-
-    items.forEach(function addOptions(item,index,array){
-        console.log(item);
-        console.log(item.type)
-        axios.get(`https://pik-predator.herokuapp.com/catalog/metadata/${item.columnName}`)
-            .then(response => item.options=response.data)
-        console.log(JSON.parse(JSON.stringify(item.options)));
-    });
-
-    /*
-    componentDidMount()
-    {
-        items.forEach(function addToString(item,index,array) {
-            axios.get(`https://pik-predator.herokuapp.com/metadata/${item.text}`)
-                .then(response => options=response.data)
+    componentWillMount() {
+        console.log(this.state);
+        this.state.items.map(item => {
+            axios.get(`https://pik-predator.herokuapp.com/catalog/metadata/${item.columnName}`)
+                .then(response => {
+                    item.options = response.data;
+                })
         });
-    }
-    */
+    };
 
-    const getCheckboxes = (item) =>{
-        console.log(item);
-        return item.options.map((option)=> {
-            return(
-            <Form.Check
-                name={option}
-                //onChange={handleChange}
-                id={option}
-                label={option}
-            />
-        )
+    handleChange(event) {
+        //this.props.clearFilters();
+        let pos=0;
+        let values =event.target.name.split('_');
+        console.log(event.target.name)
+        let type=values[0];
+        let value=values[1];
+        let flag=0;
+        if(this.props.filter.filters[0]!==null) {
+            while(pos!==-1) {
+                pos = this.props.filter.filters.map(function (e) {
+                    return e.value;
+                }).indexOf(value);
+                if(pos!==-1) {
+                    console.log(this.props.filter.filters[pos].property+" "+this.props.filter.filters[pos].value);
+                    this.props.removeFilter(pos);
+                    flag=1;
+                    pos=-1;
+                }
+            }
         }
+        if(flag!==1) this.props.addFilter({property: type, value: value})
+
+    }
+
+     getCheckboxes = (item) => {
+        return item.options.map((option) => {
+                return (
+                    <Form.Check
+                        name={item.columnName+"_"+option}
+                        onChange={this.handleChange.bind(this)}
+                        id={item.text+option}
+                        key={item.text+option}
+                        label={option}
+                    />
+                )
+            }
         )
     }
 
 
-    const showItems = () => {
-
-        return items.map( (item, i)=> {
-            return(
+     showItems = () => {
+        return this.state.items.map((item, i) => {
+            return (
                 <div className={item.type} key={i}>
                     {item.text}
                     <Form>
                         <Form.Group>
-                            {getCheckboxes(item)}
+                            {this.getCheckboxes(item)}
                         </Form.Group>
                     </Form>
 
                 </div>
             )
         })
-    } 
-
-    return(
-       <div>
-           {showItems()}
-       </div>
-    )
+    }
+    render = () => {
+        return (
+            <div>
+                {this.showItems()}
+            </div>
+        )
+    }
 }
 
-export default SideNavItems;
-
-
-/*
-return items.map( (item, i)=> {
-            return(
-                <div className={item.type} key={i}>
-                    {item.text}
-                        <Form>
-                            <Form.Group>
-                                <Form.Check
-                                    label={item.text}
-                                />
-                            </Form.Group>
-                        </Form>
-                </div>
-            )
-        })
+const mapStateToProps = (state) => {
+    return {
+        filter: state.filter,
     }
- */
-/*{getCheckboxes(item)}*/
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ addFilter,removeFilter,clearFilters }, dispatch);
+}
+
+
+//export default SideNavItems;
+export default connect(mapStateToProps,mapDispatchToProps)(SideNavItems);

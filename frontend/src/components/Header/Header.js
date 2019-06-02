@@ -39,17 +39,3 @@ export function Header(props) {
 }
 
 export default Header;
-//
-// <InputGroup size="sm" className="searchBar" style={{maxWidth: "250px"}}>
-//     <FormControl
-//         style={{backgroundColor: "#191919", borderColor: "#202020"}}
-//         placeholder="What are you searching for ..."
-//         aria-label="Search"
-//         aria-describedby="search-bar"
-//     />
-//     <InputGroup.Append>
-//         <InputGroup.Text id="search-bar">
-//             <FontAwesomeIcon icon="search"/>
-//         </InputGroup.Text>
-//     </InputGroup.Append>
-// </InputGroup>

@@ -3,8 +3,7 @@ import {
 } from '../../actions';
 
 export const initialState = {
-    filters:[],
-    products:[]
+    filters:[]
 };
 
 export default function filterReducer(state = initialState, action) {

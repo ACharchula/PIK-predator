@@ -23,4 +23,4 @@ export const clearFilters = () => {
     return {
         type: CLEAR_FILTERS
     }
-}
+};
