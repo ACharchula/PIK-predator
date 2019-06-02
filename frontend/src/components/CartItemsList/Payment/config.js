@@ -24,11 +24,9 @@ const supportedPaymentMethods = [
         supportedPaymentMethods, paymentDetails, options);
     paymentRequest.show()
     .then((paymentResponse) => {
-      store.dispatch(clearCart());
-
       return paymentResponse.complete()
       .then(() => {
-        fetch(`https://pik-predator.herokuapp.com/users/2/cart/checkout`, {
+        fetch('https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+ '/cart/checkout', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -53,6 +51,7 @@ const supportedPaymentMethods = [
               'Authorization': auth,
             }
           });
+          store.dispatch(clearCart());
         })
       });
     })

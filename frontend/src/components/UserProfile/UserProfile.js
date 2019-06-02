@@ -11,7 +11,7 @@ class UserProfile extends React.Component {
 
     componentDidMount() {
         const auth = 'Bearer '.concat(localStorage.getItem('id')); 
-        axios.get(`https://pik-predator.herokuapp.com/users/2/orders`, { headers: { Authorization: auth }})
+        axios.get('https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+'/orders', { headers: { Authorization: auth }})
         .then(response => { this.setState({data: response.data})});
     }
 
@@ -23,7 +23,7 @@ class UserProfile extends React.Component {
                             <h4>Order ID: {row.orderId}</h4> 
                             <h5>Realization date: {row.date}</h5>
                         </div>
-                        {row.products.map( (row) => {return( <OrderItem key={row.productId} product={row}/>)})}
+                        {row.products.map( (row, i) => {return( <OrderItem key={i} product={row}/>)})}
                     </div>
               );
           });
