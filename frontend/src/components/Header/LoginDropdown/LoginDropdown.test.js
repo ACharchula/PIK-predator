@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginDropdown from './LoginDropdown';
 import { shallow, mount } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
@@ -47,7 +48,7 @@ describe('LoginDropdown', () => {
     it('Changes state to logged_in, finds logout button', ()=> {
         wrapper.unmount();
         store = mockStore({login:{login_status: "logged_in"}});
-        wrapper = mount(<Provider store={store}><LoginDropdown LoginDropdown auth={mAuth}/></Provider>);
+        wrapper = mount(<Provider store={store}><BrowserRouter><LoginDropdown LoginDropdown auth={mAuth}/></BrowserRouter></Provider>);
         expect(wrapper.find("button").length).toEqual(2);
         expect(wrapper.findWhere(x => x.text() === "Log out").find('button').length).toEqual(1);
     });

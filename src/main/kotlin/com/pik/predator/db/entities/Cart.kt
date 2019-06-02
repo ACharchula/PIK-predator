@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "Carts")
 data class Cart(
     @Id var cartId: Int,
-    var userId: Int,
+    var userId: String,
     var items: MutableList<BasicProductInfo>
 ) {
     companion object {
