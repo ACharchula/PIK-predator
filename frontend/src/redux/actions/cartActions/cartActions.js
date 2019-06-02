@@ -56,11 +56,10 @@ export const removeProductFromCart = (index,product) => {
         if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
             const author = 'Bearer '.concat(localStorage.getItem('id'));
 
-            // const url = 'https://pik-predator.herokuapp.com/users/2/cart/'.concat(product.productId);
-            const url = 'http://localhost:8080/users/2/cart/'.concat(product.productId);
+            const url = 'https://pik-predator.herokuapp.com/users/2/cart/'.concat(product.productId);
 
             axios({
-                method: 'get',
+                method: 'post',
                 url: url,
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,11 +70,33 @@ export const removeProductFromCart = (index,product) => {
             });
         } else dispatch(removeFromReduxCart(index));
     };
-}
+};
 
-export const clearCart = () => {
+export const clearReduxCart = () => {
     return {
         type: CLEAR_CART
+    }
+};
+
+
+export const clearCart = () => {
+    return dispatch => {
+        if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
+            const author = 'Bearer '.concat(localStorage.getItem('id'));
+
+            const url = 'https://pik-predator.herokuapp.com/users/2/cart/';
+
+            axios({
+                method: 'delete',
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': author,
+                },
+            }).then(response => {
+                dispatch(clearReduxCart());
+            });
+        } else dispatch(clearReduxCart());
     }
 };
 

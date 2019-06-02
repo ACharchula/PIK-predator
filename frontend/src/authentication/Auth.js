@@ -1,6 +1,6 @@
 import history from './History';
 import auth0 from 'auth0-js';
-import {clearCart, failedLogin, successfulLogin, successfulLogout, addToCart, setCart} from "../redux/actions";
+import {clearCart, failedLogin, successfulLogin, successfulLogout, setCart} from "../redux/actions";
 import store from '../index.js';
 import axios from "axios";
 
@@ -9,6 +9,7 @@ export default class Auth {
     idToken;
     expiresAt;
     userProfile;
+    user_id;
 
     auth = new auth0.WebAuth({
         domain: 'pik-predator.eu.auth0.com',
@@ -29,6 +30,9 @@ export default class Auth {
                 this.setSession(authResult);
                 store.dispatch(successfulLogin());
                 localStorage.setItem('id', this.getAccessToken());
+                localStorage.setItem('user_id', this.getUserId());
+                console.log(localStorage.getItem("user_id"));
+
                 if (store.getState().cart && store.getState().cart.products) {
                     const author = 'Bearer '.concat(localStorage.getItem('id'));
 
@@ -59,6 +63,7 @@ export default class Auth {
                         const previousCart = response.data;
 
                         store.dispatch(setCart(previousCart.concat(store.getState().cart.products)));
+                    }).catch( error => {
                     });
                 }
 
@@ -76,6 +81,10 @@ export default class Auth {
 
     getIdToken = () => {
         return this.idToken;
+    }
+
+    getUserId = () => {
+        return this.user_id;
     }
 
     setSession = (authResult) => {
@@ -131,7 +140,7 @@ export default class Auth {
         return new Date().getTime() < expiresAt;
     }
 
-    getLogin = () => {
+    getUserId = () => {
 
         if (this.accessToken) {
             this.auth.client.userInfo(this.accessToken, (err, profile) => {
@@ -139,6 +148,7 @@ export default class Auth {
                     this.userProfile = profile;
                 }
                 console.log(this.userProfile);
+                return this.userProfile.sub;
             });
         }
 
