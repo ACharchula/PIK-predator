@@ -13,16 +13,17 @@ export const addToCart = (product) => {
             const author = 'Bearer '.concat(localStorage.getItem('id'));
 
             let productsIds = [];
-            productsIds.push(product.id);
+            productsIds.push(product.productId);
+            console.log(product.productId);
 
             axios({
                 method: 'post',
-                url: 'https://pik-predator.herokuapp.com/users/2/cart',
+                url: 'https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+'/cart',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': author,
                 },
-                data: productsIds
+                data: [product.productId]
             }).then(response => {
                 dispatch(addToReduxCart(product));
             });
@@ -56,7 +57,7 @@ export const removeProductFromCart = (index,product) => {
         if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
             const author = 'Bearer '.concat(localStorage.getItem('id'));
 
-            const url = 'https://pik-predator.herokuapp.com/users/2/cart/'.concat(product.productId);
+            const url = 'https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+'/cart/'.concat(product.productId);
 
             axios({
                 method: 'delete',
@@ -84,7 +85,7 @@ export const clearCart = () => {
         if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
             const author = 'Bearer '.concat(localStorage.getItem('id'));
 
-            const url = 'https://pik-predator.herokuapp.com/users/2/cart/';
+            const url = 'https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+'/cart/';
 
             axios({
                 method: 'delete',

@@ -36,33 +36,21 @@ export default class Auth {
 
                     if(store.getState().cart.products.length > 0){
                         const productIds = store.getState().cart.products.map(product => {
-                            return parseInt(product.id);
+                            return parseInt(product.productId);
                         });
                         axios({
                             method:'post',
-                            url: 'https://pik-predator.herokuapp.com/users/2/cart',
+                            url: 'https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+'/cart',
                             headers:{
                                 'Content-Type': 'application/json',
                                 'Authorization': author,
                             },
                             data: productIds
-                        });
+                        }).then(()=>this.getProducts(author));
+                    }else {
+                        this.getProducts(author);
                     }
 
-                    axios({
-                        method: 'get',
-                        url: 'https://pik-predator.herokuapp.com/users/2/cart',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': author,
-                        },
-                    }).then(response => {
-
-                        const previousCart = response.data;
-
-                        store.dispatch(setCart(previousCart.concat(store.getState().cart.products)));
-                    }).catch( error => {
-                    });
                 }
 
             } else if (err) {
@@ -72,6 +60,24 @@ export default class Auth {
             }
         });
     }
+
+    getProducts = (author) => {
+        axios({
+            method: 'get',
+            url: 'https://pik-predator.herokuapp.com/users/'+localStorage.getItem("userId")+'/cart',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': author,
+            },
+        }).then(response => {
+
+            const previousCart = response.data;
+            console.log(previousCart);
+
+            store.dispatch(setCart(previousCart));
+        }).catch( error => {
+        });
+    };
 
     getAccessToken = () => {
         return this.accessToken;

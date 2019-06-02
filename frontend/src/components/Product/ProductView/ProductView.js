@@ -16,7 +16,7 @@ class ProductView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id:"",
+            productId:"",
             description: "",
             price: 0,
             imageUrl: "",
@@ -58,7 +58,7 @@ class ProductView extends Component {
         .then(response => {
 
             this.setState({
-                id: id,
+                productId: id,
                 description: response.data.description,
                 price: response.data.price,
                 imageUrl: response.data.imageUrl,
