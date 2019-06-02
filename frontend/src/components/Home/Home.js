@@ -37,7 +37,6 @@ class Home extends Component {
     filterProducts = () => {
         let queryString="";
         if(this.props.filter.filters!==[]) this.props.filter.filters.forEach(function addToString(item,index,array) {
-            console.log(item);
             if(item!==null&&item!==undefined&&item.value!=='') {
                 let tempString="";
                 for (var p in item) {
@@ -48,7 +47,6 @@ class Home extends Component {
                 }
                 if(index===0) queryString='?'+tempString.substr(1);
                 else queryString=queryString+'&'+tempString.substr(1);
-                console.log(queryString);
             }
         });
         if(queryString!=="") axios.get(`https://pik-predator.herokuapp.com/catalog${queryString}`)

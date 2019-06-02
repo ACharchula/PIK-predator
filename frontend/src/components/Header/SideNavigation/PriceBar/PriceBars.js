@@ -3,9 +3,9 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {addFilter} from "../../../redux/actions";
-import {removeFilter} from "../../../redux/actions";
-import {clearFilters} from "../../../redux/actions";
+import {addFilter} from "../../../../redux/actions";
+import {removeFilter} from "../../../../redux/actions";
+import {clearFilters} from "../../../../redux/actions";
 
 
 import './PriceBar.scss';
@@ -16,7 +16,6 @@ class SearchBar extends Component{
     handleChange(event) {
         let fieldVal = event.target.value;
         let pos;
-        console.log(this.props.filter.filters[0]);
         if(this.props.filter.filters[0]!==null) {
             pos = this.props.filter.filters.map(function (e) {
                 return e.property;
@@ -29,7 +28,6 @@ class SearchBar extends Component{
     handleChange2(event) {
         let fieldVal = event.target.value;
         let pos;
-        console.log(this.props.filter.filters[0]);
         if(this.props.filter.filters[0]!==null) {
             pos = this.props.filter.filters.map(function (e) {
                 return e.property;

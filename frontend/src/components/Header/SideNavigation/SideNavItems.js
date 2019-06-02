@@ -35,7 +35,6 @@ class SideNavItems extends Component {
     }
 
     componentWillMount() {
-        console.log(this.state);
         this.state.items.map(item => {
             axios.get(`https://pik-predator.herokuapp.com/catalog/metadata/${item.columnName}`)
                 .then(response => {
