@@ -72,8 +72,6 @@ export default class Auth {
         }).then(response => {
 
             const previousCart = response.data;
-            console.log(previousCart);
-
             store.dispatch(setCart(previousCart));
         }).catch( error => {
         });
@@ -110,7 +108,6 @@ export default class Auth {
                 this.setSession(authResult);
             } else if (err) {
                 this.logout();
-                console.log(err);
                 alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
             }
         });
@@ -133,7 +130,6 @@ export default class Auth {
         history.replace('/');
         store.dispatch(successfulLogout());
         store.dispatch(clearCart());
-        console.log("after dispatch: " + localStorage.getItem('state'));
     };
 
 

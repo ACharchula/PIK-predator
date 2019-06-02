@@ -14,7 +14,6 @@ export const addToCart = (product) => {
 
             let productsIds = [];
             productsIds.push(product.productId);
-            console.log(product.productId);
 
             axios({
                 method: 'post',
@@ -53,7 +52,6 @@ export const removeFromReduxCart = (index) => {
 
 export const removeProductFromCart = (index,product) => {
     return dispatch => {
-        console.log(product);
         if (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true") {
             const author = 'Bearer '.concat(localStorage.getItem('id'));
 
