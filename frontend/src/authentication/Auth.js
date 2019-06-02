@@ -30,9 +30,7 @@ export default class Auth {
                 this.setSession(authResult);
                 store.dispatch(successfulLogin());
                 localStorage.setItem('id', this.getAccessToken());
-                localStorage.setItem('user_id', this.getUserId());
-                console.log(localStorage.getItem("user_id"));
-
+                this.getUserId();
                 if (store.getState().cart && store.getState().cart.products) {
                     const author = 'Bearer '.concat(localStorage.getItem('id'));
 
@@ -146,9 +144,8 @@ export default class Auth {
             this.auth.client.userInfo(this.accessToken, (err, profile) => {
                 if (profile) {
                     this.userProfile = profile;
+                    localStorage.setItem('userId', profile.sub)
                 }
-                console.log(this.userProfile);
-                return this.userProfile.sub;
             });
         }
 
