@@ -14,7 +14,8 @@ export default class Auth {
     clientID: 'cCHK0Y5vavf8LS1Yqt2ZX4KgVCzIpMNf',
     redirectUri: (process.env.NODE_ENV === 'production') ? 'https://pik-predator.herokuapp.com/callback' : 'http://localhost:3000/callback',
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid profile',
+    audience: 'https://pik-predator.herokuapp.com/'
   });
 
   login = () => {
@@ -26,6 +27,7 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         store.dispatch(successfulLogin());
+        localStorage.setItem('id', this.getAccessToken())
       } else if (err) {
         history.replace('/');
         store.dispatch(failedLogin());
