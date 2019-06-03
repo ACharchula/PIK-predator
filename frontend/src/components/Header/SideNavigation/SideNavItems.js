@@ -57,11 +57,23 @@ class SideNavItems extends Component {
                     return e.value;
                 }).indexOf(value);
                 if(pos!==-1) {
+                    this.props.removeFilter(pos,type);
+                    flag=1;
+                    pos=-1;
+                }
+            }
+            while(pos!==-1) {
+                pos = this.props.filter.filters.map(function (e) {
+                    return e.property;
+                }).indexOf(type);
+                if(pos!==-1) {
                     this.props.removeFilter(pos);
                     flag=1;
                     pos=-1;
                 }
             }
+
+
         }
         if(flag!==1) this.props.addFilter({property: type, value: value})
 

@@ -28,7 +28,7 @@ class CartItemsList extends React.Component {
                         <Button className="clear-button" size="sm" variant="danger" onClick={this.props.clearCart}>Clear Cart</Button> :
                         null }
                     <p>Total: {total} PLN</p>
-                    { products.length > 0 ?
+                    { products.length > 0 && (localStorage.getItem("isLoggedIn") && localStorage.getItem("isLoggedIn") === "true" ) ?
                         <ButtonToolbar>
                             <Button className="clear-button" size="sm"variant="danger"onClick={() => this.setState({ modalShow: true })}>Pay</Button>
                             <PaymentDialog show={this.state.modalShow} onHide={modalClose} total={total} />

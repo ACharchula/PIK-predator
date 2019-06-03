@@ -17,6 +17,7 @@ class Home extends Component {
             products: []
         }
 
+
     }
     componentDidMount() {
         if(this.props.filter.filters!==[]) this.props.clearFilters();
