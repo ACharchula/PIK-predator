@@ -16,14 +16,14 @@ class SearchBar extends Component{
 
     handleChange(event) {
         let fieldVal = event.target.value;
-        let pos;
+        let pos=-1;
         console.log(this.props.filter.filters[0]);
         if(this.props.filter.filters[0]!==null) {
             pos = this.props.filter.filters.map(function (e) {
                 return e.property;
             }).indexOf('query');
         }
-        this.props.removeFilter(pos);
+        if(pos!==-1) this.props.removeFilter(pos,'query');
         this.props.addFilter({property:'query', value: fieldVal});
     }
 
