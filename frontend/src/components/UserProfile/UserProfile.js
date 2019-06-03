@@ -18,7 +18,7 @@ class UserProfile extends React.Component {
       render() {
           const orders = this.state.data.map( (row) => {
               return (
-                    <div key={row.orderId}>
+                    <div className="ProfileView" key={row.orderId}>
                         <div className="flex">
                             <h4>Order ID: {row.orderId}</h4> 
                             <h5>Realization date: {row.date}</h5>
@@ -29,7 +29,7 @@ class UserProfile extends React.Component {
           });
 
         return (
-            <div className="ProfileView">
+            <div>
                 {orders}
             </div>
     );}
