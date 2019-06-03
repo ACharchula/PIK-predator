@@ -33,13 +33,11 @@ class Home extends Component {
         if (prevProps.filter !== this.props.filter) {
             this.filterProducts();
         }
-        console.log(this.state.products)
     }
 
     filterProducts = () => {
         let queryString="";
         if(this.props.filter.filters!==[]) this.props.filter.filters.forEach(function addToString(item,index,array) {
-            console.log(item)
             if(item!==null&&item!==undefined&&item.value!=='') {
                 let tempString="";
                 for (var p in item) {
@@ -55,7 +53,6 @@ class Home extends Component {
         if(queryString!=="") axios.get(`https://pik-predator.herokuapp.com/catalog${queryString}`)
             .then(response => this.setState({products: response.data}));
         else this.getProducts();
-        console.log(queryString);
     };
 
 

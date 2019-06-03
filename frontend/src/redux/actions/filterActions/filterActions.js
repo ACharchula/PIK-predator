@@ -2,7 +2,6 @@ export const ADD_FILTER_TO_FILTERS_CONTAINER = 'ADD_FILTER_TO_FILTERS_CONTAINER'
 //export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const REMOVE_FILTER_FROM_FILTERS_CONTAINER = 'REMOVE_FILTERS_FROM_FILTERS_CONTAINER';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
-export const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 
 export const addFilter = (filter) => {
     return {
@@ -24,8 +23,3 @@ export const clearFilters = () => {
     }
 };
 
-export const filterProducts = () => {
-    return {
-        type: FILTER_PRODUCTS
-    }
-};

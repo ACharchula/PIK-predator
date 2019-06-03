@@ -17,7 +17,6 @@ class SearchBar extends Component{
     handleChange(event) {
         let fieldVal = event.target.value;
         let pos=-1;
-        console.log(this.props.filter.filters[0]);
         if(this.props.filter.filters[0]!==null) {
             pos = this.props.filter.filters.map(function (e) {
                 return e.property;

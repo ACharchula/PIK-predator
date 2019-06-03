@@ -1,5 +1,5 @@
 import {
-    ADD_FILTER_TO_FILTERS_CONTAINER, CLEAR_FILTERS, REMOVE_FILTER_FROM_FILTERS_CONTAINER, FILTER_PRODUCTS
+    ADD_FILTER_TO_FILTERS_CONTAINER, CLEAR_FILTERS, REMOVE_FILTER_FROM_FILTERS_CONTAINER
 } from '../../actions';
 
 export const initialState = {
@@ -63,16 +63,6 @@ export default function filterReducer(state = initialState, action) {
             return {
                 ...state,
                 filters:[]
-            };
-        case REMOVE_FILTER_FROM_FILTERS_CONTAINER:
-            filters.splice(index, 1);
-            return {
-                ...state,
-                filters
-            };
-        case FILTER_PRODUCTS:
-            return {
-                ...state
             };
         default:
             return {

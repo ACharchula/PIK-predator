@@ -51,7 +51,6 @@ class SideNavItems extends Component {
         let type=values[0];
         let value=values[1];
         let flag=0;
-        let whichone="";
         if(this.props.filter.filters[0]!==null) {
             while(pos!==-1) {
                 pos = this.props.filter.filters.map(function (e) {
