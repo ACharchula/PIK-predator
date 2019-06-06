@@ -1,11 +1,13 @@
 package com.pik.predator.controller.catalog
 
 import com.pik.predator.db.dto.BasicProductInfo
-import com.pik.predator.db.entities.Product
 import com.pik.predator.db.dto.mapToBasicInfoList
+import com.pik.predator.db.entities.Product
 import com.pik.predator.db.repository.ProductRepository
-import com.pik.predator.helpers.*
-import org.springframework.http.HttpStatus
+import com.pik.predator.helpers.containsIgnoreCase
+import com.pik.predator.helpers.doOnNull
+import com.pik.predator.helpers.getById
+import com.pik.predator.helpers.notFound
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
@@ -19,9 +21,9 @@ class CatalogController(
      */
     @Deprecated("use GET /catalog without parameters")
     @CrossOrigin
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/catalog/all")
     fun getAllProducts(response: HttpServletResponse): List<BasicProductInfo> {
+
         return productRepository.findAll()
             .mapToBasicInfoList()
     }
@@ -36,9 +38,9 @@ class CatalogController(
      * @return the filtered list of product basic infos
      */
     @CrossOrigin
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/catalog")
     fun getProducts(@RequestParam filterParams: Map<String, String>, response: HttpServletResponse): List<BasicProductInfo> {
+
         val filtersHub = FiltersHub(filterParams)
 
         val filtered = productRepository.findAll()
@@ -64,20 +66,20 @@ class CatalogController(
     @CrossOrigin
     @GetMapping("/catalog/{productId}")
     fun getProductDetails(@PathVariable productId: Int, response: HttpServletResponse): Product? {
+
         return productRepository.getById(productId)
-            .alsoNullable(
-                onNotNull = { response.ok() },
-                onNull = { response.notFound() }
-            )
+            .doOnNull {
+                response.notFound()
+            }
     }
 
     @CrossOrigin
     @GetMapping("/catalog/metadata/{attributeName}")
     fun getProductDistinctValuesForAttribute(@PathVariable attributeName: String, response: HttpServletResponse): List<String>? {
+
         return productRepository.getDistinctValuesForAttribute(attributeName)
-            .alsoNullable(
-                onNotNull = { response.ok() },
-                onNull = { response.notFound() }
-            )
+            .doOnNull {
+                response.notFound()
+            }
     }
 }

@@ -17,10 +17,9 @@ class OrderController(
     fun getOrderInfo(@PathVariable orderId: Int, response: HttpServletResponse): Order? {
 
         return orderRepository.getById(orderId)
-            .alsoNullable(
-                onNotNull = { response.ok() },
-                onNull = { response.notFound() }
-            )
+            .doOnNull {
+                response.notFound()
+            }
     }
 
     @PostMapping("/orders/{orderId}")

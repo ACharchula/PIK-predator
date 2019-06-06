@@ -31,10 +31,9 @@ class CartController(
     fun getProductsInCart(@PathVariable userId: String, response: HttpServletResponse): List<BasicProductInfo>? {
 
         return cartRepository.findByUserId(userId)?.items
-            .alsoNullable(
-                onNotNull = { response.ok() },
-                onNull = { response.notFound() }
-            )
+            .doOnNull {
+                response.notFound()
+            }
     }
 
     /**
