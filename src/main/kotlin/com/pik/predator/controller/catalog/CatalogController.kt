@@ -5,6 +5,7 @@ import com.pik.predator.db.entities.Product
 import com.pik.predator.db.dto.mapToBasicInfoList
 import com.pik.predator.db.repository.ProductRepository
 import com.pik.predator.helpers.*
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletResponse
 
@@ -18,14 +19,15 @@ class CatalogController(
      */
     @Deprecated("use GET /catalog without parameters")
     @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/catalog/all")
     fun getAllProducts(response: HttpServletResponse): List<BasicProductInfo> {
-        return productRepository.findAll().mapToBasicInfoList()
-            .also { response.ok() }
+        return productRepository.findAll()
+            .mapToBasicInfoList()
     }
 
     /**
-     * Filters products by given filters
+     * FiltersHub products by given filters
      * Example query: /catalog?priceFrom=1000&priceTo=2000&manufacturer1=Asus&manufacturer2=Lenovo
      * which corresponds to following filters:
      * - price between 1000 and 2000
@@ -34,26 +36,24 @@ class CatalogController(
      * @return the filtered list of product basic infos
      */
     @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/catalog")
     fun getProducts(@RequestParam filterParams: Map<String, String>, response: HttpServletResponse): List<BasicProductInfo> {
-        val filtered = Filters(filterParams)
-            .let { filters ->
-                response.ok()
-                productRepository.findAll()
-                    .filter { item -> filters.accept(item) }
-                    .mapToBasicInfoList()
-            }
+        val filtersHub = FiltersHub(filterParams)
 
-        return filterParams["query"]
-            .letNullable(
-                onNotNull = { query ->
-                    filtered.filter {
-                        it.model.containsIgnoreCase(query) ||
-                        it.manufacturer.containsIgnoreCase(query)
-                    }
-                },
-                onNull = { filtered }
-            )
+        val filtered = productRepository.findAll()
+            .filter { item -> filtersHub.accept(item) }
+            .mapToBasicInfoList()
+
+        return if(filterParams.containsKey("query")) {
+            val query = filterParams["query"]!!
+
+            filtered.filter {
+                it.model.containsIgnoreCase(query) ||
+                it.manufacturer.containsIgnoreCase(query)
+            }
+        }
+        else filtered
     }
 
     /**

@@ -18,21 +18,9 @@ import org.mockito.Mock
 import org.springframework.test.context.junit4.SpringRunner
 import org.junit.Assert.*
 import org.mockito.Spy
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.web.context.WebApplicationContext
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.*
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import java.time.LocalDate
 
 @RunWith(SpringRunner::class)
@@ -44,13 +32,13 @@ class CartControllerTest {
     private lateinit var cartController: CartController
 
     //dependencies
-    @Spy lateinit var cartRepository: SpyCartRepository
+    @Spy lateinit var cartRepository: CartRepositorySpy
     @Mock lateinit var productRepository: ProductRepository
-    @Spy lateinit var orderRepository: SpyOrderRepository
+    @Spy lateinit var orderRepository: OrderRepositorySpy
     @Mock lateinit var sequenceGenerator: SequenceGenerator
 
     //other mocks
-    @Mock lateinit var response: HttpServletResponse
+    @Spy lateinit var response: HttpServletResponseSpy
 
     @Before
     fun setup() {
@@ -71,14 +59,14 @@ class CartControllerTest {
     private lateinit var savedCart: Cart
     private lateinit var savedOrder: Order
 
-    abstract inner class SpyCartRepository : CartRepository {
+    abstract inner class CartRepositorySpy : CartRepository {
         override fun <S : Cart> save(cart: S): S {
             savedCart = cart
             return cart
         }
     }
 
-    abstract inner class SpyOrderRepository : OrderRepository {
+    abstract inner class OrderRepositorySpy : OrderRepository {
         override fun <S : Order> save(order: S): S {
             savedOrder = order
             return order
@@ -178,11 +166,11 @@ class CartControllerTest {
     }
 
     @Test
-    fun `when remove non-existing product from existing cart then response status is 404 NOT FOUND`() {
+    fun `when remove non-existing product from existing cart then response status is 200 OK`() {
         cart.items = productListFromIds(1, 2, 3)
 
         cartController.removeProductFromCart(cart.userId, 4, response)
-        response.verifyStatus(SC_NOT_FOUND)
+        response.verifyStatus(SC_OK)
     }
 
     @Test

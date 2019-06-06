@@ -1,9 +1,14 @@
 package com.pik.predator.controller
 
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.pik.predator.db.entities.Product
 import com.pik.predator.db.dto.mapToBasicInfo
+import org.junit.Assert
+import org.junit.Assert.*
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpServletResponse.SC_OK
 
 internal val products = listOf(
     Product(
@@ -99,5 +104,14 @@ internal fun productListFromIds(vararg ids: Int) =
     ids.map { id -> products[id-1].mapToBasicInfo() }.toMutableList()
 
 internal fun HttpServletResponse.verifyStatus(status: Int) {
-    verify(this).status = status
+    assertEquals(status, this.status)
+}
+
+abstract class HttpServletResponseSpy : HttpServletResponse {
+    private var status: Int = SC_OK
+
+    override fun setStatus(status: Int) {
+        this.status = status
+    }
+    override fun getStatus(): Int = status
 }

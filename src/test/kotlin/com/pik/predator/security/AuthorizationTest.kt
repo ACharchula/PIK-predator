@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AuthorizationTest {
 
-    @Autowired private lateinit var template: TestRestTemplate
+    @Autowired private lateinit var rest: TestRestTemplate
 
     private fun TestRestTemplate.tryAccessNoAuth(path: String): HttpStatus =
         getForEntity<String>(path).statusCode
@@ -28,7 +28,7 @@ class AuthorizationTest {
     fun `when no auth then access to catalog is allowed`() {
         assertNotEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessNoAuth("/catalog")
+            rest.tryAccessNoAuth("/catalog")
         )
     }
 
@@ -36,7 +36,7 @@ class AuthorizationTest {
     fun `when no auth then access to users is permitted`() {
         assertEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessNoAuth("/users")
+            rest.tryAccessNoAuth("/users")
         )
     }
 
@@ -44,7 +44,7 @@ class AuthorizationTest {
     fun `when no auth then access to orders is permitted`() {
         assertEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessNoAuth("/orders")
+            rest.tryAccessNoAuth("/orders")
         )
     }
 
@@ -52,7 +52,7 @@ class AuthorizationTest {
     fun `when valid authorization token then access to users is allowed`() {
         assertNotEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessWithToken("/users/1/cart", TEST_AUTH_TOKEN)
+            rest.tryAccessWithToken("/users/1/cart", TEST_AUTH_TOKEN)
         )
     }
 
@@ -60,7 +60,7 @@ class AuthorizationTest {
     fun `when invalid authorization token then access to users is permitted`() {
         assertEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessWithToken("/users/1/cart", TEST_AUTH_TOKEN + "abc")
+            rest.tryAccessWithToken("/users/1/cart", TEST_AUTH_TOKEN + "abc")
         )
     }
 
@@ -68,7 +68,7 @@ class AuthorizationTest {
     fun `when valid authorization token then access to orders is allowed`() {
         assertNotEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessWithToken("/orders/1", TEST_AUTH_TOKEN)
+            rest.tryAccessWithToken("/orders/1", TEST_AUTH_TOKEN)
         )
     }
 
@@ -76,7 +76,7 @@ class AuthorizationTest {
     fun `when invalid authorization token then access to orders is permitted`() {
         assertEquals(
             HttpStatus.UNAUTHORIZED,
-            template.tryAccessWithToken("/orders/1", TEST_AUTH_TOKEN + "abc")
+            rest.tryAccessWithToken("/orders/1", TEST_AUTH_TOKEN + "abc")
         )
     }
 }
