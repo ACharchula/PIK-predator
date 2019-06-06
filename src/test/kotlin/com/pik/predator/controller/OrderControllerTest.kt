@@ -37,10 +37,10 @@ class OrderControllerTest {
     private lateinit var orderController: OrderController
 
     //dependencies
-    @Spy lateinit var orderRepository: SpyOrderRepository
+    @Spy lateinit var orderRepository: OrderRepositorySpy
 
     //other mocks
-    @Mock lateinit var response: HttpServletResponse
+    @Spy lateinit var response: HttpServletResponseSpy
 
     @Before
     fun setup() {
@@ -52,7 +52,7 @@ class OrderControllerTest {
     //helpers
     private lateinit var savedOrder: Order
 
-    abstract inner class SpyOrderRepository : OrderRepository {
+    abstract inner class OrderRepositorySpy : OrderRepository {
         override fun <S : Order> save(order: S): S {
             savedOrder = order
             return order

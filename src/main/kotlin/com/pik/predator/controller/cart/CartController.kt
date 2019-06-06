@@ -29,6 +29,7 @@ class CartController(
     @GetMapping("/users/{userId}/cart")
     @CrossOrigin
     fun getProductsInCart(@PathVariable userId: String, response: HttpServletResponse): List<BasicProductInfo>? {
+
         return cartRepository.findByUserId(userId)?.items
             .alsoNullable(
                 onNotNull = { response.ok() },
@@ -44,26 +45,21 @@ class CartController(
     @PostMapping("/users/{userId}/cart")
     @CrossOrigin
     fun addProductsToCart(@PathVariable userId: String, @RequestBody productIds: List<Int>, response: HttpServletResponse) {
-        val cart: Cart =
-            cartRepository.findByUserId(userId)
-                .letNullable(
-                    onNotNull = { cart ->
-                        response.ok()
-                        cart
-                    },
-                    onNull = {
-                        response.created()
-                        Cart(sequenceGenerator.nextId(Cart.SEQUENCE_NAME), userId, emptyMutableList())
-                    }
-                )
+
+        val cart = cartRepository.findByUserId(userId)
+            ?: createCartFotUser(userId).also { response.created() }
 
         for (productId in productIds) {
-            productRepository.getById(productId)?.let {
-                product -> cart.items.add(product.mapToBasicInfo())
-            }
+            val product = productRepository.getById(productId)
+
+            if (product != null)
+                cart.items.add(product.mapToBasicInfo())
         }
         cartRepository.save(cart)
     }
+
+    private fun createCartFotUser(userId: String): Cart =
+        Cart(sequenceGenerator.nextId(Cart.SEQUENCE_NAME), userId, emptyMutableList())
 
     /**
      * Removes given product from cart
@@ -73,19 +69,16 @@ class CartController(
     @DeleteMapping("users/{userId}/cart/{productId}")
     @CrossOrigin
     fun removeProductFromCart(@PathVariable userId: String, @PathVariable productId: Int, response: HttpServletResponse) {
-        cartRepository.findByUserId(userId)
-            .letNullable(
-                onNotNull = { cart ->
-                    val removed = cart.items.removeIf { it.productId == productId }
 
-                    if (removed) {
-                        cartRepository.save(cart)
-                        response.ok()
-                    }
-                    else response.notFound()
-                },
-                onNull = { response.notFound() }
-            )
+        val cart = cartRepository.findByUserId(userId)
+
+        if (cart != null) {
+            val removed = cart.items.removeIf { it.productId == productId }
+
+            if (removed)
+                cartRepository.save(cart)
+        }
+        else response.notFound()
     }
 
     /**
@@ -95,14 +88,13 @@ class CartController(
     @DeleteMapping("/users/{userId}/cart")
     @CrossOrigin
     fun clearCart(@PathVariable userId: String, response: HttpServletResponse) {
-        cartRepository.findByUserId(userId)
-            .letNullable(
-                onNotNull = { cart ->
-                    cartRepository.save(cart.copy(items = emptyMutableList()))
-                    response.ok()
-                },
-                onNull = { response.notFound() }
-            )
+
+        val cart = cartRepository.findByUserId(userId)
+
+        if (cart != null) {
+            cartRepository.save(cart.copy(items = emptyMutableList()))
+        }
+        else response.notFound()
     }
 
     /**
@@ -112,33 +104,36 @@ class CartController(
     @PostMapping("/users/{userId}/cart/checkout")
     @CrossOrigin
     fun checkout(@PathVariable("userId") userId: String, @RequestBody checkoutRequest: CheckoutRequest, response: HttpServletResponse) {
-        cartRepository.findByUserId(userId)
-            .letNullable(
-                onNotNull = { cart ->
-                    val order = Order(
-                        sequenceGenerator.nextId(Order.SEQUENCE_NAME),
-                        userId,
-                        checkoutRequest.firstName,
-                        checkoutRequest.lastName,
-                        checkoutRequest.email,
-                        checkoutRequest.street,
-                        checkoutRequest.houseNumber,
-                        checkoutRequest.localNumber,
-                        checkoutRequest.postalCode,
-                        checkoutRequest.city,
-                        checkoutRequest.paymentMethod,
-                        cart.items,
-                        LocalDate.now().format(Order.DATE_FORMATTER)
-                    )
-                    orderRepository.save(order)
 
-                    clearCart(userId, response)
+        val cart = cartRepository.findByUserId(userId)
 
-                    response.created()
-                    response.setHeader("Access-Control-Expose-Headers", "Location")
-                    response.setHeader("Location", "${order.orderId}")
-                },
-                onNull = { response.notFound() }
-            )
+        if (cart != null) {
+            val order = createOrderFrom(userId, checkoutRequest, cart)
+            orderRepository.save(order)
+
+            clearCart(userId, response)
+
+            response.created()
+            response.setHeader("Access-Control-Expose-Headers", "Location")
+            response.setHeader("Location", "${order.orderId}")
+        }
+        else response.notFound()
     }
+
+    private fun createOrderFrom(userId: String, checkoutRequest: CheckoutRequest, cart: Cart): Order =
+         Order(
+            sequenceGenerator.nextId(Order.SEQUENCE_NAME),
+            userId,
+            checkoutRequest.firstName,
+            checkoutRequest.lastName,
+            checkoutRequest.email,
+            checkoutRequest.street,
+            checkoutRequest.houseNumber,
+            checkoutRequest.localNumber,
+            checkoutRequest.postalCode,
+            checkoutRequest.city,
+            checkoutRequest.paymentMethod,
+            cart.items,
+            LocalDate.now().format(Order.DATE_FORMATTER)
+        )
 }

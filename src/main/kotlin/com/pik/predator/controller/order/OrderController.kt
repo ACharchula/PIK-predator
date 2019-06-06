@@ -15,6 +15,7 @@ class OrderController(
     @GetMapping("/orders/{orderId}")
     @CrossOrigin
     fun getOrderInfo(@PathVariable orderId: Int, response: HttpServletResponse): Order? {
+
         return orderRepository.getById(orderId)
             .alsoNullable(
                 onNotNull = { response.ok() },
@@ -25,24 +26,21 @@ class OrderController(
     @PostMapping("/orders/{orderId}")
     @CrossOrigin
     fun markOrderAsPaid(@PathVariable orderId: Int, response: HttpServletResponse) {
-        orderRepository.getById(orderId)
-            .letNullable(
-                onNotNull = { order ->
-                    order.isPaid = true
-                    orderRepository.save(order)
-                    response.ok()
-                },
-                onNull = { response.notFound() }
-            )
+
+        val order = orderRepository.getById(orderId)
+
+        if (order != null) {
+            order.isPaid = true
+            orderRepository.save(order)
+        }
+        else response.notFound()
     }
 
     @GetMapping("/users/{userId}/orders")
     @CrossOrigin
     fun getOrdersOfUser(@PathVariable userId: String, response: HttpServletResponse): List<SummaryOrderInfo> {
+
         return orderRepository.findByUserId(userId)
-            .let { orders ->
-                response.ok()
-                orders.mapToSummaryInfoList()
-            }
+            .mapToSummaryInfoList()
     }
 }

@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Spy
 import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
 import javax.servlet.http.HttpServletResponse
@@ -26,7 +27,7 @@ class CatalogControllerTest {
     @Mock lateinit var productRepository: ProductRepository
 
     //other mocks
-    @Mock lateinit var response: HttpServletResponse
+    @Spy lateinit var response: HttpServletResponseSpy
 
     @Before
     fun setup() {
