@@ -1,5 +1,7 @@
 # PIK-predator
 
+Predator is a website created for uni project. The main task was to create an online shop.
+
 <h2>Starting app</h2>
 In order to start the application, type this command: 
 
